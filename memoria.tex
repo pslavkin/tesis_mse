@@ -30,7 +30,7 @@ headsepline, % Uncomment to get a line under the header
 %	INFORMACIÓN DE LA MEMORIA
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Título del trabajo} % El títulos de la memoria, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \ttitle
+\thesistitle{Lectura de fiduciales para máquina CNC} % El títulos de la memoria, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \ttitle
 
 % Nombre del posgrado, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \degreename
 %\posgrado{Carrera de Especialización en Sistemas Embebidos} 
@@ -41,15 +41,15 @@ headsepline, % Uncomment to get a line under the header
 
 \author{Esp. Ing. Pablo Slavkin} % Tu nombre, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \authorname
 
-\director{Nombre del director (pertenencia)} % El nombre del director, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \dirname
-\codirector{Nombre del codirector (pertenencia)} % El nombre del codirector si lo hubiera, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \codirname.  Para activar este campo se debe descomentar la opción "codirector" en el comando \documentclass, línea 23.
+\director{MEE. Ing. Norberto M. Lerendegui (IEEE)} % El nombre del director, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \dirname
+%\codirector{Nombre del codirector (pertenencia)} % El nombre del codirector si lo hubiera, se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \codirname.  Para activar este campo se debe descomentar la opción "codirector" en el comando \documentclass, línea 23.
 
-\juradoUNO{Nombre del jurado 1 (pertenencia)} % Nombre y pertenencia del un jurado se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \jur1name
-\juradoDOS{Nombre del jurado 2 (pertenencia)} % Nombre y pertenencia del un jurado se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \jur2name
-\juradoTRES{Nombre del jurado 3 (pertenencia)} % Nombre y pertenencia del un jurado se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \jur3name
+\juradoUNO{Ing. Ariel Hernandez} % Nombre y pertenencia del un jurado se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \jur1name
+\juradoDOS{Mg. Ing. Lucio Martinez (CNEA)} % Nombre y pertenencia del un jurado se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \jur2name
+\juradoTRES{Dr. Daniel Minsky (CNEA/CONICET)} % Nombre y pertenencia del un jurado se usa en la carátula y se puede usar el cualquier lugar del documento con el comando \jur3name
 
-%\ciudad{Ciudad Autónoma de Buenos Aires}
-\ciudad{ciudad de Mendoza}
+\ciudad{Ciudad Autónoma de Buenos Aires}
+%\ciudad{ciudad de Mendoza}
 
 \fechaINICIO{marzo de 2020}
 \fechaFINAL{diciembre de 2020}
@@ -76,7 +76,8 @@ headsepline, % Uncomment to get a line under the header
 %The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
 \centering
 
-El resumen debe escribirse en uno o dos párrafo.  Debe ser breve y conciso sin ningún elemento de formato en el texto como itálicas o negrita. Tampoco se deben usar siglas ni acrónimos que no resulten obvios para un lector promedio de la memoria, ni referencias bibliográficas o notas al pie de página.  No debe faltar qué es lo que se hizo/logró, qué importancia/valor tiene el proyecto/resultado, qué va a encontrar el lector en la memoria y qué contenidos de la especialización/maestría se aplicaron en el proyecto.
+En el presente trabajo se presenta el desarrollo de un dispositivo electrónico capaz de dotar de visión artificial a una máquina de mecanizado por control numérico CNC de la fábrica española Wolfcut para permitir el alineamiento automático de mecanizados 2D mediante la lectura de marcas fiduciales.
+Utilizando Linux sobre la plataforma Beagleboard, se desarrollaron los drivers del kernel en C para interactuar con un controlador de movimientos Weihong NK105, se implementó una interfaz de control web con HTML, Javascript y Flask, se habilitó la carga de archivos USB remota mediante la tecnología configFS, y se realizó el procesamiento de video desde una cámara WIFI mediante la biblioteca PythonCV.
 
 \end{abstract}
 
@@ -120,10 +121,10 @@ Esta sección es para agradecimientos personales y es totalmente \textbf{OPCIONA
 % Incluir los capítulos como archivos separados desde la carpeta Chapters
 
 \include{Chapters/Chapter1}
-\include{Chapters/Chapter2} 
+\include{Chapters/Chapter2}
 \include{Chapters/Chapter3}
-\include{Chapters/Chapter4} 
-\include{Chapters/Chapter5} 
+\include{Chapters/Chapter4}
+\include{Chapters/Chapter5}
 
 %----------------------------------------------------------------------------------------
 %	CONTENIDO DE LA MEMORIA  - APÉNDICES
