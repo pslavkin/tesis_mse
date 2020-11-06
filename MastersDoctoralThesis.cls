@@ -30,6 +30,7 @@
 \ProvidesClass{\classname}[2016/03/25 v1.4 LaTeXTemplates.com]
 \providecommand{\baseclass}{book}
 
+
 \RequirePackage{etoolbox}
 \RequirePackage{xparse}
 \newbool{nolistspace}
@@ -54,6 +55,8 @@
 
 \LoadClass{\baseclass}
 
+%mis paquetes
+\usepackage{tcolorbox}
 %----------------------------------------------------------------------------------------
 %	CLASS OPTIONS
 %----------------------------------------------------------------------------------------
