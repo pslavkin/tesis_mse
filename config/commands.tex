@@ -1,0 +1,52 @@
+\newcommand{\subfigabc}[5]{
+   \begin{subfigure}{#1\textwidth}
+      \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+         \begin{subfigure}{1\textwidth}
+            \includegraphics[width=1.0\textwidth]{#3}
+            \caption{}
+         \end{subfigure}
+      }
+   \end{subfigure}
+   \begin{subfigure}{#2\textwidth}
+      \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+         \begin{subfigure}{1\textwidth}
+            \includegraphics[width=1.0\textwidth]{#4}
+            \caption{}
+         \end{subfigure}
+      }
+      \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+         \begin{subfigure}{1\textwidth}
+            \includegraphics[width=1.0\textwidth]{#5}
+            \caption{}
+         \end{subfigure}
+      }
+   \end{subfigure}
+}
+
+\newcommand{\subfigcab}[5]{
+   \begin{subfigure}{#2\textwidth}
+      \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+         \begin{subfigure}{1\textwidth}
+            \includegraphics[width=1.0\textwidth]{#4}
+            \caption{}
+         \end{subfigure}
+      }
+      \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+         \begin{subfigure}{1\textwidth}
+            \includegraphics[width=1.0\textwidth]{#5}
+            \caption{}
+         \end{subfigure}
+      }
+   \end{subfigure}
+   \begin{subfigure}{#1\textwidth}
+      \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+         \begin{subfigure}{1\textwidth}
+            \includegraphics[width=1.0\textwidth]{#3}
+            \caption{}
+         \end{subfigure}
+      }
+   \end{subfigure}
+}
+
+
+
