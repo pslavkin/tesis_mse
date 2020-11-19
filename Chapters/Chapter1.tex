@@ -17,22 +17,44 @@
 
 %----------------------------------------------------------------------------------------
 
-%\section{Introducción}
-En el presente capitulo se expone el principio de funcionamiento de las maquinas CNC, sus componentes principales, su interconeccion y uso. Luego se explica la problematica de la alineacion de piezas 2D y algunas soluciones.
+
+En el presente capitulo se expone la definicion, algo de historia, el principio de funcionamiento y ejemplos de uso de las maquinas CNC. Hacia el final del capitulo se introduce el problema de la alineacion de piezas en 2D.
 
 %----------------------------------------------------------------------------------------
-\section{Descripcion del problema}
+\section{Historia y principio de funcionamiento}
+   
+Hacia finales de la decada del '40, el mecanico, inventor y pionero reconocido Jhon Parson \footnote\jhonparsonwiki que se destaca en la figura \ref{fig:parsons}, logra motorizar una agujereadora de banco de precision y automatizarla con el uso de una cinta perforada. A este invento se lo considera la primera maquina de control numerico o NC por sus siglas en ingles \textit{numerical control}.
+   \centering
+   \begin{figure}[ht]
+      \subfigab{0.35}{0.64}{parsons_face}{parsons_machine}
+      \caption{Jhon Parsons en A, considerado el inventor de la maquina de control numerico NC. En B una de sus maquinas.}
+      \label{fig:parsons}
+   \end{figure}
+\par
+Luego de varias decadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las maquinas de control numerico computarizado o CNC por sus signas en ingles \textit{computer numerical control}.
+Aun con el paso del tiempo y la tecnologia, las partes principales de una maquina CNC se describen en la figura \ref{fig:cnc_bloques_basico} y son 3:
+   \begin{enumerate}
+      \item{programa}
+      \item{unidad de control}
+      \item{equipo de procesado}
+   \end{enumerate}
+   \centering
+   \begin{figure}[ht]
+      \includegraphics[width=1\textwidth]{cnc_bloques_basico.png}
+      \caption{Los 3 compoenentes baicos de una maquina CNC.}
+      \label{fig:cnc_bloques_basico}
+   \end{figure}
+
+o NC surgieron a principios de 1940 motorizando maquinas manuales para mecanizado como fresadoras y tornos. la decada del '40NC ) Si bien en alguna bibliografia se encuentran algunas referencias primigenias desde 1700, 
+   
+
+   
+\section{Principio de funcionamiento}
 
 \subsection{Introducción a las maquinas CNC}
 
-   \centering
-   \begin{figure}[ht]
-      \subfigabc{0.665}{0.318}{cnc_3d1.png}{cnc_3d2.png}{cnc_3d3.png}
-      \caption{Modelo simplificado de una maquina CNC de 3 ejes.}
-      \label{fig:cnc_3d}
-   \end{figure}
 
-
+   
 Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
 \url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
 
