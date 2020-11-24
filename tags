@@ -7,13 +7,12 @@
 An   lisis del software	Chapters/Chapter3.tex	/^}$/;"	s
 Appendix Title Here	Appendices/AppendixA.tex	/^% Appendix A$/;"	c
 Appendix Title Here	Appendices/AppendixTemplate.tex	/^% Appendix Template$/;"	c
-Aprendiendo LaTeX 	Chapters/Chapter1.tex	/^\\newcommand{\\grados}{$^{\\circ}$}$/;"	s
 Archivos	Chapters/Chapter1.tex	/^\\keyword{Figures} -- Esta carpeta contiene todas las figuras de la memoria.  Estas son las versiones finales de las imágenes que van a ser incluidas en la memoria.  Pueden ser imágenes en formato \\textit{raster}\\footnote{\\url{https:\/\/en.wikipedia.org\/wiki\/Raster_graphics}} como \\file{.png}, \\file{.jpg} o en formato vectoriales\\footnote{\\url{https:\/\/en.wikipedia.org\/wiki\/Vector_graphics}} como \\file{.pdf}, \\file{.ps}.  Se debe notar que utilizar imágenes vectoriales disminuye notablemente el peso del documento final y acelera el tiempo de compilación por lo que es recomendable su utilización siempre que sea posible.$/;"	u
 Bibliograf   a	Chapters/Chapter1.tex	/^Finalmente, se encuentra el código para incluir la bibliografía en el documento final.  Este código tampoco debe modificarse. La metodología para trabajar las referencias bibliográficas se desarrolla en la sección \\ref{sec:biblio}.$/;"	s
 Carpetas	Chapters/Chapter1.tex	/^\\section{Qué incluye esta plantilla}$/;"	u
 Chapter Title Here	Chapters/ChapterTemplate.tex	/^% Chapter Template$/;"	c
 Chapters  Chapter1	Chapters/Chapter1.tex	/^\\begin{verbatim}$/;"	i
-Chapters  Chapter1	memoria.tex	/^\\pagestyle{thesis} % Return the page headers back to the "thesis" style$/;"	i
+Chapters  Chapter1	memoria.tex	/^\\include{config\/links}$/;"	i
 Chapters  Chapter2	Chapters/Chapter1.tex	/^	\\include{Chapters\/Chapter1}$/;"	i
 Chapters  Chapter2	memoria.tex	/^\\include{Chapters\/Chapter1}$/;"	i
 Chapters  Chapter3	Chapters/Chapter1.tex	/^	\\include{Chapters\/Chapter2} $/;"	i
@@ -34,6 +33,8 @@ Este es el t   tulo de una subsecci   n	Chapters/Chapter2.tex	/^Notar el uso de 
 Estilo y convenciones	Chapters/Chapter2.tex	/^Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.$/;"	s
 Figuras	Chapters/Chapter2.tex	/^Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \\citep{IEEE:citation}. Por ejemplo, ``el presente trabajo se basa en la plataforma EDU-CIAA-NXP \\citep{CIAA}, la cual...''.$/;"	u
 Gu   a matem   tica r   pida para LaTeX 	Chapters/Chapter1.tex	/^Acá tiene un ejemplo de una ``subsubsección'' que es el cuarto nivel de ordenamiento del texto, después de capítulo, sección y subsección.  Como se puede ver, las subsubsecciones no van numeradas en el cuerpo del documento ni en el índice.  El formato está definido por la plantilla y no debe ser modificado.$/;"	u
+Historia y principio de funcionamiento	Chapters/Chapter1.tex	/^En el presente capitulo se expone la definicion, algo de historia, el principio de funcionamiento y ejemplos de uso de las maquinas CNC. Hacia el final del capitulo se introduce el problema de la alineacion de piezas en 2D.$/;"	s
+Introducci   n a las maquinas CNC	Chapters/Chapter1.tex	/^\\section{Principio de funcionamiento}$/;"	u
 Introducci   n espec   fica	Chapters/Chapter2.tex	/^\\chapter{Introducción específica} % Main chapter title$/;"	c
 Introducci   n general	Chapters/Chapter1.tex	/^% Chapter 1$/;"	c
 Main Section 1	Chapters/ChapterTemplate.tex	/^\\label{ChapterX} % Change X to a consecutive number; for referencing this chapter elsewhere, use \\ref{ChapterX}$/;"	s
@@ -41,12 +42,15 @@ Main Section 2	Chapters/ChapterTemplate.tex	/^Morbi rutrum odio eget arcu adipis
 Paquetes adicionales	Chapters/Chapter1.tex	/^La versión más reciente de TexMaker es la 4.5 y se puede descargar del siguiente link: \\url{http:\/\/www.xm1math.net\/texmaker\/download.html}. Se puede consultar el manual de usuario en el siguiente link: \\url{http:\/\/www.xm1math.net\/texmaker\/doc.html}.$/;"	u
 Personalizando la plantilla  el archivo file  memoria.tex	Chapters/Chapter1.tex	/^Notar que para actualizar las tablas de contenidos se debe ejecutar PDFLaTeX dos veces.  Esto se debe a que es necesario actualizar algunos archivos auxiliares antes de obtener el resultado final.  En forma similar, para actualizar las referencias se debe ejecutar primero PDFLaTeX, después BibTeX y finalmente PDFLaTeX dos veces por idénticos motivos.$/;"	s
 Pr   ximos pasos	Chapters/Chapter5.tex	/^\\end{itemize}$/;"	s
+Principio de funcionamiento	Chapters/Chapter1.tex	/^o NC surgieron a principios de 1940 motorizando maquinas manuales para mecanizado como fresadoras y tornos. la decada del '40NC ) Si bien en alguna bibliografia se encuentran algunas referencias primigenias desde 1700, $/;"	s
 Pruebas funcionales del hardware	Chapters/Chapter4.tex	/^\\label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \\ref{ChapterX}$/;"	s
 Qu   incluye esta plantilla	Chapters/Chapter1.tex	/^Si sos nuevo en \\LaTeX{}, se recomienda que continúes leyendo el documento ya que contiene información básica para aprovechar el potencial de esta herramienta.$/;"	s
 Subsection 1	Chapters/ChapterTemplate.tex	/^Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ultricies lacinia euismod. Nam tempus risus in dolor rhoncus in interdum enim tincidunt. Donec vel nunc neque. In condimentum ullamcorper quam non consequat. Fusce sagittis tempor feugiat. Fusce magna erat, molestie eu convallis ut, tempus sed arcu. Quisque molestie, ante a tincidunt ullamcorper, sapien enim dignissim lacus, in semper nibh erat lobortis purus. Integer dapibus ligula ac risus convallis pellentesque.$/;"	u
 Subsection 2	Chapters/ChapterTemplate.tex	/^Nunc posuere quam at lectus tristique eu ultrices augue venenatis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Vivamus sodales tortor eget quam adipiscing in vulputate ante ullamcorper. Sed eros ante, lacinia et sollicitudin et, aliquam sit amet augue. In hac habitasse platea dictumst.$/;"	u
 Tablas	Chapters/Chapter2.tex	/^El código para generar las imágenes se encuentra disponible para su reutilización en el archivo \\file{Chapter2.tex}.$/;"	u
-Una introducci   n  no tan corta  a LaTeX 	Chapters/Chapter1.tex	/^\\LaTeX{} no es \\textsc{WYSIWYG} (What You See is What You Get), a diferencia de los procesadores de texto como Microsoft Word o Pages de Apple o incluso LibreOffice en el mundo open-source. En lugar de ello, un documento escrito para \\LaTeX{} es en realidad un archivo de texto simple o llano que \\emph{no contiene formato} . Nosotros le decimos a \\LaTeX{} cómo deseamos que se aplique el formato en el documento final escribiendo comandos simples entre el texto, por ejemplo, si quiero usar texto en itálicas para dar énfasis, escribo \\verb|\\it{texto}| y pongo el texto que quiero en itálicas entre medio de las llaves. Esto significa que \\LaTeX{} es un lenguaje del tipo \\enquote{mark-up}, muy parecido a HTML.$/;"	u
-Una subsubsecci   n	Chapters/Chapter1.tex	/^Se puede encontrar la versión en español en la lista en esta página: \\url{http:\/\/www.ctan.org\/tex-archive\/info\/lshort\/}$/;"	b
+Una subsubsecci   n	Chapters/Chapter1.tex	/^   \\end{figure}$/;"	b
 Uso de may   scula inicial para los t   tulo de secciones	Chapters/Chapter2.tex	/^\\label{sec:ejemplo}$/;"	u
 Utilizando esta plantilla	Chapters/Chapter1.tex	/^Si estás escribiendo un documento con mucho contenido matemático, entonces es posible que desees leer el documento de la AMS (American Mathematical Society) llamado, \\enquote{A Short Math Guide for \\LaTeX{}}. Se puede encontrar en línea en el siguiente link: \\url{http:\/\/www.ams.org\/tex\/amslatex.html} en la sección \\enquote{Additional Documentation} hacia la parte inferior de la página.$/;"	s
+config  commands	memoria.tex	/^\\pagestyle{thesis} % Return the page headers back to the "thesis" style$/;"	i
+config  links	memoria.tex	/^\\include{config\/paths}$/;"	i
+config  paths	memoria.tex	/^\\include{config\/commands}$/;"	i

@@ -18,43 +18,44 @@
 %----------------------------------------------------------------------------------------
 
 
-En el presente capitulo se expone la definicion, algo de historia, el principio de funcionamiento y ejemplos de uso de las maquinas CNC. Hacia el final del capitulo se introduce el problema de la alineacion de piezas en 2D.
+En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria. Hacia el final se introduce el problema de la alineacion de piezas en 2D.
 
 %----------------------------------------------------------------------------------------
 \section{Historia y principio de funcionamiento}
    
-Hacia finales de la decada del '40, el mecanico, inventor y pionero reconocido Jhon Parson \footnote\jhonparsonwiki que se destaca en la figura \ref{fig:parsons}, logra motorizar una agujereadora de banco de precision y automatizarla con el uso de una cinta perforada. A este invento se lo considera la primera maquina de control numerico o NC por sus siglas en ingles \textit{numerical control}.
-   \centering
-   \begin{figure}[ht]
-      \subfigab{0.35}{0.64}{parsons_face}{parsons_machine}
-      \caption{Jhon Parsons en A, considerado el inventor de la maquina de control numerico NC. En B una de sus maquinas.}
-      \label{fig:parsons}
-   \end{figure}
+Hacia finales de la decada del '40, el mecanico inventor Jhon Parson\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons}, logro motorizar una agujereadora de banco de precision y automatizarla con el uso de una cinta perforada. A este invento se lo considera la primera maquina de control numerico o NC por sus siglas en ingles (\textit{numerical control}).
+\subfigab{0.35}{0.64}
+         {parsons_face}{parsons_machine}
+         {Jhon Parsons junto a una de sus maquinas, considerado el inventor de la maquina de control numerico NC.}
+         {fig:parsons}
 \par
-Luego de varias decadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las maquinas de control numerico computarizado o CNC por sus signas en ingles \textit{computer numerical control}.
-Aun con el paso del tiempo y la tecnologia, las partes principales de una maquina CNC se describen en la figura \ref{fig:cnc_bloques_basico} y son 3:
-   \begin{enumerate}
-      \item{programa}
-      \item{unidad de control}
-      \item{equipo de procesado}
-   \end{enumerate}
-   \centering
-   \begin{figure}[ht]
-      \includegraphics[width=1\textwidth]{cnc_bloques_basico.png}
-      \caption{Los 3 compoenentes baicos de una maquina CNC.}
-      \label{fig:cnc_bloques_basico}
-   \end{figure}
+Luego de varias decadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las maquinas de control numerico computarizado o CNC por sus signas en ingles \textit{computer numerical control}. 
+\\
+A pesar del paso del tiempo y los avances tecnologicos, las partes principales de una maquina CNC siguen siendo las mismas que se desciben en la figura \ref{fig:cnc_main_blocks}.
+\subfiga {cnc_main_blocks.pdf}
+         {Los tres componenentes basicos de una maquina CNC.}
+         {fig:cnc_main_blocks}
 
-o NC surgieron a principios de 1940 motorizando maquinas manuales para mecanizado como fresadoras y tornos. la decada del '40NC ) Si bien en alguna bibliografia se encuentran algunas referencias primigenias desde 1700, 
-   
+\subsection{Programa}
+   El programa consiste en una serie de instrucciones necesarias para obtener una determinada pieza escritas en un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki} y especificado en el documento NIST-RS274-D \citep{rs274} , creado por el Instituto tecnologico de Masachussets MIT por sus siglas en ingles (Masachussets Institute of technology) en la decada del '50. 
+   Originalmente este programa era escrito manualmente por los ingenieros de mecanizado, luego mediante una maquina de mecanografia, se ranscribia a una cinta perforada que seria interpretada por el controlador de movimientos. Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}
+\subfigcab{0.655}{0.34}
+          {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
+          {Secuencia de pasos para operar una maquina CNC primigenia. a) Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode. b) Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
+          {fig:programacion_cnc_primigenia}
 
-   
+          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente para ser procesado por la unidad de control. 
+          Esta secuencia es conocida como diseno CAD/CAM y se esquematiza en la figura \ref{fig:programacion_cnc_actial}
+\subfigcab{0.655}{0.34}
+          {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
+          {Secuencia de pasos para operar una maquina CNC moderna. a) Ingeniero utiliza un CAD software para crear la pieza en 3D.b) Utilizando un CAM Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
+          {fig:programacion_cnc_actial}
 \section{Principio de funcionamiento}
 
 \subsection{Introducción a las maquinas CNC}
 
 
-   
+
 Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
 \url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
 
@@ -66,12 +67,10 @@ Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratui
    \end{figure}
 
 Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
-   \centering
-   \begin{figure}[ht]
-      \subfigcab{0.69}{0.305}{wolfcut1.png}{wolfcut2.png}{wolfcut3.png}
-      \caption{Maquinas CNC fabricadas por la empresa Wolfcut}
-      \label{fig:wolfcut1}
-   \end{figure}
+\subfigcab  {0.69}{0.305}
+            {wolfcut1.png}{wolfcut2.png}{wolfcut3.png}
+            {Maquinas CNC fabricadas por la empresa Wolfcut}
+            {fig:wolfcut1}
 
 \subsubsection{Una subsubsección}
 
