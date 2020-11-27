@@ -24,12 +24,12 @@ En el presente capitulo se expone una breve resena historica de las maquinas CNC
 \section{Historia y principio de funcionamiento}
    
 Hacia finales de la decada del '40, el mecanico inventor Jhon Parson\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons}, logro motorizar una agujereadora de banco de precision y automatizarla con el uso de una cinta perforada. A este invento se lo considera la primera maquina de control numerico o NC por sus siglas en ingles (\textit{numerical control}).
-\subfigab{0.35}{0.64}
+\subfigab{0.38}{0.62}
          {parsons_face}{parsons_machine}
          {Jhon Parsons junto a una de sus maquinas, considerado el inventor de la maquina de control numerico NC.}
          {fig:parsons}
 \par
-Luego de varias decadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las maquinas de control numerico computarizado o CNC por sus signas en ingles \textit{computer numerical control}. 
+Luego de varias decadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las maquinas de control numerico computarizado o CNC por sus signas en ingles \textit{(computer numerical control)}. 
 \\
 A pesar del paso del tiempo y los avances tecnologicos, las partes principales de una maquina CNC siguen siendo las mismas que se desciben en la figura \ref{fig:cnc_main_blocks}.
 \subfiga {cnc_main_blocks.pdf}
@@ -37,19 +37,35 @@ A pesar del paso del tiempo y los avances tecnologicos, las partes principales d
          {fig:cnc_main_blocks}
 
 \subsection{Programa}
-   El programa consiste en una serie de instrucciones necesarias para obtener una determinada pieza escritas en un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki} y especificado en el documento NIST-RS274-D \citep{rs274} , creado por el Instituto tecnologico de Masachussets MIT por sus siglas en ingles (Masachussets Institute of technology) en la decada del '50. 
-   Originalmente este programa era escrito manualmente por los ingenieros de mecanizado, luego mediante una maquina de mecanografia, se ranscribia a una cinta perforada que seria interpretada por el controlador de movimientos. Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}
+   El programa consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.  \\
+   Este lenguaje fue creado por el Instituto tecnologico de Masachussets en la decada del 50 y especificado en el documento NIST-RS274-D \citep{rs274}.  \\
+Originalmente los ingenieros de mecanizado lo escribia manualmente en una planilla y luego ,mediante una maquina de mecanografia, se transcribia a una cinta perforada que seria luego interpretada por el controlador de movimientos.\\
+Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}
 \subfigcab{0.655}{0.34}
           {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
-          {Secuencia de pasos para operar una maquina CNC primigenia. a) Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode. b) Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
+          {Secuencia de pasos para operar una maquina CNC primigenia. A) Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode. B) Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
           {fig:programacion_cnc_primigenia}
+          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente y sera luego procesado por el controlador. \\
+          Esta secuencia es conocida como diseno CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
+\subfiguub{1}{1}
+          {cad_cnc_cuadrado}{gcode_cnc_cuadrado}{cam_cnc_cuadrado}
+          {Secuencia de pasos para operar una maquina CNC moderna. A) Se disena la pieza en el CAD. C) Se simula el proceso de corte en el CAM. C) Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de maquina que leera el controlador.}
+          {fig:programacion_cnc_actual}
 
-          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente para ser procesado por la unidad de control. 
-          Esta secuencia es conocida como diseno CAD/CAM y se esquematiza en la figura \ref{fig:programacion_cnc_actial}
-\subfigcab{0.655}{0.34}
-          {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
-          {Secuencia de pasos para operar una maquina CNC moderna. a) Ingeniero utiliza un CAD software para crear la pieza en 3D.b) Utilizando un CAM Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
-          {fig:programacion_cnc_actial}
+\subsection{Controlador}
+El controlador de movimientos es un equipo electronico capaz de leer un programa en lenguaje GCode y proveer las salidas adecuadas para mover la maquina.\\
+Es usual que a la salida del controlaor se conecten amplificadores de senal conocidos como drivers que proveen la potencia suficiente para mover los motores y mecanismos montados en la maquina.\\
+De esta manera se separa el controlador en 2 etapas, controlador logico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.\\
+\subfiga {control_and_driver.pdf}
+         {La etapa de control se suele separar en dos: controladr logico y driver de potencia}
+         {fig:control_and_driver}
+
+Dependdiendo el tipo mecanismo se selecciona y dimensiona el driver.\\
+
+
+La maquina pDependiendo del tipo de maquina, sa es una pieza de hardware
+\subsection{Maquina}
+
 \section{Principio de funcionamiento}
 
 \subsection{Introducción a las maquinas CNC}
