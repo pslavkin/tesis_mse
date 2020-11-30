@@ -32,7 +32,8 @@ Hacia finales de la decada del '40, el mecanico inventor Jhon Parson\footnote\jh
 Luego de varias decadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las maquinas de control numerico computarizado o CNC por sus signas en ingles \textit{(computer numerical control)}. 
 \\
 A pesar del paso del tiempo y los avances tecnologicos, las partes principales de una maquina CNC siguen siendo las mismas que se desciben en la figura \ref{fig:cnc_main_blocks}.
-\subfiga {cnc_main_blocks.pdf}
+\subfiga {1}
+         {cnc_main_blocks.pdf}
          {Los tres componenentes basicos de una maquina CNC.}
          {fig:cnc_main_blocks}
 
@@ -52,18 +53,75 @@ Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:pro
           {Secuencia de pasos para operar una maquina CNC moderna. A) Se disena la pieza en el CAD. C) Se simula el proceso de corte en el CAM. C) Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de maquina que leera el controlador.}
           {fig:programacion_cnc_actual}
 
+
 \subsection{Controlador}
 El controlador de movimientos es un equipo electronico capaz de leer un programa en lenguaje GCode y proveer las salidas adecuadas para mover la maquina.\\
 Es usual que a la salida del controlaor se conecten amplificadores de senal conocidos como drivers que proveen la potencia suficiente para mover los motores y mecanismos montados en la maquina.\\
-De esta manera se separa el controlador en 2 etapas, controlador logico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.\\
-\subfiga {control_and_driver.pdf}
+De esta manera controlador se compone de etapas, controlador logico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.\\
+En funcion de la complejidad requerida para la maquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.
+\subfiga {0.5}
+         {control_and_driver.pdf}
          {La etapa de control se suele separar en dos: controladr logico y driver de potencia}
          {fig:control_and_driver}
 
-Dependdiendo el tipo mecanismo se selecciona y dimensiona el driver.\\
+En la tabla Se listan en la siguiente table una lista de algunos 
+
+\begin{table}[h!]
+   \centering
+   \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
+   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
+   %m{5cm}  }
+      \toprule
+      \textbf{Caracteristicas} & \textbf{Imagen} \\ 
+      \midrule
+%-----------------------------
+      Contorlador dependiente de una PC y conexion por puerto paraleelo. Solucion economica para maquinas hobbistas de baja performance.
+      &
+      \figtable{0.3}{controlador_paralelo} \\
+%-----------------------------
+      Contorlador integrado de media performance, ideal para maquinas profesionales pero de baja complejidad. Este es el controlador que se usara en este trabajo para realizar los ensayos.
+      &
+      \figtable{0.3}{controlador_nk105} \\
+%-----------------------------
+      Contorlador autonomo profesional de gran performance y opciones de operacion.
+      &
+      \figtable{0.3}{controlador_nk200} \\
+%-----------------------------
+      \bottomrule
+   \end{tabular}
+   \label{tbl:controllers}
+\end{table}
+
+\begin{table}[h!]
+   \centering
+   \caption[Modelos de drivers]{Modelos de drivers de motores}
+   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
+   %m{5cm}  }
+      \toprule
+      \textbf{Caracteristicas} & \textbf{Imagen} \\ 
+      \midrule
+%-----------------------------
+      Driver para motores paso a paso pequenos, economicos, ideales para maquinas simples, impresoras 3D, y hobby. 
+      &
+      \figtable{0.3}{driver_steper_arduino} \\
+%-----------------------------
+      Driver para motores paso a paso medianos, ideales para maquinas de media precision y mecanica semipesada.
+      &
+      \figtable{0.3}{driver_steper} \\
+%-----------------------------
+      Driver para motores BLDC, de potencia media, adecuados para maquinas de extrema precision y escalables en potencia.
+      &
+      \figtable{0.3}{driver_servo} \\
+%-----------------------------
+      \bottomrule
+   \end{tabular}
+   \label{tbl:drivers}
+\end{table}
 
 
-La maquina pDependiendo del tipo de maquina, sa es una pieza de hardware
+
+
+
 \subsection{Maquina}
 
 \section{Principio de funcionamiento}
