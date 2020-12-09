@@ -18,7 +18,7 @@
 %----------------------------------------------------------------------------------------
 
 
-En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria. Hacia el final se introduce el problema de la alineacion de piezas en 2D.
+En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria. Hacia el final se introduce la problematica de la alineacion de piezas en 2D.
 
 %----------------------------------------------------------------------------------------
 \section{Historia y principio de funcionamiento}
@@ -40,56 +40,90 @@ A pesar del paso del tiempo y los avances tecnologicos, las partes principales d
 \subsection{Programa}
    El programa consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.  \\
    Este lenguaje fue creado por el Instituto tecnologico de Masachussets en la decada del 50 y especificado en el documento NIST-RS274-D \citep{rs274}.  \\
-Originalmente los ingenieros de mecanizado lo escribia manualmente en una planilla y luego ,mediante una maquina de mecanografia, se transcribia a una cinta perforada que seria luego interpretada por el controlador de movimientos.\\
+Originalmente los ingenieros de mecanizado lo escribian manualmente en una planilla y luego ,mediante una maquina de mecanografia, se transcribia a una cinta perforada que seria luego interpretada por el controlador de movimientos.\\
 Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}
 \subfigcab{0.655}{0.34}
           {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
           {Secuencia de pasos para operar una maquina CNC primigenia. A) Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode. B) Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
           {fig:programacion_cnc_primigenia}
-          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente y sera luego procesado por el controlador. \\
+          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente y que sera luego procesado por el controlador. \\
           Esta secuencia es conocida como diseno CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
 \subfiguub{1}{1}
           {cad_cnc_cuadrado}{gcode_cnc_cuadrado}{cam_cnc_cuadrado}
           {Secuencia de pasos para operar una maquina CNC moderna. A) Se disena la pieza en el CAD. C) Se simula el proceso de corte en el CAM. C) Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de maquina que leera el controlador.}
           {fig:programacion_cnc_actual}
 
+
 \subsection{Controlador}
 El controlador de movimientos es un equipo electronico capaz de leer un programa en lenguaje GCode y proveer las salidas adecuadas para mover la maquina.\\
 Es usual que a la salida del controlaor se conecten amplificadores de senal conocidos como drivers que proveen la potencia suficiente para mover los motores y mecanismos montados en la maquina.\\
 De esta manera controlador se compone de etapas, controlador logico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.\\
-En funcion de la complejidad requerida para la maquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.
 \subfiga {0.5}
          {control_and_driver.pdf}
          {La etapa de control se suele separar en dos: controladr logico y driver de potencia}
          {fig:control_and_driver}
-
-En la tabla Se listan en la siguiente table una lista de algunos 
+En funcion de la complejidad requerida para la maquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.
+\\
+En la tabla \ref{tbl:controllers} Se listan algunos modelos de controladores comerciales listando las caracteristicas principales.
 
 \begin{table}[h!]
    \centering
-   \caption[caption corto]{caption largo más descriptivo}
-   \begin{tabular}{  c  m{5cm}  m{5cm}  }
+   \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
+   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
+   %m{5cm}  }
       \toprule
-      \textbf{my.Lboro} & \textbf{Advantages} & \textbf{Disadvantages} \\
+      \textbf{Caracteristicas} & \textbf{Imagen} \\ 
       \midrule
-      \figtable{0.2}{driver_stepper}
+%-----------------------------
+      Contorlador dependiente de una PC y conexion por puerto paraleelo. Solucion economica para maquinas hobbistas de baja performance.
       &
-      \begin{itemize}
-         \item Accessibility
-         \item Up to date information
-         \item Fulfil students needs and wants \ldots
-      \end{itemize}
-      & 
-      \begin{itemize}
-         \item Accessibility
-         \item Up to date information
-         \item Fulfil students needs and wants \ldots
-      \end{itemize}
-      \\
+      \figtable{0.3}{controlador_paralelo} \\
+%-----------------------------
+      Contorlador integrado de media performance, ideal para maquinas profesionales pero de baja complejidad. Este es el controlador que se usara en este trabajo para realizar los ensayos.
+      &
+      \figtable{0.3}{controlador_nk105} \\
+%-----------------------------
+      Controlador autonomo profesional de gran performance y opciones de operacion.
+      &
+      \figtable{0.3}{controlador_nk200} \\
+%-----------------------------
       \bottomrule
    \end{tabular}
-   \label{tbl:myLboro}
+   \label{tbl:controllers}
 \end{table}
+
+En la tabla \ref{tbl:drivers} se muestran drivers de potencia de mercado indicando las caracteristicas principales.
+
+\begin{table}[h!]
+   \centering
+   \caption[Modelos de drivers]{Modelos de drivers de motores}
+   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
+   %m{5cm}  }
+      \toprule
+      \textbf{Caracteristicas} & \textbf{Imagen} \\ 
+      \midrule
+%-----------------------------
+      Driver para motores paso a paso pequenos, economicos, ideales para maquinas simples, impresoras 3D, y hobby. 
+      &
+      \figtable{0.3}{driver_steper_arduino} \\
+%-----------------------------
+      Driver para motores paso a paso medianos, ideales para maquinas de media precision y mecanica semipesada.
+      &
+      \figtable{0.3}{driver_steper} \\
+%-----------------------------
+      Driver para motores BLDC, de potencia media, adecuados para maquinas de extrema precision y escalables en potencia.
+      &
+      \figtable{0.3}{driver_servo} \\
+%-----------------------------
+      \bottomrule
+   \end{tabular}
+   \label{tbl:drivers}
+\end{table}
+
+
+
+
+
 \subsection{Maquina}
 
 \section{Principio de funcionamiento}

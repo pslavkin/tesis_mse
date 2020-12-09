@@ -18,7 +18,7 @@
 %----------------------------------------------------------------------------------------
 
 
-En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria. Hacia el final se introduce el problema de la alineacion de piezas en 2D.
+En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria. Hacia el final se introduce la problematica de la alineacion de piezas en 2D.
 
 %----------------------------------------------------------------------------------------
 \section{Historia y principio de funcionamiento}
@@ -40,13 +40,13 @@ A pesar del paso del tiempo y los avances tecnologicos, las partes principales d
 \subsection{Programa}
    El programa consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.  \\
    Este lenguaje fue creado por el Instituto tecnologico de Masachussets en la decada del 50 y especificado en el documento NIST-RS274-D \citep{rs274}.  \\
-Originalmente los ingenieros de mecanizado lo escribia manualmente en una planilla y luego ,mediante una maquina de mecanografia, se transcribia a una cinta perforada que seria luego interpretada por el controlador de movimientos.\\
+Originalmente los ingenieros de mecanizado lo escribian manualmente en una planilla y luego ,mediante una maquina de mecanografia, se transcribia a una cinta perforada que seria luego interpretada por el controlador de movimientos.\\
 Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}
 \subfigcab{0.655}{0.34}
           {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
           {Secuencia de pasos para operar una maquina CNC primigenia. A) Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode. B) Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
           {fig:programacion_cnc_primigenia}
-          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente y sera luego procesado por el controlador. \\
+          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente y que sera luego procesado por el controlador. \\
           Esta secuencia es conocida como diseno CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
 \subfiguub{1}{1}
           {cad_cnc_cuadrado}{gcode_cnc_cuadrado}{cam_cnc_cuadrado}
@@ -58,19 +58,18 @@ Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:pro
 El controlador de movimientos es un equipo electronico capaz de leer un programa en lenguaje GCode y proveer las salidas adecuadas para mover la maquina.\\
 Es usual que a la salida del controlaor se conecten amplificadores de senal conocidos como drivers que proveen la potencia suficiente para mover los motores y mecanismos montados en la maquina.\\
 De esta manera controlador se compone de etapas, controlador logico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.\\
-En funcion de la complejidad requerida para la maquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.
 \subfiga {0.5}
          {control_and_driver.pdf}
          {La etapa de control se suele separar en dos: controladr logico y driver de potencia}
          {fig:control_and_driver}
-
-En la tabla Se listan en la siguiente table una lista de algunos 
+En funcion de la complejidad requerida para la maquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.
+\par
+En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales listando las caracteristicas principales.
 
 \begin{table}[h!]
    \centering
    \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
    \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
-   %m{5cm}  }
       \toprule
       \textbf{Caracteristicas} & \textbf{Imagen} \\ 
       \midrule
@@ -83,7 +82,7 @@ En la tabla Se listan en la siguiente table una lista de algunos
       &
       \figtable{0.3}{controlador_nk105} \\
 %-----------------------------
-      Contorlador autonomo profesional de gran performance y opciones de operacion.
+      Controlador autonomo profesional de gran performance y opciones de operacion.
       &
       \figtable{0.3}{controlador_nk200} \\
 %-----------------------------
@@ -92,11 +91,11 @@ En la tabla Se listan en la siguiente table una lista de algunos
    \label{tbl:controllers}
 \end{table}
 
+
 \begin{table}[h!]
    \centering
    \caption[Modelos de drivers]{Modelos de drivers de motores}
    \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
-   %m{5cm}  }
       \toprule
       \textbf{Caracteristicas} & \textbf{Imagen} \\ 
       \midrule
@@ -120,9 +119,17 @@ En la tabla Se listan en la siguiente table una lista de algunos
 
 
 
-
-
 \subsection{Maquina}
+En terminos generales la maquina es un conjunto de piezas electromecanicas que permiten mover el elemento de mecanizado en varias dimensiones.
+Sin embargo en algunas maquinas el elemento de mecaizado permanece fijo y lo que se mueve es la pieza a mecanizaer.
+Suelen ser motorizadas, peroo tambien las hay con actuadores lineales, sistemas hidraulicos o una combinacion de todos estos.
+Dependiendo el proposito de la maquina se definen los grados de libertad del movimiento.
+Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos roboticos pero solo dos para corte y grabado de piezas planas con laser.
+Otra caracteristica importante es la cinematica
+Para el desarrollo de este trabajo se estudian solamente maquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras.
+
+brazos robotocps que suelen tener, y otras con solo 2 y hasta 1 glo que se mueve es 
+se Cuando se refiere a la maquina se 
 
 \section{Principio de funcionamiento}
 
