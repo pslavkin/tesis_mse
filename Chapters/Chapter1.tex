@@ -121,20 +121,66 @@ En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelo
 
 \subsection{Maquina}
 En terminos generales la maquina es un conjunto de piezas electromecanicas que permiten mover el elemento de mecanizado en varias dimensiones.
-Sin embargo en algunas maquinas el elemento de mecaizado permanece fijo y lo que se mueve es la pieza a mecanizaer.
-Suelen ser motorizadas, peroo tambien las hay con actuadores lineales, sistemas hidraulicos o una combinacion de todos estos.
+\\
+En algunas maquinas el elemento de mecaizado permanece fijo y lo que se mueve es la pieza a mecanizar.
+
+Suelen ser motorizadas, pero tambien las hay con actuadores lineales, sistemas hidraulicos o una combinacion de todos estos.
+\\
 Dependiendo el proposito de la maquina se definen los grados de libertad del movimiento.
+\\
 Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos roboticos pero solo dos para corte y grabado de piezas planas con laser.
-Otra caracteristica importante es la cinematica
-Para el desarrollo de este trabajo se estudian solamente maquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras.
+\\
+Para el desarrollo de este trabajo se estudian solamente maquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras que se esquematiza en la figura \ref{fig:cnc_3d}.
 
-brazos robotocps que suelen tener, y otras con solo 2 y hasta 1 glo que se mueve es 
-se Cuando se refiere a la maquina se 
+\subfigabc  {0.635}{0.30}
+            {cnc_3d1.png}{cnc_3d2.png}{cnc_3d3.png}
+            {Esquema de una maquina de 3 ejes perpendiculares como las que se analizan en esta memoria.}
+            {fig:cnc_3d}
 
-\section{Principio de funcionamiento}
+Se muestran anlgunos modelos de maquinas fabricadas por Wolfcut en la figura \ref{fig:wolfcut1}
+
+\subfigcab  {0.67}{0.30}
+            {wolfcut3.png}{wolfcut2.png}{wolfcut1.png}
+            {Maquinas CNC fabricadas por la empresa Wolfcut. A) Fresadora de 3 ejes para corte y mecanizado de madera, plasticos, carton, aluminio, etc. B) Maquina de 2 ejes de corte por cuchilla para carton, papel, calcos, etc. C) Maquina de 3 ejes para corte y grabado laser de materiales plasticos, madera, carton, papel, etc.}
+            {fig:wolfcut1}
+
+
+\section{Problema de alineacion en 2D}
+
+Dado un trabajo de corte, por ejemplo el corte de una letra 'W` en una placa de madera virgen los pasos para realizar el trabajo se pueden resumir en la siguiente lista:
+   \begin{enumerate}
+   \item{Realizar el diseno de la letra `W' con las herramientas CAD/CAM.}
+   \item{Cargar el programa en el controlador.}
+   \item{Fijar la placa de madera en la mesa.}
+   \item{Posicionar la fresa de corte sobre la placa en la coordenada de inicio de la letra `W'.}
+   \item{Cortar.}
+   \end{enumerate}
+
+   En la figura \ref{fig:alinea1} se puede ver que dado que la placa de madera esta virgen, no hace falta posicionar de manera precisa la la placa en la mesa.
+
+\subfigab  {0.48}{0.5}
+            {alineacion_1.png}{alineacion_2.png}
+            {Ejemplo de mecanizado de una letra 'W' en una placa de madera virgen sin alineacion.}
+            {fig:alinea1}
+
+En ciertas ocaciones se requiere que el trabajo de corte se realice sobre una pieza previamnete impresa. En el ejemplo la placa de madera podria haber sido impresa en otra maquina, y luego es necesario cortar su perimetro.
+   En este caso sera necesario utilizar alguna tecnica para posicionar con exactitud la placa de madera en la maquina para conseguir la alineacion.
+\par
+   Tambien es usual encontrar que las maquinas tengan pequenas diferencias de escala a la hora de ejecutar los trabajos.
+   Por ejemplo la letra `W' del ejemplo podria tener una dimension mayor que la especificada en el archivo de diseno.
+   En este caso habra que escalar el archivo de diseno para que al ejecutar el trabajo se compensen los desajustes.
+\par
+
+   En la figura \ref{fig:alinea2} se muestra esta situacion con una placa de madera impresa con una letra 'W' que esta desplazada, rotada y escalada con respecto al archivo original de diseno.
+
+\subfigab  {0.49}{0.5}
+            {alineacion_3.png}{alineacion_4.png}
+            {Ejemplo de mecanizado de una letra 'W' en una placa de madera previamente impresa pero que esta desplazada rotada y escalada segun el diseno original.}
+            {fig:alinea2}
+
+
 
 \subsection{Introducción a las maquinas CNC}
-
 
 
 Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
@@ -148,10 +194,6 @@ Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratui
    \end{figure}
 
 Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
-\subfigcab  {0.69}{0.305}
-            {wolfcut1.png}{wolfcut2.png}{wolfcut3.png}
-            {Maquinas CNC fabricadas por la empresa Wolfcut}
-            {fig:wolfcut1}
 
 \subsubsection{Una subsubsección}
 
