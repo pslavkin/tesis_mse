@@ -9,7 +9,7 @@
 
 %----------------------------------------------------------------------------------------
 
-En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria, luego algunas de las motivaciones para la realizacion de este trabajo y en el final se introduce la problematica de la alineacion de piezas en 2D.
+En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria, luego se introduce la problematica de la alineacion de piezas en 2D y finalmente las motivaciones para la realizacion de este trabajo junto con un resumen de los objetivos y alcances.
 
 %----------------------------------------------------------------------------------------
 \section{Historia y principio de funcionamiento}
@@ -73,6 +73,10 @@ En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelo
       &
       \figtable{0.3}{controlador_nk105} \\
 %-----------------------------
+      Contorlador basado en PC sobre SO Windows de media performance. Este es el controlador que usa actualmente Wolfcut en sus maquinas en conjunto con un software de reconocimiento de marcas
+      &
+      \figtable{0.3}{ges_edding} \\
+%-----------------------------
       Controlador autonomo profesional de gran performance y opciones de operacion.
       &
       \figtable{0.3}{controlador_nk200} \\
@@ -107,7 +111,6 @@ En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelo
    \end{tabular}
    \label{tbl:drivers}
 \end{table}
-
 
 
 \subsection{Maquina}
@@ -181,7 +184,23 @@ En ciertas ocaciones se requiere que el trabajo de corte se realice sobre una pi
 
    Las tareas \ref{item:tomar_cotas} y \ref{item:escuadrar} requeren de intervencion manual que consume valioso tiempo del operario de la maquina y es muy propenso a errores. Los resultados de esta operacion manual termina con mucha variacion en los resultados y en ciertos casos podria arruinar la pieza impresa original por cortar fuera de margen.
 
+
 \section{Motivacion}
-   Basado en el conocimiento de mercado que ha adquirido Wolfcut durante muchos anios en relacion a las caracteristicas tecnicas de los controladores de maquinas de mercado, se ha determinado que los controldores de rango bajo y medio no cuentan con caracteristicas tecnicas que permitan algun tipo de alineacion y transformacion en tiempo de operacion, mientras que los controladores de mayor performance lo permiten pero a un costo excesivo para el mercado de la empresa. \\
-   La motivacion principal es lograr dotar de este tipo de solucion utilizando los controladores que actualimente comercializa la empresa y mantener sus productos competentes tanto en precio como en caracteristicas tecnicas.
+   Basado en el conocimiento de mercado que ha adquirido Wolfcut durante muchos anios en relacion a las caracteristicas tecnicas de los controladores de maquinas, se ha observado que los controldores de rango bajo y medio no cuentan con caracteristicas tecnicas que permitan algun tipo de alineacion y transformacion, mientras que algunos de los controladores de mayor performance lo permiten pero a un costo excesivo para el mercado de la empresa. \\
+   Esta situacion motiva el objetivo de dotar de vision artificial a los controladores que actualimente comercializa la empresa y asi mantener sus productos competentes tanto en precio como en caracteristicas tecnicas. \\
+
+   Por otro lado, el desarrollo se realizo siguiendo un modelo de bloques para permitir portar el trabajo a cualquier controlador que permita cierta interaccion o cuente con una API definida.
+   Este enfoque refuerza la motivacion considerando otros mercados en los que se podria aplicar como, brazos roboticos, impresoras 3D, etc.
+
+\section{Objetivos y alcance}
+   Se platean los siguientes objetivos globales:
+   \begin{enumerate}
+      \item{Intervenir el controlador NK105 para poder controlar su operacion a traves de un computador externo}
+      \item{Dotar de una interfaz web tanto para comandar la maquina como para lectura de marcas}
+      \item{Permitir el uso de diferentes modelos de camaras y tipos de interfases para poder adaptarlos a cada escenario de uso}
+      \item{Mantener los costos de todo el sistema en una fraccion del costo del propio controldor}
+      \item{Lograr una alineacion con 3 marcas y corregir offset, escalado y rotado del trabajo de corte}
+      \item{Poder enviar el nuevo archivo de corte corregido al controlador sin necesidad de utilizar un pendrive USB}
+   \end{enumerate}
+
 
