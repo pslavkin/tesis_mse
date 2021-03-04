@@ -2,6 +2,8 @@
 
 \chapter{Introducción general} % Main chapter title
 
+En el presente capitulo se introducen ejemplos de uso de las maquinas CNC y la problematica de la alineacion. Luego se enumeran algunas soluciones disponibles en el mercado y finalmente la motivacion, alcance y objetivos de la propia.
+
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
 
@@ -9,198 +11,90 @@
 
 %----------------------------------------------------------------------------------------
 
-En el presente capitulo se expone una breve resena historica de las maquinas CNC, su principio de funcionamiento y su uso en la industria, luego se introduce la problematica de la alineacion de piezas en 2D y finalmente las motivaciones para la realizacion de este trabajo junto con un resumen de los objetivos y alcances.
 
-%----------------------------------------------------------------------------------------
-\section{Historia y principio de funcionamiento}
+\section{Mecanizados 2D}
+En la actualidad, muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas}, se realizan utilizando maquinas de control numerico computarizado CNC.
+
+\subfigabc  {0.68}{0.3}
+            {piezas_mecanizadas4.png}{piezas_mecanizadas2.png}{piezas_mecanizadas1.png}
+            {Ejemplos de piezas mecanizadas mediante maquinas CNC. a) Corte de letras en madera para carteleria. b) Placa de circuito impreso mecanizado. c) Pieza de alumnio para una maquina. }
+            {fig:piezas_mecanizadas}
+
+            Un proceso industrial tipico para el corte de estas piezas, se esquematiza en la figura \ref{fig:pos_sin_marcas} y en resumen consiste en los siguientes pasos:
+
+\begin{enumerate}
+\item{Posicionar la placa del material a cortar en la mesa de corte}
+\item{Posicionar la herramienta de corte en un punto de referencia de la plancha}
+\item{Cargar el arhivo que contiene la informacion de corte.}
+\item{Cortar.}
+\end{enumerate}
+
+\subfigab{0.4}{0.4}
+         {pos_sin_marcas1.png}{pos_sin_marcas2.png}
+         {Esquema de corte de una letra en una placa de material virgen. a) Placa a cortar fijada a la mesa de corte y fresa de corte en posicion. b) pieza cortada}
+         {fig:pos_sin_marcas}
+
+         Sin embargo hay casos en los cuales la placa a cortar esta impresa y el proceso de corte debe respetar su silueta con exactitud como se esquematiza en la figura \ref{fig:pos_con_marcas}.
+         Dado que no se aplico ninguna correccion ni alineamiento entre el sistema de movimientos de la maquina y la pieza, el resultado no es el esperado.
+
+\subfigab{0.4}{0.4}
+         {pos_con_marcas1.png}{pos_con_marcas2.png}
+         {Esquema de corte de una letra en una placa de material previamente impreso al cual se le desea cortar la silueta. a) Placa a cortar fijada a la mesa de corte y fresa de corte en posicion. b) pieza cortada con una notable desalineacion entre la silueta previamente impresa y el corte del material}
+         {fig:pos_con_marcas}
+
+         Este problema no solo aparece en este tipo de cortes, hay otros casos similares como los siguientes:
+\begin{itemize}
+   \item{Alineacion de placas de circuito impreso de 2 caras}
+   \item{Alineacion de una pieza que requiere un retoque}
+   \item{Alineacion luego de un corte de energia}
+   \item{Correcion por errores de escala entre diferentes maquinas}
+   \item{Correccion ante escalado por variacion de temperatura}
+   \item{Correccion por deformacion para piezas con elasticidad}
+\end{itemize}
+
+         El presente trabajo aplican tecnicas de vision artificial para reconocer puntos de referencia, fiduciales, expresamente impresos junto con la silueta a recortar y de esta manera corregir el desplazamiento, el angulo y la escala del archivo original y mantenr un error de alineacion acotado sin la necesidad de tecnicas de escuadrado o medicion manuales.
+
+
+\section{Soluciones de mercado}
+
+En la tabla \ref{tbl:competitors} se muestran desarrollos de software que permiten extenderse o adaptarse para el reconocimiento de marcas. Sin embergo no se han encontrado soluciones embebidas, sin uso de PC, o accesorios para controladores embebidos con esta caracteristica.
    
-Hacia finales de la decada del '40, el mecanico inventor Jhon Parson\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons}, logro motorizar una agujereadora de banco de precision y automatizarla con el uso de una cinta perforada. A este invento se lo considera la primera maquina de control numerico o NC por sus siglas en ingles (\textit{numerical control}).
-\subfigab{0.38}{0.62}
-         {parsons_face}{parsons_machine}
-         {Jhon Parsons junto a una de sus maquinas, considerado el inventor de la maquina de control numerico NC.}
-         {fig:parsons}
-\par
-Luego de varias decadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las maquinas de control numerico computarizado o CNC por sus signas en ingles \textit{(computer numerical control)}. 
-\\
-A pesar del paso del tiempo y los avances tecnologicos, las partes principales de una maquina CNC siguen siendo las mismas que se desciben en la figura \ref{fig:cnc_main_blocks}.
-\subfiga {1}
-         {cnc_main_blocks.pdf}
-         {Los tres componenentes basicos de una maquina CNC.}
-         {fig:cnc_main_blocks}
-
-\subsection{Programa}
-   El programa consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.  \\
-   Este lenguaje fue creado por el Instituto tecnologico de Masachussets en la decada del 50 y especificado en el documento NIST-RS274-D \citep{rs274}.  \\
-Originalmente los ingenieros de mecanizado lo escribian manualmente en una planilla y luego ,mediante una maquina de mecanografia, se transcribia a una cinta perforada que seria luego interpretada por el controlador de movimientos.\\
-Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}
-\subfigcab{0.655}{0.34}
-          {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
-          {Secuencia de pasos para operar una maquina CNC primigenia. A) Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode. B) Operadora transcribiendo la lista de operaciones a una cinta plastica perforadac) Lector de cinta multiperforada que controla los movimientos de la maquina.}
-          {fig:programacion_cnc_primigenia}
-          En el presente se disena la pieza en 3D con la ayuda de programas de diseno asisitido por computadora CAD por sus siglas en ingles ( computer aided design), luego se procesa el modelo con un programa de manufactura asistido por computadora CAM por sus siglas en ingles (computer aided manufacturing) y el resultado es un archivo de texto en lenguaje GCode que se almacena digitalmente y que sera luego procesado por el controlador. \\
-          Esta secuencia es conocida como diseno CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
-\subfiguub{1}{1}
-          {cad_cnc_cuadrado}{gcode_cnc_cuadrado}{cam_cnc_cuadrado}
-          {Secuencia de pasos para operar una maquina CNC moderna. A) Se disena la pieza en el CAD. C) Se simula el proceso de corte en el CAM. C) Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de maquina que leera el controlador.}
-          {fig:programacion_cnc_actual}
-
-
-\subsection{Controlador}
-El controlador de movimientos es un equipo electronico capaz de leer un programa en lenguaje GCode y proveer las salidas adecuadas para mover la maquina.\\
-Es usual que a la salida del controlaor se conecten amplificadores de senal conocidos como drivers que proveen la potencia suficiente para mover los motores y mecanismos montados en la maquina.\\
-De esta manera el controlador se compone de etapas, controlador logico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.\\
-\subfiga {0.5}
-         {control_and_driver.pdf}
-         {La etapa de control se suele separar en dos: controladr logico y driver de potencia}
-         {fig:control_and_driver}
-En funcion de la complejidad requerida para la maquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.
-\par
-En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales listando las caracteristicas principales.
-
 \begin{table}[h!]
    \centering
-   \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
-   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
+   \caption[Sistemas de alineacion automativos]{Algunos modelos y marcas de sistemas de alineacion automatica disponibles en mercado}
+   \begin{tabular}{m{0.5\textwidth}m{0.5\textwidth}}
       \toprule
       \textbf{Caracteristicas} & \textbf{Imagen} \\ 
       \midrule
 %-----------------------------
-      Contorlador dependiente de una PC y conexion por puerto paralelo. Solucion economica para maquinas hobbistas de baja performance.
+      EddingCNC: Software basado en PC sobre Windows al cual varios fabricantes (GES, Wolfcut OPOS, etc) lo han extendido para soportar reconocimiento de marcas
       &
-      \figtable{0.3}{controlador_paralelo} \\
+      \figtable{0.5}{edding_cnc_camera} \\
 %-----------------------------
-      Contorlador integrado de media performance, ideal para maquinas profesionales pero de baja complejidad. Este es el controlador que se usara en este trabajo para realizar los ensayos.
+      myCNC: Ofrece un sistema de vision artificial y reconocimiento de marcas basado en una PC industrial y camaras USB.
       &
-      \figtable{0.3}{controlador_nk105} \\
+      \figtable{0.5}{mycnc_camera} \\
 %-----------------------------
-      Contorlador basado en PC sobre SO Windows de media performance. Este es el controlador que usa actualmente Wolfcut en sus maquinas en conjunto con un software de reconocimiento de marcas
+      linuxCNC: Es un software de control que opera sobre Linux al cual se le hab hecho algunas intervenciones no documentadas para el reconocimiento de marcas
       &
-      \figtable{0.3}{ges_edding} \\
-%-----------------------------
-      Controlador autonomo profesional de gran performance y opciones de operacion.
-      &
-      \figtable{0.3}{controlador_nk200} \\
+      \figtable{0.5}{linuxcnc_camera} \\
 %-----------------------------
       \bottomrule
    \end{tabular}
-   \label{tbl:controllers}
+   \label{tbl:competitors}
 \end{table}
 
+   
+\section{Motivacion y alcance}
+   La principal motivacion de este trabajo es lograr extender las capacidades de un controlador embebido de uso profesional y dotarlo de vision artificial para el reconocimiento de marcas. \\
+   Con los argunmentos y la experiencia en el mercado de maqiunas CNC de la empresa Wolfcut, se determino que uno de los controladores de uso profesional mas popular del mercado es el NK105 que se muestra en la figura \ref{fig:nk105}.
+   \subfiga{0.6}
+      {nk105.png}
+      {Controlador NK105 de la firma Weihong elegido para extender sus funciones y dotarlo de lectura de marcas}
+      {fig:nk105}
 
-\begin{table}[h!]
-   \centering
-   \caption[Modelos de drivers]{Modelos de drivers de motores}
-   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
-      \toprule
-      \textbf{Caracteristicas} & \textbf{Imagen} \\ 
-      \midrule
-%-----------------------------
-      Driver para motores paso a paso pequenos, economicos, ideales para maquinas simples, impresoras 3D, y hobby. 
-      &
-      \figtable{0.3}{driver_steper_arduino} \\
-%-----------------------------
-      Driver para motores paso a paso medianos, ideales para maquinas de media precision y mecanica semipesada.
-      &
-      \figtable{0.3}{driver_steper} \\
-%-----------------------------
-      Driver para motores BLDC, de potencia media, adecuados para maquinas de extrema precision y escalables en potencia.
-      &
-      \figtable{0.3}{driver_servo} \\
-%-----------------------------
-      \bottomrule
-   \end{tabular}
-   \label{tbl:drivers}
-\end{table}
-
-
-\subsection{Maquina}
-En terminos generales la maquina es un conjunto de piezas electromecanicas que permiten mover el elemento de mecanizado en varias dimensiones.
-\\
-En algunas maquinas el elemento de mecaizado permanece fijo y lo que se mueve es la pieza a mecanizar.
-
-Suelen ser motorizadas, pero tambien las hay con actuadores lineales, sistemas hidraulicos o una combinacion de todos estos.
-\\
-Dependiendo el proposito de la maquina se definen los grados de libertad del movimiento.
-\\
-Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos roboticos pero solo dos para corte y grabado de piezas planas con laser.
-\\
-Para el desarrollo de este trabajo se estudian solamente maquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras que se esquematiza en la figura \ref{fig:cnc_3d}.
-
-\subfigabc  {0.635}{0.30}
-            {cnc_3d1.png}{cnc_3d2.png}{cnc_3d3.png}
-            {Esquema de una maquina de 3 ejes perpendiculares como las que se analizan en esta memoria.}
-            {fig:cnc_3d}
-
-Se muestran anlgunos modelos de maquinas fabricadas por Wolfcut en la figura \ref{fig:wolfcut1}
-
-\subfigcab  {0.67}{0.30}
-            {wolfcut3.png}{wolfcut2.png}{wolfcut1.png}
-            {Maquinas CNC fabricadas por la empresa Wolfcut. A) Fresadora de 3 ejes para corte y mecanizado de madera, plasticos, carton, aluminio, etc. B) Maquina de 2 ejes de corte por cuchilla para carton, papel, calcos, etc. C) Maquina de 3 ejes para corte y grabado laser de materiales plasticos, madera, carton, papel, etc.}
-            {fig:wolfcut1}
-
-
-\section{Problema de alineacion en 2D}
-
-Dado un trabajo de corte, por ejemplo el corte de una letra 'W` en una placa de madera virgen los pasos para realizar el trabajo se pueden resumir en la siguiente lista:
-   \begin{enumerate}
-   \item{Realizar el diseno de la letra `W' con las herramientas CAD/CAM.}
-   \item{Cargar el programa en el controlador.}
-   \item{Fijar la placa de madera en la mesa.}
-   \item{Posicionar la fresa de corte sobre la placa en la coordenada de inicio de la letra `W'.}
-   \item{Cortar.}
-   \end{enumerate}
-
-   En la figura \ref{fig:alinea1} se puede ver que dado que la placa de madera esta virgen, no hace falta posicionar de manera precisa la la placa en la mesa.
-
-\subfigab  {0.48}{0.5}
-            {alineacion_1.png}{alineacion_2.png}
-            {Ejemplo de mecanizado de una letra 'W' en una placa de madera virgen sin alineacion.}
-            {fig:alinea1}
-
-En ciertas ocaciones se requiere que el trabajo de corte se realice sobre una pieza previamnete impresa. En el ejemplo la placa de madera podria haber sido impresa en otra maquina, y luego es necesario cortar su perimetro.
-   En este caso sera necesario utilizar alguna tecnica para posicionar con exactitud la placa de madera en la maquina para conseguir la alineacion.
-\par
-   Tambien es usual encontrar que las maquinas tengan pequenas diferencias de escala a la hora de ejecutar los trabajos.
-   Por ejemplo la letra `W' del ejemplo podria tener una dimension mayor que la especificada en el archivo de diseno.
-   En este caso habra que escalar el archivo de diseno para que al ejecutar el trabajo se compensen los desajustes.
-\par
-
-   En la figura \ref{fig:alinea2} se muestra esta situacion con una placa de madera impresa con una letra 'W' que esta desplazada, rotada y escalada con respecto al archivo original de diseno.
-
-\subfigab  {0.49}{0.5}
-            {alineacion_3.png}{alineacion_4.png}
-            {Ejemplo de mecanizado de una letra 'W' en una placa de madera previamente impresa pero que esta desplazada rotada y escalada segun el diseno original.}
-            {fig:alinea2}
-
-   En este caso los pasos para realizar el trabajo se pueden resumir en la siguiente lista:
-
-   \begin{enumerate}
-   \item{Tomar al menos 2 cotas de la pieza impresa y escalar con las herramientas de CAD/CAM el disenio original. \label{item:tomar_cotas} }
-   \item{Cargar el programa en el controlador.}
-   \item{Alinear la placa impresa con un eje de movimiento para escuadrar ambos.\label{item:escuadrar}}
-   \item{Posicionar la fresa de corte sobre la placa en la coordenada de inicio de la letra `W'.}
-   \item{Cortar.}
-   \end{enumerate}
-
-   Las tareas \ref{item:tomar_cotas} y \ref{item:escuadrar} requeren de intervencion manual que consume valioso tiempo del operario de la maquina y es muy propenso a errores. Los resultados de esta operacion manual termina con mucha variacion en los resultados y en ciertos casos podria arruinar la pieza impresa original por cortar fuera de margen.
-
-
-\section{Motivacion}
-   Basado en el conocimiento de mercado que ha adquirido Wolfcut durante muchos anios en relacion a las caracteristicas tecnicas de los controladores de maquinas, se ha observado que los controldores de rango bajo y medio no cuentan con caracteristicas tecnicas que permitan algun tipo de alineacion y transformacion, mientras que algunos de los controladores de mayor performance lo permiten pero a un costo excesivo para el mercado de la empresa. \\
-   Esta situacion motiva el objetivo de dotar de vision artificial a los controladores que actualimente comercializa la empresa y asi mantener sus productos competentes tanto en precio como en caracteristicas tecnicas. \\
-
-   Por otro lado, el desarrollo se realizo siguiendo un modelo de bloques para permitir portar el trabajo a cualquier controlador que permita cierta interaccion o cuente con una API definida.
-   Este enfoque refuerza la motivacion considerando otros mercados en los que se podria aplicar como, brazos roboticos, impresoras 3D, etc.
-
-\section{Objetivos y alcance}
-   Se platean los siguientes objetivos globales:
-   \begin{enumerate}
-      \item{Intervenir el controlador NK105 para poder controlar su operacion a traves de un computador externo}
-      \item{Dotar de una interfaz web tanto para comandar la maquina como para lectura de marcas}
-      \item{Permitir el uso de diferentes modelos de camaras y tipos de interfases para poder adaptarlos a cada escenario de uso}
-      \item{Mantener los costos de todo el sistema en una fraccion del costo del propio controldor}
-      \item{Lograr una alineacion con 3 marcas y corregir offset, escalado y rotado del trabajo de corte}
-      \item{Poder enviar el nuevo archivo de corte corregido al controlador sin necesidad de utilizar un pendrive USB}
-   \end{enumerate}
-
-
+   Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuracion y tampoco cuenta con una API definida por el fabricante para poder conectarse y externder sus funciones. \\
+   Sin embargo al estar basado internamente en FPGA, es reconocido por sus excelentes resultados de corte, su estabilidad en trabajos extensos y al no requerir de una PC o software externo para operar maximiza su availabilidad. \\
+   El alcance de este trabajo se limita a intervenir y dotar de lectura de marcas al controlador NK105 y obtener resultados comparables con otras soluciones de mercado.
+   
+%----------------------------------------------------------------------------------------
