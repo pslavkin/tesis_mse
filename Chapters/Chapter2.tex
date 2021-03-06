@@ -248,7 +248,8 @@ Si bien la opcion del microscopio USB es atractiva, la gran extension que debe r
   Esta caracteristica es de gran utilidad y complementa la aplicacion de usuario dado desde otra pestana del navegador permite ajustar los parametros mas importantes: zoom, brillo, desplazamiento, resolucion y calidad de imagen.\\
 
 
-\subsection{Metodo de alineacion}
+\subsection{Trigonometria de alineacion}
+
    El objectivo del metodo es el de poder conocer la dimension, la posicion y la rotacion exacta de la proueccion en dos dimensiones de un objeto relativo a las coordenadas y escala de la maquina en la cual se desea mecanizarlo. \\
 Esto se debe a que la pieza que se desea mecanizar podria estar distorcionada, pero tambien la propia maquina y lo que importa es solo su relacion. \\
    Como se trata de una alineacion en dos dimensiones, en geometria implica posicionar, escalar y rotar un plano respecto de otro.\\
@@ -319,4 +320,26 @@ Esto se debe a que la pieza que se desea mecanizar podria estar distorcionada, p
          \end{equation}
 
 
+\subsection{Deteccino y tipos de marcas fiduciales}
+   Es posible utilizar diversas figuras geometricas e incluso colores para idenrificar la posicion de una marca, sin embargo en el mercado grafico y de mecanizado quedo empiricamente establecido que las marcas son circulos o cuadrados de entre 1 y 10mm de diametro o lado.
+   Para un efectivo reconocimiento de una marca utilizando una camara de video algunas considereaciones deben tenerse como ser:
+   \begin{itemize}
+      \item{Maximizar el contraste entre el fondo del objeto y la marca}
+      \item{Evitar irregularidades en el trazado del contorno}
+      \item{De ser posible que la marca este pintada internamente y que no sea solo un contorno}
+      \item{Que este alejada de bordes y otras figuras de la pieza}
+      \item{En el caso de marcas cuadradas es posible tomar no solo el centro sino tambien el angulo}
+      \item{En el caso de marcas circulares se logra mejor precision en la deteccion del centro}
+   \end{itemize}
+   Algunos ejemplos de marcas fiduciales se muestran en la figura \ref{fig:ejemplo_marcas}.
 
+\subfigabc{0.52}{0.2}
+         {ejemplo_marcas2}{ejemplo_marcas1}{ejemplo_marcas3}
+         {Ejemplo de diferentes tipos de marcas fiduciales. a) Figuras gemetricas llenas o contorno b) Ejemplo de marcas fiducial en una placa de circuito impreso PCB. c) Marcas fiduciales codificadas.}
+         {fig:ejemplo_marcas}
+
+         Para el alcance de este trabajo solo se utilizaran marcas geometricas llenas o contornos.
+
+
+
+   
