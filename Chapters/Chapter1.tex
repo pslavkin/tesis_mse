@@ -1,83 +1,94 @@
-% Chapter 1
-
+% Chapter 1 
 \chapter{Introducción general} % Main chapter title
 
-En el presente capitulo se introducen ejemplos de uso de las maquinas CNC y la problematica de la alineacion. Luego se enumeran algunas soluciones disponibles en el mercado y finalmente la motivacion, alcance y objetivos de la propia.
+En el presente capítulo se introducen ejemplos de uso de las maquinas CNC y las dificultades que presentan para alinearse con las piezas a mecanizar. Luego se comparan soluciones de otros fabricantes y finalmente se comenta acerca de la motivación, el alcance y los objetivos de la propia.
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
 
 %----------------------------------------------------------------------------------------
-
-%----------------------------------------------------------------------------------------
-
-
-\section{Mecanizados 2D}
-En la actualidad, muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas}, se realizan utilizando maquinas de control numerico computarizado CNC.
+\section{Mecanizados CNC en 2D}
+En la actualidad, muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas} se realizan utilizando máquinas de control numérico computarizado o CNC \citep{WEBSITE:cncwiki} (\textit{computer numerical control}.
 
 \subfigabc  {0.68}{0.3}
-            {piezas_mecanizadas4.png}{piezas_mecanizadas2.png}{piezas_mecanizadas1.png}
-            {Ejemplos de piezas mecanizadas mediante maquinas CNC. a) Corte de letras en madera para carteleria. b) Placa de circuito impreso mecanizado. c) Pieza de alumnio para una maquina. }
+            {Piezas_mecanizadas4.png}{piezas_mecanizadas2.png}{piezas_mecanizadas1}
+            {Ejemplos de piezas mecanizadas mediante máquinas CNC. a) Corte de letras en madera para cartelería. b) Placa de circuito impreso realizado mediante el fresado del contorno de sus pistas. c) Corte en placa de aluminio para obtener un repuesto de una maquina herramienta.}
             {fig:piezas_mecanizadas}
 
-            Un proceso industrial tipico para el corte de estas piezas, se esquematiza en la figura \ref{fig:pos_sin_marcas} y en resumen consiste en los siguientes pasos:
+            El proceso de mecanizar piezas utilizando esta tecnología se esquematiza en la figura \ref{fig:pos_sin_marcas} y consiste en una serie de pasos como los que se enumeran a continuación:
 
 \begin{enumerate}
-\item{Posicionar la placa del material a cortar en la mesa de corte}
-\item{Posicionar la herramienta de corte en un punto de referencia de la plancha}
-\item{Cargar el arhivo que contiene la informacion de corte.}
+\item{Posicionar la placa del material a cortar en la mesa de corte.}
+\item{Posicionar la herramienta de corte en un punto de referencia de la placa.}
+\item{Cargar el archivo que contiene la información de corte.}
 \item{Cortar.}
 \end{enumerate}
 
 \subfigab{0.4}{0.4}
          {pos_sin_marcas1.png}{pos_sin_marcas2.png}
-         {Esquema de corte de una letra en una placa de material virgen. a) Placa a cortar fijada a la mesa de corte y fresa de corte en posicion. b) pieza cortada}
+         {Esquema de corte de una letra A en una placa de material virgen. a) Placa a cortar fijada a la mesa de corte y fresa de corte en posición. b) Pieza cortada.}
          {fig:pos_sin_marcas}
 
-         Sin embargo hay casos en los cuales la placa a cortar esta impresa y el proceso de corte debe respetar su silueta con exactitud como se esquematiza en la figura \ref{fig:pos_con_marcas}.
-         Dado que no se aplico ninguna correccion ni alineamiento entre el sistema de movimientos de la maquina y la pieza, el resultado no es el esperado.
+         Hay casos en los cuales la placa a cortar está previemente impresa y el proceso de corte debe respetar su silueta con exactitud como se esquematiza en la figura \ref{fig:pos_torcido}. \\
+         Dado que no se aplicó ninguna corrección ni alineamiento entre el sistema de movimientos de la máquina y la pieza, el resultado no es el esperado.
 
-\subfigab{0.4}{0.4}
-         {pos_con_marcas1.png}{pos_con_marcas2.png}
-         {Esquema de corte de una letra en una placa de material previamente impreso al cual se le desea cortar la silueta. a) Placa a cortar fijada a la mesa de corte y fresa de corte en posicion. b) pieza cortada con una notable desalineacion entre la silueta previamente impresa y el corte del material}
-         {fig:pos_con_marcas}
+\subfigab{0.4}{0.45}
+         {pos_torcido1.png}{pos_torcido2.png}
+         {Corte de la silueta de la letra A previamente impresa en el material. a) Placa a cortar fijada a la mesa de corte y fresa de corte en posición. b) Pieza cortada con una notable desalineación entre la silueta previamente impresa y el corte.}
+         {fig:pos_torcido}
 
-         Este problema no solo aparece en este tipo de cortes, hay otros casos similares como los siguientes:
+         En la industria se encuentran muchos casos de uso en donde se presenta este problema, algungos de los cuales se enumeran a continuación:
 \begin{itemize}
-   \item{Alineacion de placas de circuito impreso de 2 caras}
-   \item{Alineacion de una pieza que requiere un retoque}
-   \item{Alineacion luego de un corte de energia}
-   \item{Correcion por errores de escala entre diferentes maquinas}
-   \item{Correccion ante escalado por variacion de temperatura}
-   \item{Correccion por deformacion para piezas con elasticidad}
+   \item{Alineación de placas de circuito impreso de 2 caras.}
+   \item{Alineación de una pieza que requiere un nuevo proceso de mecanizado.}
+   \item{Alineación luego de abortar un mecanizado debido a un corte de energía.}
+   \item{Corrección por errores de escala entre diferentes máquinas.}
+   \item{Corrección por contracción y estiramiento del material debido a variaciones de temperatura.}
+   \item{Corrección por deformación en piezas elásticas.}
 \end{itemize}
 
-         El presente trabajo aplican tecnicas de vision artificial para reconocer puntos de referencia, fiduciales, expresamente impresos junto con la silueta a recortar y de esta manera corregir el desplazamiento, el angulo y la escala del archivo original y mantenr un error de alineacion acotado sin la necesidad de tecnicas de escuadrado o medicion manuales.
+         En el presente trabajo se aplican técnicas de vision artificial para reconocer puntos de referencia conocidos como fiduciales, que permiten corregir esta desalineación. \\
+         Estos puntos se insertan en el proceso de diseño y se imprimen junto con el trabajo a mecanizar.\\ 
+         Una vez reconocidos con una cámara de video montada en la maquina CNC, se puede corregir el desplazamiento, el ángulo y la escala del objeto impreso relativos al sistema de movimiento de la maquina.\\
+         El resultado esperado se esquematiza en la figura \ref{fig:pos_con_marcas}.
+
+\subfigab{0.4}{0.4}
+         {pos_con_marcas1}{pos_con_marcas2}
+         {Corte de la silueta de la letra A previamente impresa en el material con lectura de marcas. a) Placa a cortar impresa con la letra A y tres marcas fijada a la mesa con fresa de corte ya en posición. b) Alineación del trabajo de corte según las marcas azules de referencia. La pieza fue cortada según lo esperado.}
+         {fig:pos_con_marcas}
 
 
 \section{Soluciones de mercado}
 
-En la tabla \ref{tbl:competitors} se muestran desarrollos de software que permiten extenderse o adaptarse para el reconocimiento de marcas. Sin embergo no se han encontrado soluciones embebidas, sin uso de PC, o accesorios para controladores embebidos con esta caracteristica.
+En la tabla \ref{tbl:competitors} se destacan algunos desarrollos de software que permiten extenderse o adaptarse para el reconocimiento de marcas.\\
+   La mayoría de las soluciones del mercado están basadas en PC y eso aumenta el costo general del sistema, disminuye la fiabilidad y limita el acceso desde multiples plataformas.\\
+   Se ha podido constatar que además del costo de hardware, licencias o extensiones de software, el costo de las cámaras utilizadas son privativos para el segmento de máquinas bajo a medio que es donde mejor aplican los resultados de este trabajo.\\
+   Tampoco se ha encontrado ningún sistema que utilice una cámara con conexión inalámbrica.\\ 
+   Y hay un consenso en el mercado que las soluciones de vision artificial que existen hasta el momento para el software mas popular, el Mach3 \citep{WEBSITE:mach3}, no son adecuadas para todos los escenarios.
    
 \begin{table}[h!]
    \centering
-   \caption[Sistemas de alineacion automativos]{Algunos modelos y marcas de sistemas de alineacion automatica disponibles en mercado}
+   \caption[Sistemas de reconocimiento de marcas]{Se destacan algunos modelos y marcas de sistemas de reconocimiento de marcas y sus características principales..}
    \begin{tabular}{m{0.5\textwidth}m{0.5\textwidth}}
       \toprule
-      \textbf{Caracteristicas} & \textbf{Imagen} \\ 
+      \textbf{Características} & \textbf{Imagen} \\ 
       \midrule
 %-----------------------------
-      EddingCNC: Software basado en PC sobre Windows al cual varios fabricantes (GES, Wolfcut OPOS, etc) lo han extendido para soportar reconocimiento de marcas
+      EddingCNC \citep{WEBSITE:eddingcnc}: Software basado en PC sobre Windows al cual varios fabricantes como GES \citep{WEBSITE:gescnc} y Wolfcut \citep{WEBSITE:wolfcut} lo han extendido para soportar reconocimiento de marcas.
       &
       \figtable{0.5}{edding_cnc_camera} \\
 %-----------------------------
-      myCNC: Ofrece un sistema de vision artificial y reconocimiento de marcas basado en una PC industrial y camaras USB.
+      myCNC \citep{WEBSITE:mycnc}: Esta empresa ofrece un sistema de visión artificial y reconocimiento de marcas basado en una PC industrial y cámaras USB.
       &
       \figtable{0.5}{mycnc_camera} \\
 %-----------------------------
-      linuxCNC: Es un software de control que opera sobre Linux al cual se le hab hecho algunas intervenciones no documentadas para el reconocimiento de marcas
+      Machinekit \citep{WEBSITE:machinekit}: Es un software de control que opera sobre Linux al cual se le han hecho algunas intervenciones para el reconocimiento de marcas.
       &
       \figtable{0.5}{linuxcnc_camera} \\
+%-----------------------------
+      Summa \citep{WEBSITE:summacnc}: Es una línea de máquinas de corte de contornos principalmente en papel que cuenta con lectura de marcas integrado en sus sistemas.
+      &
+      \figtable{0.5}{summa_camera} \\
 %-----------------------------
       \bottomrule
    \end{tabular}
@@ -85,16 +96,18 @@ En la tabla \ref{tbl:competitors} se muestran desarrollos de software que permit
 \end{table}
 
    
-\section{Motivacion y alcance}
-   La principal motivacion de este trabajo es lograr extender las capacidades de un controlador embebido de uso profesional y dotarlo de vision artificial para el reconocimiento de marcas. \\
-   Con los argunmentos y la experiencia en el mercado de maqiunas CNC de la empresa Wolfcut, se determino que uno de los controladores de uso profesional mas popular del mercado es el NK105 que se muestra en la figura \ref{fig:nk105}.
+\section{Motivación y alcance}
+   La principal motivación de este trabajo es lograr extender las capacidades de un controlador embebido de uso profesional y dotarlo de visión artificial para el reconocimiento de marcas fiduciales. \\
+   Con los argumentos y la experiencia de la empresa Wolfcut, se determinó que uno de los controladores de uso profesional más popular del mercado es el NK105 de la firma Weihong \citep{WEBSITE:nk105} que se muestra en la figura \ref{fig:nk105}.
    \subfiga{0.6}
       {nk105.png}
-      {Controlador NK105 de la firma Weihong elegido para extender sus funciones y dotarlo de lectura de marcas}
+      {Controlador NK105 de la firma Weihong elegido para extender sus funciones y dotarlo de lectura de marcas.}
       {fig:nk105}
 
-   Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuracion y tampoco cuenta con una API definida por el fabricante para poder conectarse y externder sus funciones. \\
-   Sin embargo al estar basado internamente en FPGA, es reconocido por sus excelentes resultados de corte, su estabilidad en trabajos extensos y al no requerir de una PC o software externo para operar maximiza su availabilidad. \\
+   Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuración. \\
+   No provee una API definida por el fabricante ni una interfase física para poder conectarse y extender sus funciones. \\
+   Por otro lado, al estar basado internamente en una FPGA, es reconocido por sus excelentes resultados de corte, su estabilidad en trabajos extensos y al no requerir de una PC o software externo para operar cuenta con una excelente availabilidad y fiabilidad. \\
+   Es un controlador simple, pero de uso profesional con un mercado ya consolidado y muy extenso en todo el mundo.
    El alcance de este trabajo se limita a intervenir y dotar de lectura de marcas al controlador NK105 y obtener resultados comparables con otras soluciones de mercado.
-   
+
 %----------------------------------------------------------------------------------------
