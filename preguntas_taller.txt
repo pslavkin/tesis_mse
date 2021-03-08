@@ -19,3 +19,5 @@ entre marzo de 2020 y diciembre de 2020
 A) esto es una subfigura. B) esto es otra.
 
 Si quiero hacer referencia a la B por ej. hago 1.2.B ??
+
+5) todos los newlines son \par ? o se puede usar \\
