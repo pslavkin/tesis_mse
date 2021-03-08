@@ -1,2 +1,21 @@
-Que hago con tantas referencias a web html etc?? meto en bibliografia?
+1)Que hago con tantas referencias a web html etc?? meto en bibliografia?
+2) como serica correcto indicar la decada por ej.
+...en decada del '50...
 
+3)que fecha va en la portada del trabajo? 
+--------------------------------------
+Este trabajo fue realizado en la Ciudad Autónoma de Buenos Aires,
+entre marzo de 2020 y diciembre de 2020
+--------------------------------------
+
+4) como se especifican las subfiguras?
+
+--------  -------- 
+|      |  |      | 
+|      |  |      | 
+--------  -------- 
+   (A)      (B)
+   Fig 1.2 esta es una figura multiple.
+A) esto es una subfigura. B) esto es otra.
+
+Si quiero hacer referencia a la B por ej. hago 1.2.B ??

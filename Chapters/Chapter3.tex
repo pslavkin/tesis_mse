@@ -12,22 +12,23 @@ En este capitulo se muestra en detalle la solucion implementada destacando los b
    Este cable cuenta con 2 interfases, una UART que comunica el estado de los botones del mando a distancia y una interfase SPI para el envio de la informacion a la pantalla LCD.
 Estas interfases se adaptaron en tension y se conectaron a la SBC para poder procesar los datos como se muestra en la figura \ref{fig:intervencion_mando_distancia}
 
-\subfigab{0.5}{0.5}
+\subfigab
          %{intervencion_mando_uart}{intervencion_mando_spi}
-         {no_signal}{no_signal}
-         {Mando a distancia del controlador NK105 a) Cominicacion por UART del estado de la botonera b) Envio de datos del controlador al LCD por SPI}
+   {0.45}{no_signal}{comentario}{fig:intervencion_mando_A}
+   {0.45}{no_signal}{comentario}{fig:intervencion_mando_B}
+         {Mando a distancia del controlador NK105 a) Cominicacion por UART del estado de la botonera b) Envío de datos del controlador al LCD por SPI}
          {fig:intervencion_mando}
 
-En la figura \ref{fig:handheld_uart} se muestran los bloques de software utilizados para procesar la informacion proveniente del mando a distancia.
-   Se aprovecharon los mecanismos de colas y names pipes que ofrece Linux para miltiplexar los datos provenientes de la UART del mando a distancia con los datos generados por la propia SBC.
+En la figura \ref{fig:handheld_uart} se muestran los bloques de software utilizados para procesar la información proveniente del mando a distancia.
+   Se aprovecharon los mecanismos de colas y names pipes que ofrece Linux para multiplexar los datos provenientes de la UART del mando a distancia con los datos generados por la propia SBC.
 
 
 \section{Envio de arvhivos por USB}
 
-
-
-
-\subfigabc  {0.67}{0.31}
-            {nkhack1.png}{nkhack2.png}{nkhack3.png}
-            {Aplicacion web desarrollada para controlar la maquina, transferir archivos, gestionar la deteccion de marcas, visualizar el trabajo a cortar en tiempo real, entre otras utilidades de configuracion.}
-            {fig:nkhack}
+\subfigtwotwo
+         {0.48}{nkhack1.png} {comentario}
+         {0.48}{nkhack2.png} {comentario}
+         {0.48}{nkhack3.png} {comentario}
+         {0.48}{nkhack3.png} {comentario}
+         {Aplicacion web desarrollada para controlar la maquina, transferir archivos, gestionar la deteccion de marcas, visualizar el trabajo a cortar en tiempo real, entre otras utilidades de configuracion.}
+         {fig:nkhack}

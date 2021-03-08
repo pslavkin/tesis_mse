@@ -2,54 +2,83 @@
 
 \label{Chapter2}
 
-En el presente capitulo se expone una breve reseña histórica de las máquinas CNC, su principio de funcionamiento y su uso en la industria. Luego se introducen las tecnologías mas relevantes involucradas en el desarrollo de este trabajo.
+En el presente capítulo se expone una breve reseña histórica de las máquinas CNC, su principio de funcionamiento y su uso en la industria. Luego se introducen las tecnologías mas relevantes involucradas en el desarrollo de este trabajo.
 
 \section{Historia y principio de funcionamiento}
 
-
-Hacia finales de la década del '40, el mecánico inventor Jhon Parson\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada.\\
+Hacia finales de la década del '40, el mecánico inventor Jhon Parson\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons_A}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada, figura \ref{fig:parsons_B}.\\
 A este invento se lo considera la primera máquina de control numérico o NC por sus siglas en inglés (\textit{numerical control}).
-\subfigab{0.37}{0.6}
-         {parsons_face}{parsons_machine}
+\subfigab
+         {0.37}{parsons_face}{Fotografia de Jhon Parsons.}{fig:parsons_A}
+         {0.6}{parsons_machine}{Una de las primeras maquinas consideradas CNC.}{fig:parsons_B}
          {Jhon Parsons junto a una de sus máquinas, considerado el inventor de la máquina de control numérico NC.}
          {fig:parsons}
 \par
-Luego de varias décadas, con el advenimiento de la computadoras, se reemplazaron las cintas perforadas por programas de computadoras, dando lugar a las máquinas de control numérico computarizado o CNC por sus siglas en inglés \textit{(computer numerical control)}.
+Luego de varias décadas, con el advenimiento de las computadoras, se reemplazaron las cintas perforadas por software, dando lugar a las máquinas de control numérico computarizado o CNC por sus siglas en inglés \textit{(computer numerical control)}.
 \\
-A pesar del paso del tiempo y los avances tecnológicos, las partes principales de una máquina CNC siguen siendo las mismas que se desceben en la figura \ref{fig:cnc_main_blocks}.
+A pesar del paso del tiempo y los avances tecnológicos, las partes principales de una máquina CNC siguen siendo las mismas que se muestran en la figura \ref{fig:cnc_main_blocks}.
 \subfiga {1}
          {cnc_main_blocks.pdf}
-         {Los tres componenentes básicos de una máquina CNC.}
+         {Los tres bloques básicos de una máquina CNC.}
          {fig:cnc_main_blocks}
 
 \subsection{Programa de movimientos}
-   El programa consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.\\
+   El programa de movimientos consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.\\
    Este lenguaje fue creado por el Instituto tecnológico de Masachussets en la década del '50 y especificado en el documento NIST-RS274-D \citep{rs274}.\\
 Originalmente los ingenieros de mecanizado lo escribían manualmente en una planilla y luego, mediante una máquina de mecanografía, se transcribía a una cinta perforada que sería interpretada por el controlador de movimientos.\\
 Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}.
-\subfigcab{0.65}{0.34}
-          {gcode_a_mano}{gcode_a_maquina}{lector_cinta_perforada}
-          {Secuencia de pasos para operar una máquina CNC primigenia. A) Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode. B) Operadora transcribiendo la lista de operaciones a una cinta plástica perforada. c) Lector de cinta multiperforada que controla los movimientos de la máquina.}
+\subfigtwotwo
+          {0.48}{cad_cam_primigenio1} {Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode.}
+          {0.48}{cad_cam_primigenio4} {Operadora transcribiendo la lista de operaciones a una cinta plástica perforada.}
+          {0.48}{cad_cam_primigenio2} {Operadora preparando la maquina de procesamiento de cintas perforadas}
+          {0.48}{cad_cam_primigenio3} {Lector de cinta multiperforada que controla los movimientos de la máquina.}
+          {Secuencia de pasos para operar una máquina CNC primigenia.}
           {fig:programacion_cnc_primigenia}
+
+
           En el presente se diseña la pieza en tres dimensiones o 3D con la ayuda de programas de diseño asistido por computadora CAD  (\textit{computer aided design}).\\
-   Este modelo se procesa con otro programa de manufactura asistido por computadora CAM (\textit{computer aided manufacturing}) en donde se instruyen los métodos de mecanizado.\\
+          Algunos programas de CAD reconocidos se listan a continuacion:
+          \begin{itemize}
+             \item{FreeCAD}
+             \item{Blender}
+             \item{Rhinoceros}
+             \item{AutoCAD}
+             \item{SolidWorks}
+          \end{itemize}
+   La salida del software de CAD se procesa con uno de manufactura asistido por computadora CAM (\textit{computer aided manufacturing}) en donde el diseñador puede configurar los métodos y estrategias de mecanizado.\\
+          Algunos programas de CAM reconocidos se listan a continuación:
+          \begin{itemize}
+             \item{RhinoCAM}
+             \item{Blender CAM}
+             \item{FreeMILL}
+             \item{Aspire}
+             \item{Mastercam}
+          \end{itemize}
+
    El resultado final es un archivo de texto en lenguaje GCode que se almacena digitalmente y que será procesado por el controlador.\\
           Esta secuencia es conocida como diseño CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
-\subfigacb{1}{1}
-          {cad_cnc_cuadrado}{gcode_cnc_cuadrado}{cam_cnc_cuadrado}
-          {Secuencia de pasos para operar una máquina CNC moderna. A) Se diseña la pieza en CAD. C) Se simula el proceso de corte en CAM. C) Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de máquina que leerá el controlador.}
-          {fig:programacion_cnc_actual}
+\subfigtwotwo 
+            {0.48}{cad_cnc_cuadrado}{Se diseña la pieza en CAD. C) Se simula el proceso de corte en CAM.}
+            {0.48}{gcode_cnc_cuadrado}{Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de máquina que leerá el controlador.}
+            {0.48}{cam_cnc_cuadrado} {falta comentario}
+            {0.48}{cam_cnc_cuadrado} {falta comentario}
+            {Secuencia de pasos para operar una máquina CNC moderna.}
+            {fig:programacion_cnc_actual}
+
+
+
 
 \subsection{Controlador}
-El controlador de movimientos es un equipo electrónico capaz de leer un programa en lenguaje GCode y proveer las salidas adecuadas para mover la máquina.\\
-Es usual que a la salida del controlador se conecten amplificadores de señal conocidos como manejadores (\textit{drivers}) que proveen la potencia suficiente para mover los motores y mecanismos montados en la máquina.\\
+El controlador de movimientos es un equipo electrónico capaz de leer un programa en lenguaje GCode y proveer las señales eléctricas adecuadas para mover la máquina.\\
+Es usual que a la salida del controlador se conecten amplificadores de señal (\textit{drivers}) que proveen la potencia suficiente para mover los motores y mecanismos montados en la máquina.\\
 De esta manera el controlador se compone de dos etapas, controlador lógico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.\\
+
 \subfiga {0.5}
          {control_and_driver.pdf}
          {La etapa de control se suele separar en dos: controlador lógico y driver de potencia}
          {fig:control_and_driver}
-En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.
-\par
+
+En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.\\
 En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales detallando las características principales.\\
 
 \begin{table}[h!]
@@ -112,24 +141,33 @@ En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelo
 En términos generales la máquina es un conjunto de piezas electromecánicas que permiten mover el elemento de mecanizado en varias dimensiones.\\
 En algunas máquinas el elemento de mecanizado permanece fijo y lo que se mueve es la pieza a mecanizar.\\
 Suelen ser motorizadas, pero también las hay con actuadores lineales, sistemas hidráulicos o una combinación de todos estos.\\
-Dependiendo el propósito de la máquina se definen los grados de libertad del movimiento.\\
-Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos robotics pero solo dos para corte y grabado de piezas planas con laser.\\
+Dependiendo el propósito de la máquina se definen los grados de libertad del movimiento.
+Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos roboticos y solo dos para corte y grabado de piezas planas con láser.\\
 Para el desarrollo de este trabajo se estudian solamente máquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras que se esquematiza en la figura \ref{fig:cnc_3d}.
 
-\subfigabc  {0.635}{0.30}
-            {cnc_3d1.png}{cnc_3d2.png}{cnc_3d3.png}
-            {Esquema de una máquina de 3 ejes perpendiculares como las que se analizan en este trabajo..}
+\subfigtwotwo
+            {0.48}{cnc_3d1}{comentario1}
+            {0.48}{cnc_3d2}{comentario2}
+            {0.48}{cnc_3d3}{comentario3}
+            {0.48}{cnc_3d3}{comentario3}
+            {Varias vistas de una máquina de 3 ejes perpendiculares como las que se estudia en este trabajo.}
             {fig:cnc_3d}
 
 Se muestran algunos modelos de máquinas fabricadas por Wolfcut en la figura \ref{fig:wolfcut1}.
 
-\subfigcab  {0.67}{0.30}
-            {wolfcut3.png}{wolfcut2.png}{wolfcut1.png}
-            {Maquinas CNC fabricadas por la empresa Wolfcut. A) Fresadora de 3 ejes para corte y mecanizado de madera, plásticos, cartón, aluminio, etc. B) Máquina de 2 ejes de corte por cuchilla para cartón, papel, calcos, etc. C) Máquina de 3 ejes para corte y grabado láser de materiales plásticos, madera, cartón, papel, etc.}
+%ojo estaba smallsmallbig TODO
+\subfigtwotwo
+            {0.48}{wolfcut3}{Fresadora de 3 ejes para corte y mecanizado de madera, plásticos, cartón, aluminio, etc.}
+            {0.48}{wolfcut2}{Máquina de 2 ejes de corte por cuchilla para cartón, papel, tela, etc.}
+            {0.48}{wolfcut1}{Máquina de 3 ejes para corte y grabado láser de materiales plásticos, madera, cartón, papel, etc.}
+            {0.48}{wolfcut1}{Máquina de 3 ejes para corte y grabado láser de materiales plásticos, madera, cartón, papel, etc.}
+            {Maquinas CNC fabricadas por la empresa Wolfcut.}
             {fig:wolfcut1}
 
 
 \subsection{Tecnologías utilizadas}
+   En el diagrama de bloques de la figura \ref{fig:system_main_blocks} se muestran las partes que componen el sistema implementado.\\ 
+   Para poder luego explicar como se relacionan e interactúan entre si estos bloques, en las próximas secciones se describen las cualidades y funciones mas destacadas de cada uno.
 
 \subfiga {0.6}
          {system_main_blocks.pdf}
@@ -138,7 +176,7 @@ Se muestran algunos modelos de máquinas fabricadas por Wolfcut en la figura \re
 
 \subsection{Plataforma PocketBeagle}
    PocketBeagle es un miembro de un ecosistema de plataformas de desarrollo BeagleBoard. \citep{WEBSITE:beagleboard}.
-   Las características de esta plataforma, que se muestra en la figura \ref{fig:pocketbeagle}.a, y que son relevantes para este trabajo son las siguientes:
+   Las características de esta plataforma, que se muestra en la figura \ref{fig:pocketbeagle}.A, y que son relevantes para este trabajo son las siguientes:
    \begin{itemize}
       \item{Controlador integrado SiP (system-in-package) Octavo Systems OSD3358-SM.}
       \item{Memoria de 512MB DDR3.}
@@ -146,76 +184,75 @@ Se muestran algunos modelos de máquinas fabricadas por Wolfcut en la figura \re
       \item{72 pines de expansion, UART, SPI, I2C, entre otras.}
       \item{USB de alta velocidad.}
    \end{itemize}
-   Durante la carrera de maestría se obtuvo experiencia en el uso de una plataforma de la misma familia, BeagleBoneBlack \url{https://beagleboard.org/black} sobre la cual se corrió un sistema operativo Linux y se desarrollaron drivers para manejar interfases de comunicación. \\
-   Dicha experiencia permitió argumentar que este modelo cuenta con las interfases de comunicación necesarias y es capaz de correr el software requerido para este trabajo a una fracción del costo y tamaño.
-   La única falencia es que no cuenta con una interfaz Wi-Fi ni Ethernet pero se resolvió utilizando un adaptador USB como se destaca en la figura \ref{fig:pocketbeagle}.b.
+   Durante la carrera de maestría se obtuvo experiencia en el uso de otra plataforma de la misma familia, BeagleBoneBlack\footnote\beagleboneblack sobre la cual se corrió un sistema operativo Linux y se desarrollaron drivers para manejar interfases de comunicación. \\
+   Dicha experiencia permitió argumentar que la PocketBeagle cuenta con las interfases de comunicación necesarias y es capaz de correr el software requerido para este trabajo a una fracción del costo y tamaño. \\
+   La única falencia es que no cuenta con una interfaz Wi-Fi ni Ethernet pero se resolvió utilizando un adaptador USB como se destaca en la figura \ref{fig:pocketbeagle}.B.\\
+   Se está utilizando una distribución oficial del sistema operativo Debian compilada para esta plataforma y se puede descargar desde este link oficial\footnote\beagleimages.
 
-   Se esta utilizando una distribución oficial del sistema operativo Debian compilada para esta plataforma y que se puede descargar desde este link \url{https://beagleboard.org/latest-images}.
-
-
-\subfigab {0.35}{0.23}
-         {pocketbeagle}{dongle_wifi}
-         {a) Plataforma PocketBeagle de desarrollo utilizada en este trabajo. \url{http://beagleboard.org/pocket} b) Adaptador USB a WiFi que otorga conectividad a la plataforma. }
+\subfigab 
+         {0.45}{pocketbeagle}{Plataforma PocketBeagle de desarrollo utilizada en este trabajo.}{fig:pocketbeagle_A}
+         {0.45}{dongle_wifi}{Adaptador USB a Wi-Fi que otorga conectividad a la plataforma.}{fig:pocketbeagle_B}
+         {Plataforma de desarrollo}
          {fig:pocketbeagle}
 
-         Se evaluaron plataformas mas potentes como la PYNQ-Z1 \url{https://www.xilinx.com/products/boards-and-kits/1-hydd4z.html}, pero dado que se trata de un accesorio para un controlador, se intentó mantener los costos y la complejidad justa para la aplicación.\\
-   
+         Se evaluaron plataformas mas potentes como la PYNQ-Z1 \citep{WEBSITE:pynq}, pero dado que se trata de un accesorio para un controlador, se intentó mantener los costos y la complejidad justa para la aplicación.\\
 
 \subsection{Aplicación web}
    La interfaz de usuario se desarrolló utilizando tecnologías web para permitir acceder desde cualquier dispositivo a con un navegador web.\\
-   La decision de utilizar tecnologías web esta basada parcialmente en la carencia en la industria de aplicaciones para el manejo de maquinas CNC que sean agnósticas en cuanto al sistemas operativo. \\
-Muchos usuarios utilizan herramientas de diseño sobre MacOS, y deben contar con un segundo computador para poder interactuar con el CNC.\\
-   Con la estrategia web, solo basta abrir un navegador desde el mismo entorno y computador de trabajo para operar el CNC.\\
-   Para cumplir con los requisitos planteados se utilizaron una gran variedad de tecnologías que se muestra en la figura \ref{fig:webstack}.\\
-   \subfiga {0.6}
+   Los argumentos a favor de esta tecnología están basados en la falta de aplicaciones para el manejo de máquinas CNC que sean independientes del sistema operativo del ordenador del cliente. \\
+Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbox{macOS\footnote\macos}, y deben contar con un segundo computador para poder interactuar con el CNC.\\
+   Con la estrategia web, solo basta con abrir un navegador desde el mismo entorno y computador de trabajo para operar el CNC.\\
+   Para cumplir con los requisitos planteados se utilizó un arreglo de tecnologías web muy variadas pero ligadas entre sí que se muestran en la figura \ref{fig:webstack}.\\
+   \subfiga {0.8}
             {webstack.pdf}
             {Capas de software relacionadas con la aplicación web utilizadas en este trabajo.}
             {fig:webstack}
 
-   Para entender la misión de cada bloque del stack se describe la funcionalidad principal en la siguiente lista:
+   Para entender la función principal de cada capa se describen algunos detalles en la siguiente lista:
    \begin{itemize}
-      \item{Python \citep{WEBSITE:python}: Es un poderoso y popular lenguaje de programación en el cual se corre principalmente el servidor web, y las funciones de procesamiento de imágenes.
+      \item{Python \citep{WEBSITE:python}: Es un poderoso y popular lenguaje de programación en el cual se corre principalmente el servidor web, y las funciones de procesamiento de imágenes. La imagen del sistema operativo de la PocketBeagle ya cuenta con Python versión 3 instalado por defecto, lo que asegura compatibilidad.
       }
-      \item{asyncio \citep{WEBSITE:asyncio}: Es una biblioteca para Python que permite correr una única tarea que a su vez corre muchas otras de manera concurrente pero cooperativa. \\
-      Esto permite que, por ejemplo, una función de Python este esperando datos de un archivo mientras otra procese una imagen sin bloquear las funciones del servidor y trabajando todas de manera ordenada.
+      \item{asyncio \citep{WEBSITE:asyncio}: Es una biblioteca para Python que permite correr una única tarea que administra muchas de manera concurrente y cooperativa.
+      Esto permite que, por ejemplo, una función de Python esté esperando datos de un archivo mientras otra procesa una imagen sin bloquear las funciones del servidor y trabajando todas de manera ordenada.
       }
       \item{aiohttp \citep{WEBSITE:aiohttp}: Es una biblioteca de Python que permite correr un servidor web utilizando la infraestructura de asyncio para realizar tareas de manera cooperativa y concurrete.\\
       Es el motor del servidor web en este trabajo.
       }
-      \item{HTML5.0 \citep{WEBSITE:html5}: Es el lenguaje de marcas de facto para visualizar contenidos en la web.\\
-         En este trabajo se utiliza para mostrar contenido estático pero sobre todo para aprovechar un mecanismo nativo para la reproducción de video necesario para mostrar las capturas de la cámara. \\
+      \item{HTML5.0 \citep{WEBSITE:html5}: Es el lenguaje de marcas utilizado para visualizar contenidos en la web.\\
+         En este trabajo se utiliza para mostrar contenido estático y también para aprovechar un mecanismo nativo de la version 5.0 para la reproducción de vídeo necesario para mostrar las capturas de la cámara.
       }
       \item{CSS \citep{WEBSITE:css}: Es un lenguaje que permite definir estilos, colores, formato y modo de presentación en pantalla de una página escrita en HTML.\\
       Es indispensable para crear aplicaciones web atractivas y apropiadas para cada uso.
       }
-      \item{JavaScript \citep{WEBSITE:javascript}: Es un lenguaje de programación intrínsecamente relacionado con HTML que permite la creación de paginas web dinámicas.\\
-         La mayoría de los navegadores modernos soportan este lenguaje y es lo que permite que la aplicación que se desarrolla pueda correr en cualquier plataforma que cuente con un navegador web. \\
-         Mas del 90\% de la aplicación web desarrollada está codificada en lenguaje JavaScript, y es el motor de la aplicación. \\
+      \item{JavaScript \citep{WEBSITE:javascript}: Es un lenguaje de programación intrínsecamente relacionado con HTML que permite la creación de páginas web dinámicas.\\
+         La mayoría de los navegadores modernos soportan este lenguaje y esto permite que la aplicación que se desarrolla pueda correr en cualquier plataforma que cuente con un navegador web. \\
+         Mas del 90\% de la aplicación web desarrollada está codificada en lenguaje JavaScript, los cálculos de alineación, la interacción con el usuario, etc.\\
          También se utilizan bibliotecas de terceros para diferentes usos escritas en este lenguaje, lo que permite reutilizar código. \\
       }
-      \item{WebGl \citep{WEBSITE:webgl}: Es una biblioteca gráfica (\textit{Web graphics library}) escrita en JavaScript, que permite definir y visualizar objetos de tres dimensiones en una pagina web.\\
+      \item{WebGL \citep{WEBSITE:webgl}: Es una biblioteca gráfica (\textit{Web graphics library}) escrita en JavaScript, que permite definir y visualizar objetos de tres dimensiones en una pagina web.\\
          Esta íntimamente ligada con el desarrollo web y es por ello que puede aprovechar las tarjetas gráficas del ordenador del cliente para acelerar las tareas.\\
          De esta manera logra eficiencias similares a las aplicaciones nativas del sistema operativo.
       }
-      \item{Three.js \citep{WEBSITE:threejs}: Es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGl pero facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación dejando un código mas simple de mantener.\\
-         Se utiliza en la aplicación para visualizar el movimiento de la máquina en 3D, los trazos de corte, las correcciones de rotación, y otros. \\
+      \item{Three.js \citep{WEBSITE:threejs}: Es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGl pero facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación y mejora el mantenimiento del código.
+         Se utiliza en la aplicación para visualizar el movimiento de la máquina en 3D, los trazos de corte, las correcciones de rotación, etc.
       }
-      \item{Websockets \citep{WEBSITE:websockets}: Es un protocolo de comunicaciones que opera sobre TCP, similar a HTTP, pero diseñado con la premisa de lograr una comunicación bidireccional de baja latencia.\\
+      \item{Websockets \citep{WEBSITE:websockets}: Es un protocolo de comunicaciones que opera sobre el protocolo TCP/IP, similar a HTTP, pero está diseñado con la premisa de lograr una comunicación bidireccional de baja latencia.\\
          Es de gran importancia en la aplicación para lograr una rápida respuesta de operación.
       }
-      \item{socketio \citep{WEBSITE:socketio}: Es una biblioteca de JavaSctip que utilizando Websockets permite la comunicación bidireccional entre el servidor web y el o los clientes.\\
+      \item{socket.IO \citep{WEBSITE:socketio}: Es una biblioteca de JavaScript que utilizando Websockets permite la comunicación bidireccional entre el servidor web y el o los clientes.\\
          En este trabajo toda la comunicación entre los scripts de JavaScript que corren en el cliente y el servidor en Python se comunican utilizando esta biblioteca.
       }
-   \item{openCV \citep{WEBSITE:opencv}: Es una biblioteca muy popular escrita en C++ para procesamiento de imágenes asistido por computadora.\\
-         Además de contar con potentes algoritmos de procesamiento muy útiles para este trabajo, esta portada para muchas plataformas asegurando la compatibilidad entre dispositivos.
+   \item{OpenCV \citep{WEBSITE:opencv}: Es una biblioteca muy popular escrita en C++ para procesamiento de imágenes asistido por computadora.\\
+         Además de contar con potentes algoritmos de procesamiento muy útiles para este trabajo, es soportada por muchas plataformas asegurando la compatibilidad entre dispositivos.
+         En particular la PocketBeagle utiliza la biblioteca libopencv-dev extraída de los repositorios oficiales de Debian.
       }
-   \item{PyOpenCV \citep{WEBSITE:pyopencv}: Es una biblioteca de Python que permite utilizar las funciones de openCV.\\
-         Dado que este trabajo está escrito en Python, se utiliza esta biblioteca para el procesamiento de marcas.
+   \item{PyOpenCV \citep{WEBSITE:pyopencv}: Es una biblioteca de Python que permite utilizar las funciones de OpenCV.\\
+         Dado que este trabajo está escrito en Python, se utiliza esta biblioteca para el procesamiento de marcas, la cual a su vez utiliza libopencv-dev del sistema operativo.
       }
 \end{itemize}
 
-\subsection{Cámara de video}
-   Los criterios para la selección de la cámara de video se basaron principalmente en la interfaz de comunicación, los costos, la calidad de imagen y la facilidad de adquisición en mercado local. 
+\subsection{Cámara de vídeo}
+   Los criterios para la selección de la cámara de vídeo se basaron principalmente en la interfaz de comunicación, los costos, la calidad de imagen y la facilidad de adquisición en mercado local. 
    Con dichos criterios se confeccionó la tabla \ref{tab:camara_selection} con las opciones mas destacadas.
 
    \begin{table}[h]
@@ -237,26 +274,25 @@ Muchos usuarios utilizan herramientas de diseño sobre MacOS, y deben contar con
 
 Si bien la opción del microscopio USB es atractiva, la gran extension que debe recorrer el cable por las bandejas portacables compartida con la alimentación de los motores, desalienta su uso. \\
    Por otro lado las cámaras industriales con interfase Ethernet resuelven este problema, pero por sus altos costos y difícil accesibilidad en el mercado local, se decidió postergar su utilización.\\
-   Para este trabajo se optó por utilizar un celular con una aplicación muy popular llamada IPWebcam \citep{WEBSITE:ipwebcam} para la transmisión de video como se muestra en la figura \ref{fig:ipwebcam}. \\
+   Para este trabajo se optó por utilizar un celular la aplicación IPWebcam \citep{WEBSITE:ipwebcam} para la transmisión de vídeo como se muestra en la figura \ref{fig:ipwebcam}.\\
    Esta opción resuelve el problema del cable, pero también permite utilizar varios modelos de móvil simultáneamente sin cambiar el software y poder tomar imágenes desde diferentes ángulos simultáneamente. \\
 
-   \subfigab{0.6}{0.3}
-            {ipwebcam1}{ipwebcam2}
-            {Aplicación IPWebcam que permite utilizar la cámara del móvil y enviar el video por Wi-Fi. a) Se muestra una captura parcial de la página web que permite el control de los parámetros de la cámara. b) Captura de la aplicación en el móvil.}
-            {fig:ipwebcam}
+\subfigab
+         {0.45}{ipwebcam1}{Captura parcial de la página web que permite el control de los parámetros de la cámara.}{fig:ipwebcam_A}
+         {0.45}{ipwebcam2}{Captura de la aplicación en el móvil.}{fig:ipwebcam_B}
+         {Aplicación IPWebcam que permite utilizar la cámara del móvil y enviar el vídeo por Wi-Fi.}
+         {fig:ipwebcam}
 
-  También cuenta con una interfaz web desde la cual se pueden ajustar los parámetros de la cámara.\\
-  Esta característica es de gran utilidad y complementa la aplicación de usuario dado desde otra pestaña del navegador permite ajustar los parámetros mas importantes: zoom, brillo, desplazamiento, resolución y calidad de imagen.\\
-
+  También cuenta con una interfaz web desde la cual se pueden ajustar los parámetros de la cámara mas importantes: zoom, brillo, desplazamiento, resolución y calidad de imagen.\\
 
 \subsection{Trigonometría de alineación}
 
    El objetivo del método es poder conocer la dimensión, la posición y la rotación de un objeto relativo a la máquina. \\
 Esto se debe a que tanto la pieza que se desea mecanizar como la maquina podrían estar distorsionadas y lo que importa es solo su relación. \\
    Como se trata de una alineación en dos dimensiones, en geometría implica posicionar, escalar y rotar un plano respecto de otro.\\
-   Si se consideran dos planos A y B superpuestos como se muestra en la figura \ref{fig:alineacion_offset}.a en donde A en rojo representa el sistema de coordenadas de la máquina y las dimensiones establecidas en el archivo de corte, mientras que B en azul representa la el objeto real a mecanizar que se encuentra desplazado, rotado y escalado respecto al primero. \\
-   Conociendo las coordenadas de un solo punto en los dos sistemas de coordenadas, se puede establecer el desplazamiento y corregirlo como se realiza en la figura \ref{fig:alineacion_offset}.b. El punto $1$ en el sistema A es el $(2,1)$ mientras que en el sistema B es el $(0,0)$.
-   La ecuación que corrija la posición de A es la \ref{eq:alineacion_offset}
+   Si se consideran dos planos A y B superpuestos como se muestra en la figura \ref{fig:alineacion_offset_A} en donde A en rojo representa el sistema de coordenadas de la máquina y las dimensiones establecidas en el archivo de corte, mientras que B en azul representa la el objeto real a mecanizar que se encuentra desplazado, rotado y escalado respecto al primero.\\
+   Conociendo las coordenadas de un solo punto en los dos sistemas de coordenadas, se puede establecer el desplazamiento y corregirlo como se realiza en la figura \ref{fig:alineacion_offset_B}. El punto $1$ en el sistema A es el $(2,1)$ mientras que en el sistema B es el $(0,0)$.
+   La ecuación que corrige la posición de A es la \ref{eq:alineacion_offset}
 
    \begin{equation}
       \begin{aligned}
@@ -266,19 +302,24 @@ Esto se debe a que tanto la pieza que se desea mecanizar como la maquina podría
       \label{eq:alineacion_offset}
    \end{equation}
 
-\subfigab{0.45}{0.45}
-         {alineacion_offset1}{alineacion_offset2}
-         {Corrección de desplazamiento. A representa el sistema de coordenadas de la máquina y las dimensiones extraídas del archivo de corte, B representa el objeto real desplazado, escalado y rotado respecto del primero a) El plano B se encuentra desplazado $2$ en el eje x y $1$ en el eje Y.\\ b) El plano A se desplaza y corrige su posición.}
+\subfigab
+         {0.45}{alineacion_offset1}{El plano B se encuentra desplazado $2$ en el eje x y $1$ en el eje Y.}{fig:alineacion_offset_A}
+         {0.45}{alineacion_offset2}{El plano A se desplaza y corrige su posición.}{fig:alineacion_offset_B}
+         {Corrección de desplazamiento. A representa el sistema de coordenadas de la máquina y las dimensiones extraídas del archivo de corte, B representa el objeto real desplazado, escalado y rotado respecto del primero}
          {fig:alineacion_offset}
 
-         Ahora si se considera un segundo punto $2$ como se muestra en la figura \ref{fig:alineacion_rotacion1}.a, se puede calcular la rotación relativa entre B y A.\\
+         Ahora, si se considera el punto 2, como se muestra en la figura \ref{fig:alineacion_rotacion1_A}, se puede calcular la rotación relativa entre B y A.\\
          Como primer paso, aplicando trigonometría se calcula el ángulo que forma el punto 2 con el punto 1 en el plano A, luego el ángulo del punto 2 con el punto 1 pero en coordenadas del plano B.\\
          Su diferencia es la rotación del plano A respecto al plano B.\\
-         Se puede ver gráficamente en las figuras \ref{fig:alineacion_rotacion1} b y c y se expresa en las ecuaciones \ref{eq:alineacion_rotacion}.
-\subfigabc{0.65}{0.3}
-         {alineacion_rotacion1}{alineacion_rotacion2}{alineacion_rotacion3}
-         {Calculó de rotación conociendo las coordenadas relativas de dos puntos. a) Se calcula las coordenadas del punto 2 en cada sistema de coordenadas. b) Se calcula el ángulo en el plano A. b) Se calcula el ángulo en el plano B.}
-         {fig:alineacion_rotacion1}
+         Se puede ver gráficamente en las figuras \ref{fig:alineacion_rotacion1} B y C y se expresa en las ecuaciones \ref{eq:alineacion_rotacion}.
+
+\subfigtwotwo
+            {0.48}{alineacion_rotacion2}{Se calcula el ángulo en el plano B.}
+            {0.48}{alineacion_rotacion3}{Se calcula el ángulo en el plano A.}
+            {0.48}{alineacion_rotacion1}{Se calcula las coordenadas del punto 2 en cada sistema de coordenadas.}
+            {0.48}{alineacion_rotacion1}{Se calcula las coordenadas del punto 2 en cada sistema de coordenadas.}
+            {Cálculo de rotación conociendo las coordenadas relativas de dos puntos.}
+            {fig:alineacion_rotacion1}
 
 
          \begin{equation}
@@ -297,18 +338,20 @@ Esto se debe a que tanto la pieza que se desea mecanizar como la maquina podría
 
          Una vez obtenida la diferencia de ángulos se corrige rotando el plano A respecto del B como se muestra en la figura \ref{fig:alineacion_rotacion2}.
 
-\subfigab{0.45}{0.45}
-         {alineacion_rotacion4}{alineacion_rotacion5}
-         {Correccion de la rotacion. a) Se calcula la diferencia de ángulos entre los planos. b) Se corrige rotando el plano A.}
+\subfigab
+         {0.45}{alineacion_rotacion4}{Se calcula la diferencia de ángulos entre los planos.}{fig:alineacion_rotacion2_A}
+         {0.45}{alineacion_rotacion5}{Se corrige rotando el plano A.}{fig:alineacion_rotacion2_B}
+         {Correccion de la rotacion.}
          {fig:alineacion_rotacion2}
 
          Para completar el proceso y conseguir la alineación final resta escalar el plano A relacionando las dimensiones con el plano B.\\
          Se muestra gráficamente esta corrección en la figura \ref{fig:alineacion_escalado1} y se expresa en las ecuaciones  \ref{eq:alineacion_escalado}.
 
 
-\subfigab{0.45}{0.45}
-         {alineacion_escalado1}{alineacion_escalado2}
-         {Corrección de la escala. a) Se calcula la diferencia de dimensiones en $x$ e $y$ b) Se corrige escalando el plano A.}
+\subfigab
+         {0.45}{alineacion_escalado1}{Se calcula la diferencia de dimensiones en $x$ e $y$}{fig:alineacion_escalado1_A}
+         {0.45}{alineacion_escalado2}{Se corrige escalando el plano A.}{fig:alineacion_escalado1_B}
+         {Corrección de la escala.}
          {fig:alineacion_escalado1}
 
          \begin{equation}
@@ -326,8 +369,8 @@ Esto se debe a que tanto la pieza que se desea mecanizar como la maquina podría
          Estas ecuaciones se utilizaron para el desarrollo de la aplicación detallada en el capitulo \ref{Chapter3}.
 
 \subsection{Detection y tipos de marcas fiduciales}
-   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado es usuarl encontrar que las marcas son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\\
-   Para un efectivo reconocimiento de una marca utilizando una cámara de video algunas consideraciones deben tenerse en cuenta como ser:
+   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado es usuar encontrar que las marcas son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\\
+   Para un efectivo reconocimiento de una marca utilizando una cámara de vídeo algunas consideraciones deben tenerse en cuenta como ser:
    \begin{itemize}
       \item{Maximizar el contraste entre el fondo del objeto y la marca.}
       \item{Evitar irregularidades en el trazado del contorno.}
@@ -338,10 +381,13 @@ Esto se debe a que tanto la pieza que se desea mecanizar como la maquina podría
    \end{itemize}
    Algunos ejemplos de marcas fiduciales se muestran en la figura \ref{fig:ejemplo_marcas}.
 
-\subfigabc{0.52}{0.2}
-         {ejemplo_marcas2}{ejemplo_marcas1}{ejemplo_marcas3}
-         {Ejemplo de diferentes tipos de marcas fiduciales. a) Figuras geométricas llenas o contorno b) Ejemplo de marcas fiduciales en una placa de circuito impreso PCB. c) Marcas fiduciales codificadas.}
-         {fig:ejemplo_marcas}
+\subfigtwotwo
+            {0.48}{ejemplo_marcas2}{Figuras geométricas llenas o contorno} 
+            {0.48}{ejemplo_marcas1}{Ejemplo de marcas fiduciales en una placa de circuito impreso PCB.}
+            {0.48}{ejemplo_marcas3}{Marcas fiduciales codificadas. Se pueden utilizar no solo para reconocer la posicino sino tambien leer un numero codificado.}
+            {0.48}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado.}
+            {Ejemplo de diferentes tipos de marcas fiduciales.}
+            {fig:ejemplo_marcas}
 
          Para el alcance de este trabajo solo se utilizaran marcas geométricas llenas o contornos.
 
