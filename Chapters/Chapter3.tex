@@ -1,9 +1,28 @@
 \chapter{Diseño e implementación} % Main chapter title
 
-\label{Chapter3} 
+\label{Chapter3}
 
-En este capitulo se muestra en detalle la solucion implementada destacando los bloques constitutivos y su interoperabilidad.
+En este capítulo se desglosan los bloques principales del sistema, se explican los criterios de diseño de cada uno y se resaltan los aspectos mas relevantes de la implementación.
 
+\section{Diseño general del sistema}
+\subfiga {0.6}
+         {system_blocks2.pdf}
+         {Diagrama de bloques del sistema implementado con el objeto de identificar las tecnologías involucradas en cada bloque.}
+         {fig:system_blocks2}
+   
+\section{Interconexión de hardware}
+   \subsection{PocketBeagle a NK105}
+   \subsection{Camara de video a PocketBeagle}
+   \subsection{USB cliente mass storage a NK105}
+\section{Kernel de Linux y file system}
+   \subsection{Adaptacion del devicetree para PocketBeagle}
+   \subsection{Manejador de dispositivo SPI esclavo}
+   \subsection{Decodificacion de comandos del LCD}
+\section{Aplicación de captura de teclado}
+\subsection{Aplicación de rotación y escala de GCode}
+\subsection{Algoritmos para reconocimiento de marcas}
+
+\subsection{Intervencion al NK105}
 
 \section{Intervencion al NK105}
 
