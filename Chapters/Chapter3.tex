@@ -2,16 +2,108 @@
 
 \label{Chapter3}
 
-En este capítulo se desglosan los bloques principales del sistema, se explican los criterios de diseño de cada uno y se resaltan los aspectos mas relevantes de la implementación.
+En este capítulo se desglosan los bloques principales del sistema y su interconexion, se explican los criterios de diseño y se detallan los aspectos mas relevantes de la implementación.
 
 \section{Diseño general del sistema}
+
+En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparacion entre el sistema de conexionado original, figura \ref{fig:system_blocks0}, y el sistema luego de agregar los bloques de reconocimiento de marcas implementados, figura \ref{fig:system_blocks1}.
+
+\subfigab 
+         {0.45} {system_blocks0.pdf} {Diagrama de bloques del sistema original de interconexion entre la maquina CNC y el controlador NK105 sin ninguna intervencion.} {fig:system_blocks0}
+         {0.45}{system_blocks1.pdf} {Diagrama de bloques del sistema de interconexion de la maquina CNC con los bloques implementados para el reconocimiento de marcas.} {fig:system_blocks1}
+         {Comparacion entre la interconexion original de la maquina CNC y luego de agregar el sistema de reconocimiento de marcas}
+         {fig:system_blocks}
+
+         En la siguiente lista se detallan las principales características de cada bloque:
+         \begin{itemize}
+            \item{Wi-Fi: es una red inalámbrica compartida entre los bloques ``PocketBeagle'', ``Cámara de video'' y ``Navegador web''. No requiere tener acceso a internet.}
+            \item{Navegador web: se refiere a cualquier dispositivo que pueda ejecutar un navegador: ordenador personal, teléfono celular, tableta, etc.}
+            \item{PocketBeagle: es la plataforma de desarrollo PocketBeagle con el agregado de una circuitería que permite intercalarse entre los bloques ``Controlador CNC'' y ``Mando a distancia''}
+            \item{Maquina CNC: es el conjunto de piezas electromecánicas motorizadas para el realizar el mecanizado de piezas.}
+            \item{Controlador CNC: es el dispositivo electrónico encargado de comandar los motores de la maquina CNC para generar los movimientos de corte.}
+            \item{Mando a distancia: es un dispositivo electrónico cableado que se conecta al ``Controlador CNC'' y cuenta con una pantalla para visualización y un teclado para interacción con el operador de la maquina.}
+            \item{Cámara de video: es el dispositivo que se monta en la maquina CNC y permite capturar las imágenes que se utilizaran para el reconocimiento de marcas. En esta implementación se utiliza la cámara de un teléfono celular, pero podría ser otra mientras permita la transmisión de video por el protocolo IP.}
+         \end{itemize}
+
+         Como la conexión entre el ``Mando a distancia'' y el ``Controlador NK105'' en la figura \ref{fig:system_blocks0} se realiza con un conector, el proceso de intercalar el bloque ``PocketBeagle'' es un proceso reversible y no modifica la funcionalidad original del sistema sino que agrega nuevas. \par
+
+
+\section{Bloque PocketBeagle}
+   \subsection{Conexion entre ``PocketBeagle'' y ``Controlador CNC''}
+
+   El fabricante del controlador CNC elegido para el trabajo no ofrece ninguna opción de interconexión excepto su mando a distancia.\par
+   Sin embargo el controlador es muy popular y su buen desempeño es reconocido en la industria, por lo que aún con esta importante dificultad fue el elegido para este trabajo. \par
+   Para resolver la interacción se intercaló una tarjeta electronica en el cable que conecta el ``Mando a distancia'' con el ``Controlador CNC'', como se muestra en la figura \ref{fig:pocket_a_comando}. \par
+
+\subfiga {0.6}
+         {pocket_a_comando}
+         {Fotografia de la tarjeta de intercalado entre el ``Controlador CNC'' y su ``Mando a distancia''}
+         {fig:pocket_a_comando} %TODO tomar una que tenga el comando
+
+   En este cable están implementados dos canales de comunicación, una comunicación serial UART \textit{universal asynchronous receiver-transmitter} que comunica periódicamente el estado de los botones y uno interfaz SPI \textit{synchronous peripheral interface} sobre la cual se envían los datos a la pantalla LCD.
+   Estas interfases se ajustan en tension y conectan a sus respectivas interfases en la plataforma PocketBeagle.\par
+
+   Una vez adquiridas las señales en la unidad de procesamiento, se desarrollaron una serie de bloques de software que se muestran en la figura \ref{fig:system_blocks2}.\par
+   Se aprovecharon los mecanismos de colas o FIFO's \textit{names pipes} por sus siglas en inglés, que ofrece Linux para multiplexar los datos provenientes del ``Teclado'' con un nuevo bloque ``Teclado virtual''.
+      Los datos que se envíen al bloque ``FIFO RX'' serán intercalados con los originales y de esta manera se puede simular operaciones de teclado desde una aplicación que corra en la ``PocketBeagle''. \par
+      Se desarrollo una aplicación en lenguaje C en espacio de usuario de Linux que implementar esta lógica. Esta aplicación corre en la PocketBeagle como un servicio. \par
+
+      En el fragmento de código \ref{cod:handheld1} se pueden ver las tres tareas principales que corren concurrentemente para implementar la lectura del teclado físico, la lectura de una cola virtual y el intercalado y envió de los datos al controlador.
+
+\begin{lstlisting}[label=cod:handheld1,caption=Funcion de intercalado de datos entre el teclado fisico y el virtual utilizando colas.]
+
+//recibe los datos desde el teclado fisico por interfase serial
+void* rcvFunc(void* niyto)
+{
+   char frame[FRAME_SIZE];
+   while(true) {
+      while ( Get_Byte(PORT_NUMBER, frame )<1 || frame[0]!=FRAME_HEADER)
+         ;
+      PollComport(PORT_NUMBER, frame+1, FRAME_SIZE-1);
+      if(memcmp(frame,FRAME_DEFAULT,FRAME_SIZE))
+         mq_send(msgQueue,frame,FRAME_SIZE,1);
+   }
+}
+//recibe los datos a traves de una cola del sistema operativo
+void* rcvVirtual(void* niyto)
+{
+   char buf  [ MAX_VIRTUAL_CMD_LENGHT ];
+   char frame[ FRAME_SIZE             ];
+   FILE* pipeVi;
+   while(pipeVi=fopen(PIPE_VI,"r")) {
+      while(fgets(buf,MAX_VIRTUAL_CMD_LENGHT,pipeVi)>0) {
+         memcpy(frame,FRAME_DEFAULT,FRAME_SIZE);
+         mapBtn2Bits(atoi(buf),frame);
+         crc(frame);
+         if(memcmp(frame,FRAME_DEFAULT,FRAME_SIZE)) {
+            mq_send(msgQueue,frame,FRAME_SIZE,1);
+         }
+      }
+      fclose(pipeVi);
+   }
+}
+//intercala los datos del teclado fisico y el virtual y envia la salida al controlador 
+void* sendFunc(void* niyto)
+{
+   struct timespec tm;
+   char frame[ FRAME_SIZE ];
+   while ( true ) {
+      clock_gettime(CLOCK_REALTIME, &tm);
+      tm=timespec_add (tm,(struct timespec){0, QUEUE_SND_TOUT});
+      mq_timedreceive( msgQueue,frame,FRAME_SIZE,NULL,&tm);
+      sendBuf        ( PORT_NUMBER  ,ans?frame:FRAME_DEFAULT ,FRAME_SIZE );
+   }
+}
+\end{lstlisting}
+
+
 \subfiga {0.6}
          {system_blocks2.pdf}
          {Diagrama de bloques del sistema implementado con el objeto de identificar las tecnologías involucradas en cada bloque.}
          {fig:system_blocks2}
-   
-\section{Interconexión de hardware}
-   \subsection{PocketBeagle a NK105}
+
+LLEGUE HASTA ACA \ldots.
+
    \subsection{Camara de video a PocketBeagle}
    \subsection{USB cliente mass storage a NK105}
 \section{Kernel de Linux y file system}
@@ -26,20 +118,12 @@ En este capítulo se desglosan los bloques principales del sistema, se explican 
 
 \section{Intervencion al NK105}
 
-   Es importante mencionar que el controlador elejido para el trabajo no cuenta con una API de control y tampoco esta dotado de algun canal de comunicaciones dedicado para tal fin, sin embargo su uso es tan popular y su desempenio es reconocido en la industria, por lo que aun con esta dificultad fue el controlador elegido.
-   Para resolver la comunicacion con el controldor se intervio el cable que conecta el mando a distancia con el controlador.
-   Este cable cuenta con 2 interfases, una UART que comunica el estado de los botones del mando a distancia y una interfase SPI para el envio de la informacion a la pantalla LCD.
-Estas interfases se adaptaron en tension y se conectaron a la SBC para poder procesar los datos como se muestra en la figura \ref{fig:intervencion_mando_distancia}
-
 \subfigab
          %{intervencion_mando_uart}{intervencion_mando_spi}
    {0.45}{no_signal}{comentario}{fig:intervencion_mando_A}
    {0.45}{no_signal}{comentario}{fig:intervencion_mando_B}
          {Mando a distancia del controlador NK105 a) Cominicacion por UART del estado de la botonera b) Envío de datos del controlador al LCD por SPI}
          {fig:intervencion_mando}
-
-En la figura \ref{fig:handheld_uart} se muestran los bloques de software utilizados para procesar la información proveniente del mando a distancia.
-   Se aprovecharon los mecanismos de colas y names pipes que ofrece Linux para multiplexar los datos provenientes de la UART del mando a distancia con los datos generados por la propia SBC.
 
 
 \section{Envio de arvhivos por USB}
