@@ -2,11 +2,11 @@
 
 \label{Chapter3}
 
-En este capítulo se desglosan los bloques principales del sistema y su interconexion, se explican los criterios de diseño y se detallan los aspectos mas relevantes de la implementación.
+En este capítulo se desglosan los bloques principales del sistema, se explica su interconexion, los criterios de diseño y los aspectos mas relevantes de cada implementación.
 
 \section{Diseño general del sistema}
 
-En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparacion entre el sistema de conexionado original, figura \ref{fig:system_blocks0}, y el sistema luego de agregar los bloques de reconocimiento de marcas implementados, figura \ref{fig:system_blocks1}.
+En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparacion entre el sistema de conexionado original, figura \ref{fig:system_blocks0}, y modificado para el reconocimiento de marcas, figura \ref{fig:system_blocks1}.
 
 \subfigab 
          {0.45} {system_blocks0.pdf} {Diagrama de bloques del sistema original de interconexion entre la maquina CNC y el controlador NK105 sin ninguna intervencion.} {fig:system_blocks0}
@@ -25,30 +25,34 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
             \item{Cámara de video: es el dispositivo que se monta en la maquina CNC y permite capturar las imágenes que se utilizaran para el reconocimiento de marcas. En esta implementación se utiliza la cámara de un teléfono celular, pero podría ser otra mientras permita la transmisión de video por el protocolo IP.}
          \end{itemize}
 
-         Como la conexión entre el ``Mando a distancia'' y el ``Controlador NK105'' en la figura \ref{fig:system_blocks0} se realiza con un conector, el proceso de intercalar el bloque ``PocketBeagle'' es un proceso reversible y no modifica la funcionalidad original del sistema sino que agrega nuevas. \par
-
 
 \section{Bloque PocketBeagle}
-   \subsection{Conexion entre ``PocketBeagle'' y ``Controlador CNC''}
 
-   El fabricante del controlador CNC elegido para el trabajo no ofrece ninguna opción de interconexión excepto su mando a distancia.\par
-   Sin embargo el controlador es muy popular y su buen desempeño es reconocido en la industria, por lo que aún con esta importante dificultad fue el elegido para este trabajo. \par
-   Para resolver la interacción se intercaló una tarjeta electronica en el cable que conecta el ``Mando a distancia'' con el ``Controlador CNC'', como se muestra en la figura \ref{fig:pocket_a_comando}. \par
+   El controlador elegido para este trabajo es muy popular y su buen desempeño es reconocido en la industria, pero no ofrece ninguna opción de interconexión excepto su mando a distancia a traves de un cable multifilar.\par
 
-\subfiga {0.6}
-         {pocket_a_comando}
-         {Fotografia de la tarjeta de intercalado entre el ``Controlador CNC'' y su ``Mando a distancia''}
-         {fig:pocket_a_comando} %TODO tomar una que tenga el comando
+   Se estudio en detalle este cable que conecta el ``Controlador CNC'' con su ``Mando a distancia'' y se determino que tiene dos canales de comunicación, una comunicación serial UART \textit{universal asynchronous receiver-transmitter} que comunica periódicamente el estado del teclado y una interfaz SPI \textit{synchronous peripheral interface} sobre la cual se envían los datos a la pantalla LCD. \par
 
-   En este cable están implementados dos canales de comunicación, una comunicación serial UART \textit{universal asynchronous receiver-transmitter} que comunica periódicamente el estado de los botones y uno interfaz SPI \textit{synchronous peripheral interface} sobre la cual se envían los datos a la pantalla LCD.
-   Estas interfases se ajustan en tension y conectan a sus respectivas interfases en la plataforma PocketBeagle.\par
+   Para poder interactuar con estas interfases se intercaló una tarjeta electronica que las conecta a la plataforma PocketBeagle como se muestra en la figura \ref{fig:handheld_a_pocket} .\par
 
-   Una vez adquiridas las señales en la unidad de procesamiento, se desarrollaron una serie de bloques de software que se muestran en la figura \ref{fig:system_blocks2}.\par
-   Se aprovecharon los mecanismos de colas o FIFO's \textit{names pipes} por sus siglas en inglés, que ofrece Linux para multiplexar los datos provenientes del ``Teclado'' con un nuevo bloque ``Teclado virtual''.
-      Los datos que se envíen al bloque ``FIFO RX'' serán intercalados con los originales y de esta manera se puede simular operaciones de teclado desde una aplicación que corra en la ``PocketBeagle''. \par
-      Se desarrollo una aplicación en lenguaje C en espacio de usuario de Linux que implementar esta lógica. Esta aplicación corre en la PocketBeagle como un servicio. \par
+\subfigab 
+{0.48} {handheld_a_pocket_original} { ``Controlador CNC'' conectado con su ``Mando a distancia'' sin intervencion.\\ \vphantom{1}}{handheld_a_pocket_original}
+{0.48} {handheld_a_pocket_intervenido} {``Controlador CNC'' conectado con su ``Mando a distancia'' intervenido por la\\ ``PocketBeagle''.}{handheld_a_pocket_intervenido}
+   {Comparacion entre la conexion del controlador y su comando antes y despues de ser intervenido por el accesorio desarrollado.}
+   {fig:handheld_a_pocket}
 
-      En el fragmento de código \ref{cod:handheld1} se pueden ver las tres tareas principales que corren concurrentemente para implementar la lectura del teclado físico, la lectura de una cola virtual y el intercalado y envió de los datos al controlador.
+         Como la conexión entre el ``Mando a distancia'' y el ``Controlador NK105'' se realiza con un conector, el proceso de intercalar ``PocketBeagle'' es un proceso reversible, no modifica la funcionalidad original del sistema y permite instalarse sin dificultades.\par
+
+   Se desarrollaron una serie de aplicaciones de software que se muestran en la figura \ref{fig:system_blocks2} para lograr dos objetivos principales que se detallan en las subsecciones siguientes
+
+\subfiga {0.8}
+         {system_blocks2.pdf}
+         {Diagrama de bloques del sistema implementado con el objeto de identificar las tecnologías involucradas en cada bloque.}
+         {fig:system_blocks2}
+
+\subsection{Teclado virtual}
+
+      Para lograr enviar datos desde la PocketBeagle al controlador se desarrollo una aplicación en lenguaje C que corre como servicio en la PocketBeagl.\par
+      En el fragmento de código \ref{cod:handheld1} se pueden ver tres tareas o \textit{threads} que implementan la lectura del teclado físico, la lectura de una cola virtual, el intercalado y el envió de los datos al controlador.\par
 
 \begin{lstlisting}[label=cod:handheld1,caption=Funcion de intercalado de datos entre el teclado fisico y el virtual utilizando colas.]
 
@@ -96,16 +100,100 @@ void* sendFunc(void* niyto)
 }
 \end{lstlisting}
 
+   Se aprovecharon los mecanismos de colas o FIFO's \textit{names pipes} por sus siglas en inglés, que ofrece Linux para multiplexar los datos del ``Teclado'' con un nuevo bloque ``Teclado virtual''.\par
+      Con esta tecnica, si se envian datos a la ``FIFO Rx'' los datos se envian al controlador emulando el presionado de un boton en el teclado fisico, pero al mismo tiempo se atiende la comunicacion original y el controlador se puede manejar virtual o fisicamente.
+      
+\subsection{Pantalla virtual}
 
-\subfiga {0.6}
-         {system_blocks2.pdf}
-         {Diagrama de bloques del sistema implementado con el objeto de identificar las tecnologías involucradas en cada bloque.}
-         {fig:system_blocks2}
+      Para poder conocer el estado del controlador es necesario contar con la informacion que se muestra en la pantalla LCD. 
+      Se estudio en detalle las especificaciones del controlador de esta pantalla y debido a la alta velocidad de los datos y que las tramas no estan definidas ni en tiempo ni en el largo de las tramas, no fue posible leer esta informacion con una aplicacion en espacio de usuario. \par
+      Para poder recolectarlos se implemento un driver SPI en modo exclavo \textit{spi slave} como modulo del kernel del sistema operativo.
+      Este driver, a diferencia del driver original del kernel, permite recibir cualquier longitud de trama y en cualquier momento y almacenarla en una memoria contigua.
+      Esto se logro utliazando las siguientes tecnicas:
+      \begin{itemize}
+         \item {Interrupciones: Se utilizo una interrupcion conectada a la senal de seleccion de chip del SPI \textit{chip select}. Esto permite reaccionar rapidamente cuando se inicia una transaccion.}
+         \item {Acceso directo a memoria: Se utilizo el susbsistema DMA \textit{direct access memory} para que las operaciones de copia de los datos que se reciben por SPI a mamoria las realice un bloque de hardware sin la intervencion del procesador. Esto permite conservar los recursos del procesador para otras tareas.}
+         \item{Comunicacion interprocessos: Se utilizaron diversos metodos de IPC's \textit{interprocess commnications} que ofrece Linux para lograr un sistema reactivo con minimo retardo.}
+         \item{Operaciones de archivo: Para la salida de los datos se utiliza el acceso estandard del sistema como si este fuera un archivo. De esta manera se aprovechan las herramientas estandars de lectura del sistema operativo y se facilita la integracion con el software en espacio de usuario.}
+         \item{multitarea de kernel: dentro del modulo se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepcion de nuevos datos por SPI}
+      \end{itemize}
+
+      En el diagrama de bloques de la figura \ref{fig:lcd_driver_blocks} se muestra la secuencia de pasos que se implemento dentro del modulo. 
+      
+\subfiga {1}
+         {lcd_driver_blocks.pdf}
+         {Diagrama de bloques implementados en el driver de kernel para la lectura e interpretacion de las tramas del LCD.}
+         {fig:lcd_driver_blocks}
+
+      %,caption=Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD.]
+         \begin{lstlisting}[caption={Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD.},label={cod:lcd_driver}]
+//Manejador de interrupcion conectada a la senal de chip select
+static irq_handler_t csIrqHandler(unsigned int irq, void *dev_id, struct pt_regs *regs)
+{
+   complete(getNewDataReady());
+   printkk(KERN_DEBUG "llego irq %i\r\n",irqCounter++);
+   setGpio();
+   return (irq_handler_t) IRQ_HANDLED;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={},label={cod:lcd_driver},title={\lstlistingname~\thelstlisting: Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD. (continued)}] 
+
+//espera una trama y la procesa
+static int newDataFunc(void *nol)
+{
+   int ans;
+   while(1) {
+      ans=wait_for_completion_interruptible_timeout(&newData.ready,msecs_to_jiffies(param_newDataTout));
+      reinit_completion(&newData.ready);
+      newData.actualIndex = findSpiFifoLen(newData.actualIndex);
+      newData.lastIndex = parse ( newData.actualIndex);
+      if(ans==0)
+         wakeUpFileOp();
+   }
+   return 0;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[name={caption},caption={},label=cod:lcd_driver,title={\lstlistingname~\thelstlisting: Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD. (continued)}] 
+
+//esta funcion se llama cuando desde el espacio de usuario se pide un acceso de lectura
+static ssize_t lcd_read( struct file *filp, char __user *buf, size_t count, loff_t *f_pos )
+{
+   size_t len=0;
+   size_t miss=0;
+   char localBuf[FRAME_LEN];
+
+   int i=(int)filp->private_data;
+   wait_event_interruptible(fileOp.queue[i].ready, fileOp.queue[i].flag);
+   fileOp.queue[i].flag=false;
+   len  = ((FRAME_LEN-1)<count)?(FRAME_LEN-1):count;
+   memcpy(localBuf,(char*)getLcd()->cdram,LCD_LEN);
+   snprintf(localBuf+LCD_LEN,TRAILER_LEN,"%05u\r\n",fileOp.queue[i].frameNumber++);
+   miss= copy_to_user(buf,localBuf,FRAME_LEN-1);
+   len=len-miss;
+   decWakeUpCounter();
+   return len;
+};
+
+
+\end{lstlisting}
+
+
+      En la foto de la figura \ref{fig:handheld_lcd_on_action} se puede ver en la pantalla del ``Mando a distancia'' una operacion de ingreso los numeros ``1234'' sin presionar los botones del teclado fiscio sino que se enviaron desde una consola de comandos de la PocketBeagle.\par
+
+\subfiga {1}
+         {handheld_lcd_on_action}
+         {Virtualizacion completa del teclado y LCD utilizando la PocketBeagle. Se envian datos a una FIFO que son leidos por un servicio que los redirecciona al controlador. Los datos del LCD son capturados por el el driver de kernel y mostrados en la consola. Se puede ver la sincronia entre el mando a distancia y el virutal.}
+         {fig:handheld_lcd_on_action}
+
+
 
 LLEGUE HASTA ACA \ldots.
 
    \subsection{Camara de video a PocketBeagle}
    \subsection{USB cliente mass storage a NK105}
+
 \section{Kernel de Linux y file system}
    \subsection{Adaptacion del devicetree para PocketBeagle}
    \subsection{Manejador de dispositivo SPI esclavo}
