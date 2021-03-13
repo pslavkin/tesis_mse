@@ -267,10 +267,19 @@ Como se comento en la seccion \ref{subsection:camara_de_video}, en el alcance de
 \end{figure}
 
 Una vez capturado el fotograma se lo procesa con una secuencia de operaciones que se muestran en el fragmento \ref{cod:reconocimiento2}.
+En la linea 2 se convierte el fotograma ``img'' del formato de imagen original de tres canales azul, verde y rojo, BGR \textit{blue,green,red} de 8bits por canal, a un formato en escala de grises segun la ecuacion \ref{eq:bgr2gray}:
+\begin{equation}
+   \text{RGB[A] to Gray:} \quad Y \leftarrow 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B
+   \label{eq:bgr2gray}
+\end{equation}
+En donde la imagen resultante es de un solo canal de 8bits. Este procedimiento es necesario dado que la mayoria de las funciones de analisis de imagenes en openCV se realizan en un solo canal.\par 
+
+  El la linea 3 se realiza un fil 
+
+
 
 \begin{figure}[h]
    \begin{lstlisting}[language=python,caption={Algoritmo principal de reconocimiento de marcas en un fotograma},label={cod:reconocimiento2}]
-
 def recognition(self,img):
       imgray              = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
       ret, thresh         = cv.threshold(imgray, int(self.grayThresh), 0xff, cv.THRESH_BINARY_INV)
@@ -299,6 +308,13 @@ def recognition(self,img):
 \end{figure}
 
 
+\subfigtwotwo
+         {0.48}{reconocimiento_comparativa1} {comentario}
+         {0.48}{reconocimiento_comparativa2} {comentario}
+         {0.48}{reconocimiento_comparativa3} {comentario}
+         {0.48}{reconocimiento_comparativa4} {comentario}
+         {Comparativa.}
+         {fig:reconocimiento_comparativa}
 
 \section{Kernel de Linux y file system}
    \subsection{Adaptacion del devicetree para PocketBeagle}
