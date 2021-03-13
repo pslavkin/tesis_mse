@@ -54,60 +54,70 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
       Para lograr enviar datos desde la PocketBeagle al controlador se desarrollo una aplicación en lenguaje C que corre como servicio en la PocketBeagl.\par
       En el fragmento de código \ref{cod:handheld1} se pueden ver tres tareas o \textit{threads} que implementan la lectura del teclado físico, la lectura de una cola virtual, el intercalado y el envió de los datos al controlador.\par
 
-\begin{lstlisting}[label=cod:handheld1,caption=Funcion de intercalado de datos entre el teclado fisico y el virtual utilizando colas.]
+\begin{figure}
+   \begin{lstlisting}[label={cod:handheld1},caption={Tarea encargada de procesar los datos del teclado fisico y reenviarlos a la cola de multiplexado.}]
 
-//recibe los datos desde el teclado fisico por interfase serial
-void* rcvFunc(void* niyto)
-{
-   char frame[FRAME_SIZE];
-   while(true) {
-      while ( Get_Byte(PORT_NUMBER, frame )<1 || frame[0]!=FRAME_HEADER)
-         ;
-      PollComport(PORT_NUMBER, frame+1, FRAME_SIZE-1);
-      if(memcmp(frame,FRAME_DEFAULT,FRAME_SIZE))
-         mq_send(msgQueue,frame,FRAME_SIZE,1);
-   }
-}
-//recibe los datos a traves de una cola del sistema operativo
-void* rcvVirtual(void* niyto)
-{
-   char buf  [ MAX_VIRTUAL_CMD_LENGHT ];
-   char frame[ FRAME_SIZE             ];
-   FILE* pipeVi;
-   while(pipeVi=fopen(PIPE_VI,"r")) {
-      while(fgets(buf,MAX_VIRTUAL_CMD_LENGHT,pipeVi)>0) {
-         memcpy(frame,FRAME_DEFAULT,FRAME_SIZE);
-         mapBtn2Bits(atoi(buf),frame);
-         crc(frame);
-         if(memcmp(frame,FRAME_DEFAULT,FRAME_SIZE)) {
+   void* rcvFunc(void* niyto)
+   {
+      char frame[FRAME_SIZE];
+      while(true) {
+         while ( Get_Byte(PORT_NUMBER, frame )<1 || frame[0]!=FRAME_HEADER)
+            ;
+         PollComport(PORT_NUMBER, frame+1, FRAME_SIZE-1);
+         if(memcmp(frame,FRAME_DEFAULT,FRAME_SIZE))
             mq_send(msgQueue,frame,FRAME_SIZE,1);
-         }
       }
-      fclose(pipeVi);
    }
-}
-//intercala los datos del teclado fisico y el virtual y envia la salida al controlador 
-void* sendFunc(void* niyto)
-{
-   struct timespec tm;
-   char frame[ FRAME_SIZE ];
-   while ( true ) {
-      clock_gettime(CLOCK_REALTIME, &tm);
-      tm=timespec_add (tm,(struct timespec){0, QUEUE_SND_TOUT});
-      mq_timedreceive( msgQueue,frame,FRAME_SIZE,NULL,&tm);
-      sendBuf        ( PORT_NUMBER  ,ans?frame:FRAME_DEFAULT ,FRAME_SIZE );
+   \end{lstlisting}
+\end{figure}
+
+\begin{figure}
+   \begin{lstlisting}[label={cod:handheld1},caption={},title={\lstlistingname~\thelstlisting:Tarea que recibe datos del teclado virtual y los reenvia a la cola de multiplexado..}]
+   void* rcvVirtual(void* niyto)
+   {
+      char buf  [ MAX_VIRTUAL_CMD_LENGHT ];
+      char frame[ FRAME_SIZE             ];
+      FILE* pipeVi;
+      while(pipeVi=fopen(PIPE_VI,"r")) {
+         while(fgets(buf,MAX_VIRTUAL_CMD_LENGHT,pipeVi)>0) {
+            memcpy(frame,FRAME_DEFAULT,FRAME_SIZE);
+            mapBtn2Bits(atoi(buf),frame);
+            crc(frame);
+            if(memcmp(frame,FRAME_DEFAULT,FRAME_SIZE)) {
+               mq_send(msgQueue,frame,FRAME_SIZE,1);
+            }
+         }
+         fclose(pipeVi);
+      }
    }
-}
-\end{lstlisting}
+   \end{lstlisting}
+\end{figure}
+
+\begin{figure}
+   \begin{lstlisting}[label={cod:handheld1},caption={},title={\lstlistingname~\thelstlisting:Taread de multiplexado de los datos del teclado fisico y virtual.}]
+   void* sendFunc(void* niyto)
+   {
+      struct timespec tm;
+      char frame[ FRAME_SIZE ];
+      while ( true ) {
+         clock_gettime(CLOCK_REALTIME, &tm);
+         tm=timespec_add (tm,(struct timespec){0, QUEUE_SND_TOUT});
+         mq_timedreceive( msgQueue,frame,FRAME_SIZE,NULL,&tm);
+         sendBuf        ( PORT_NUMBER  ,ans?frame:FRAME_DEFAULT ,FRAME_SIZE );
+      }
+   }
+   \end{lstlisting}
+\end{figure}
 
    Se aprovecharon los mecanismos de colas o FIFO's \textit{names pipes} por sus siglas en inglés, que ofrece Linux para multiplexar los datos del ``Teclado'' con un nuevo bloque ``Teclado virtual''.\par
-      Con esta tecnica, si se envian datos a la ``FIFO Rx'' los datos se envian al controlador emulando el presionado de un boton en el teclado fisico, pero al mismo tiempo se atiende la comunicacion original y el controlador se puede manejar virtual o fisicamente.
-      
+      Con esta tecnica, si se envian datos a la ``FIFO Rx'' los datos se envian al controlador emulando el presionado de un boton en el teclado fisico, pero al mismo tiempo se atiende la comunicacion original y el controlador se puede manejar virtual o fisicamente.\par
+   Dado que la recepcion es a traves de una FIFO, es posible instanciar mas de un teclado virtual con accesos concurrentes \citep{book:embeddedprimer}.
+
 \subsection{Pantalla virtual}
 
-      Para poder conocer el estado del controlador es necesario contar con la informacion que se muestra en la pantalla LCD. 
+      Para poder conocer el estado del controlador es necesario contar con la informacion que se muestra en la pantalla LCD.\par
       Se estudio en detalle las especificaciones del controlador de esta pantalla y debido a la alta velocidad de los datos y que las tramas no estan definidas ni en tiempo ni en el largo de las tramas, no fue posible leer esta informacion con una aplicacion en espacio de usuario. \par
-      Para poder recolectarlos se implemento un driver SPI en modo exclavo \textit{spi slave} como modulo del kernel del sistema operativo.
+      Para poder recolectarlos se implemento un driver SPI en modo exclavo \textit{spi slave} como modulo del kernel del sistema operativo \citep{book:ldd3}.
       Este driver, a diferencia del driver original del kernel, permite recibir cualquier longitud de trama y en cualquier momento y almacenarla en una memoria contigua.
       Esto se logro utliazando las siguientes tecnicas:
       \begin{itemize}
@@ -120,67 +130,67 @@ void* sendFunc(void* niyto)
 
       En el diagrama de bloques de la figura \ref{fig:lcd_driver_blocks} se muestra la secuencia de pasos que se implemento dentro del modulo. 
       
-\subfiga {1}
+\subfiga {0.7}
          {lcd_driver_blocks.pdf}
          {Diagrama de bloques implementados en el driver de kernel para la lectura e interpretacion de las tramas del LCD.}
          {fig:lcd_driver_blocks}
 
-      %,caption=Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD.]
-         \begin{lstlisting}[caption={Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD.},label={cod:lcd_driver}]
-//Manejador de interrupcion conectada a la senal de chip select
-static irq_handler_t csIrqHandler(unsigned int irq, void *dev_id, struct pt_regs *regs)
-{
-   complete(getNewDataReady());
-   printkk(KERN_DEBUG "llego irq %i\r\n",irqCounter++);
-   setGpio();
-   return (irq_handler_t) IRQ_HANDLED;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[caption={},label={cod:lcd_driver},title={\lstlistingname~\thelstlisting: Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD. (continued)}] 
-
-//espera una trama y la procesa
-static int newDataFunc(void *nol)
-{
-   int ans;
-   while(1) {
-      ans=wait_for_completion_interruptible_timeout(&newData.ready,msecs_to_jiffies(param_newDataTout));
-      reinit_completion(&newData.ready);
-      newData.actualIndex = findSpiFifoLen(newData.actualIndex);
-      newData.lastIndex = parse ( newData.actualIndex);
-      if(ans==0)
-         wakeUpFileOp();
+\begin{figure}[h]
+   \begin{lstlisting}[caption={Manejador de la interrupcion asociada auna transaccion SPI. Cuando es llamada activa toda la cadena de procesos que actualiza el estado de la pantalla.},label={cod:lcd_driver}]
+   static irq_handler_t csIrqHandler(unsigned int irq, void *dev_id, struct pt_regs *regs)
+   {
+      complete(getNewDataReady());
+      return (irq_handler_t) IRQ_HANDLED;
    }
-   return 0;
-}
-\end{lstlisting}
+   \end{lstlisting}
+\end{figure}
 
-\begin{lstlisting}[name={caption},caption={},label=cod:lcd_driver,title={\lstlistingname~\thelstlisting: Fragmentos de codigo del modulo implementado para recibir y procesar las tramas de datos del LCD. (continued)}] 
+\begin{figure}[h]
+   \begin{lstlisting}[caption={},label={cod:lcd_driver},title={\lstlistingname~\thelstlisting: Tarea que espera en modo bloqueante una trama nueva. Utiliza uno de los metodos de comunicacion interprocesos del kernel de Linux.}]
 
-//esta funcion se llama cuando desde el espacio de usuario se pide un acceso de lectura
-static ssize_t lcd_read( struct file *filp, char __user *buf, size_t count, loff_t *f_pos )
-{
-   size_t len=0;
-   size_t miss=0;
-   char localBuf[FRAME_LEN];
+   static int newDataFunc(void *nol)
+   {
+      int ans;
+      while(1) {
+         ans=wait_for_completion_interruptible_timeout(&newData.ready,msecs_to_jiffies(param_newDataTout));
+         reinit_completion(&newData.ready);
+         newData.actualIndex = findSpiFifoLen(newData.actualIndex);
+         newData.lastIndex = parse ( newData.actualIndex);
+         if(ans==0)
+            wakeUpFileOp();
+      }
+      return 0;
+   }
+   \end{lstlisting}
+\end{figure}
 
-   int i=(int)filp->private_data;
-   wait_event_interruptible(fileOp.queue[i].ready, fileOp.queue[i].flag);
-   fileOp.queue[i].flag=false;
-   len  = ((FRAME_LEN-1)<count)?(FRAME_LEN-1):count;
-   memcpy(localBuf,(char*)getLcd()->cdram,LCD_LEN);
-   snprintf(localBuf+LCD_LEN,TRAILER_LEN,"%05u\r\n",fileOp.queue[i].frameNumber++);
-   miss= copy_to_user(buf,localBuf,FRAME_LEN-1);
-   len=len-miss;
-   decWakeUpCounter();
-   return len;
-};
+\begin{figure}[h]
+   \begin{lstlisting}[name={caption},caption={},label=cod:lcd_driver,title={\lstlistingname~\thelstlisting: Funcion que bloquea a la espera de una operacion de lectura del espacio de usuario. Cuando se activa copia el estado de la pantalla.}] 
 
+   static ssize_t lcd_read( struct file *filp, char __user *buf, size_t count, loff_t *f_pos )
+   {
+      size_t len=0;
+      size_t miss=0;
+      char localBuf[FRAME_LEN];
 
-\end{lstlisting}
+      int i=(int)filp->private_data;
+      wait_event_interruptible(fileOp.queue[i].ready, fileOp.queue[i].flag);
+      fileOp.queue[i].flag=false;
+      len  = ((FRAME_LEN-1)<count)?(FRAME_LEN-1):count;
+      memcpy(localBuf,(char*)getLcd()->cdram,LCD_LEN);
+      snprintf(localBuf+LCD_LEN,TRAILER_LEN,"%05u\r\n",fileOp.queue[i].frameNumber++);
+      miss= copy_to_user(buf,localBuf,FRAME_LEN-1);
+      len=len-miss;
+      decWakeUpCounter();
+      return len;
+   };
+   \end{lstlisting}
+\end{figure}
 
-
-      En la foto de la figura \ref{fig:handheld_lcd_on_action} se puede ver en la pantalla del ``Mando a distancia'' una operacion de ingreso los numeros ``1234'' sin presionar los botones del teclado fiscio sino que se enviaron desde una consola de comandos de la PocketBeagle.\par
+\subsection{Sistema virtual completo}
+      En conjunto los dos susbsistemas, el teclado virutal corriendo como servicio del sistema operativo para manajar la UART y la pantalla virtual corriendo como modulo del kernel asociadodo a la interfaz SPI, son todo lo necesario para tomar control de la maquina desde la PocketBeagle.\par
+      En la foto de la figura \ref{fig:handheld_lcd_on_action} se puede ver en la pantalla del ``Mando a distancia'' una operacion de ejemplo en la cual se ingresan los numeros ``1234'' sin presionar los botones del teclado fisico sino que se envian desde una consola de comandos de la PocketBeagle.\par
+      Dada lo compelidad y la falta de informacion oficial, el desarrollo y puesta a punto de estos dos subsistemas representaron aproximadamente el 50\% del desaroollo total de este trabajo.\par
 
 \subfiga {1}
          {handheld_lcd_on_action}
@@ -188,11 +198,52 @@ static ssize_t lcd_read( struct file *filp, char __user *buf, size_t count, loff
          {fig:handheld_lcd_on_action}
 
 
+\subsection{Conextion USB como almacenamiento masivo}
+   Otro de los inconvenientes del controlador es que la unica manera para transferirle archivos es a traves de la conexion por USB de un dispositivo de almacenamiento masivo.\par
+   Dado que la PocketBeagle cuenta con una conexion USB que puede actuar como un dispositivo de almacenamiento masivo virtual, se desarrollo una tecnica para intercambiar archivos con el controlador de manera remota a traves de Wi-Fi. \par
+   La tecnologia involucrada en Linux para permitir este funcionamiento es \textit{configFS}\citep{WEBSITE:configfs}.\par.
+   Se implemento un sistema de doble sistema de archivos como el que se muestra en la figura \ref{fig:configfs}.
+
+\subfigab 
+{0.48} {configfs1} {El controlador lee nuevos archivos del sistema de archivos 1 en verde. La aplicacion escribe futuros trabajos en el sistema de archivos 2 en rojo.}{fig:configfs1}
+{0.48} {configfs2} {El controlador lee nuevos archivos del sistema de archivos 2 en rojo. La aplicacion escribe futuros trabajos en el sistema de archivos 1 en verde.}{fig:configfs2}
+   {Sistema de doble sistema de archivos. El verde se presenta al controlador como un dispositivo de almacenamiento masivo con archivos para su ejecucion. Al mismo tiempo el rojo se presenta a la aplicacion web como un sistema de archivos para escribir archivos de futuros trabajos.}
+   {fig:configfs}
+
+   En el script mostrado en \ref{cod:configfs} se aprovecha el lenguaje \textit{bash} para implementar este sistema dual en muy pocas lineas.\par
+   Este script corre como servicio en la PocketBeagl.
+
+\begin{figure}[h]
+   \begin{lstlisting}[language=bash,caption={Implementacion de doble sistema de archivos conectado con la tecnologia configFS. Se aprovecha la potencia del lenguaje de scripting y se corre como servicio.},label={cod:configfs}]
+
+   pipe=./mass_pipe
+   mnt_point=./mnt_point
+   lun_file=/sys/kernel/config/usb_gadget/g_multi/functions/mass_storage.usb0/lun.0/file
+   fs0=./fs0.img
+   fs1=./fs1.img
+
+   while true
+   do
+       if read line <$pipe; then
+           if  test $fs = $fs0
+           then
+              fs=$fs1
+           else
+              fs=$fs0
+           fi
+           mount $fs $mnt_point
+           cp  $line $mnt_point
+           umount $mnt_point
+           echo $fs > $lun_file
+       fi
+   done
+   \end{lstlisting}
+\end{figure}
+
 
 LLEGUE HASTA ACA \ldots.
 
    \subsection{Camara de video a PocketBeagle}
-   \subsection{USB cliente mass storage a NK105}
 
 \section{Kernel de Linux y file system}
    \subsection{Adaptacion del devicetree para PocketBeagle}
