@@ -154,6 +154,44 @@
       \end{center}
    \end{figure}
 }
+\newcommand{\subfigabc}[9]{
+    \def\tempa{#1}%
+    \def\tempb{#2}%
+    \def\tempc{#3}%
+    \def\tempd{#4}%
+    \def\tempe{#5}%
+    \def\tempf{#6}%
+    \def\tempg{#7}%
+    \def\temph{#8}%
+    \def\tempi{#9}%
+    \subfigabcmoreparams
+}
+\newcommand{\subfigabcmoreparams}[5]{
+   \begin{figure}[h]
+      \begin{center}
+         \begin{subfigure}{\tempa\textwidth}
+            \includegraphics[width=1.0\textwidth,frame]{\tempb}
+            \caption{\tempc}
+            \label{\tempd}
+         \end{subfigure}
+         \hfill
+         \begin{subfigure}{\tempe\textwidth}
+            \includegraphics[width=1.0\textwidth,frame]{\tempf}
+            \caption{\tempg}
+            \label{\temph}
+         \end{subfigure}
+         \hfill
+         \begin{subfigure}{\tempi\textwidth}
+            \includegraphics[width=1.0\textwidth,frame]{#1}
+            \caption{#2}
+            \label{#3}
+         \end{subfigure}
+         \caption{#4}
+         \label{#5}
+      \end{center}
+   \end{figure}
+}
+
 
 \newcommand{\figtable}[2]{
    \begin{minipage}{#1\textwidth}

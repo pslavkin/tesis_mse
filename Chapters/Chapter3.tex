@@ -9,10 +9,10 @@ En este capítulo se desglosan los bloques principales del sistema, se explica s
 En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparacion entre el sistema de conexionado original, figura \ref{fig:system_blocks0}, y modificado para el reconocimiento de marcas, figura \ref{fig:system_blocks1}.
 
 \subfigab 
-         {0.45} {system_blocks0.pdf} {Diagrama de bloques del sistema original de interconexion entre la maquina CNC y el controlador NK105 sin ninguna intervencion.} {fig:system_blocks0}
-         {0.45}{system_blocks1.pdf} {Diagrama de bloques del sistema de interconexion de la maquina CNC con los bloques implementados para el reconocimiento de marcas.} {fig:system_blocks1}
-         {Comparacion entre la interconexion original de la maquina CNC y luego de agregar el sistema de reconocimiento de marcas}
-         {fig:system_blocks}
+        {0.45} {system_blocks0.pdf} {Diagrama de bloques del sistema original de interconexion entre la maquina CNC y el controlador NK105 sin ninguna intervencion.} {fig:system_blocks0}
+        {0.45}{system_blocks1.pdf} {Diagrama de bloques del sistema de interconexion de la maquina CNC con los bloques implementados para el reconocimiento de marcas.} {fig:system_blocks1}
+        {Comparacion entre la interconexion original de la maquina CNC y luego de agregar el sistema de reconocimiento de marcas}
+        {fig:system_blocks}
 
          En la siguiente lista se detallan las principales características de cada bloque:
          \begin{itemize}
@@ -35,8 +35,8 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
    Para poder interactuar con estas interfases se intercaló una tarjeta electronica que las conecta a la plataforma PocketBeagle como se muestra en la figura \ref{fig:handheld_a_pocket} .\par
 
 \subfigab 
-{0.48} {handheld_a_pocket_original} { ``Controlador CNC'' conectado con su ``Mando a distancia'' sin intervencion.\\ \vphantom{1}}{handheld_a_pocket_original}
-{0.48} {handheld_a_pocket_intervenido} {``Controlador CNC'' conectado con su ``Mando a distancia'' intervenido por la\\ ``PocketBeagle''.}{handheld_a_pocket_intervenido}
+   {0.48} {handheld_a_pocket_original} { ``Controlador CNC'' conectado con su ``Mando a distancia'' sin intervencion.\\ \vphantom{1}}{handheld_a_pocket_original}
+   {0.48} {handheld_a_pocket_intervenido} {``Controlador CNC'' conectado con su ``Mando a distancia'' intervenido por la\\ ``PocketBeagle''.}{handheld_a_pocket_intervenido}
    {Comparacion entre la conexion del controlador y su comando antes y despues de ser intervenido por el accesorio desarrollado.}
    {fig:handheld_a_pocket}
 
@@ -205,8 +205,8 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
    Se implemento un sistema de doble sistema de archivos como el que se muestra en la figura \ref{fig:configfs}.
 
 \subfigab 
-{0.48} {configfs1} {El controlador lee nuevos archivos del sistema de archivos 1 en verde. La aplicacion escribe futuros trabajos en el sistema de archivos 2 en rojo.}{fig:configfs1}
-{0.48} {configfs2} {El controlador lee nuevos archivos del sistema de archivos 2 en rojo. La aplicacion escribe futuros trabajos en el sistema de archivos 1 en verde.}{fig:configfs2}
+   {0.48} {configfs1} {El controlador lee nuevos archivos del sistema de archivos 1 en verde. La aplicacion escribe futuros trabajos en el sistema de archivos 2 en rojo.}{fig:configfs1}
+   {0.48} {configfs2} {El controlador lee nuevos archivos del sistema de archivos 2 en rojo. La aplicacion escribe futuros trabajos en el sistema de archivos 1 en verde.}{fig:configfs2}
    {Sistema de doble sistema de archivos. El verde se presenta al controlador como un dispositivo de almacenamiento masivo con archivos para su ejecucion. Al mismo tiempo el rojo se presenta a la aplicacion web como un sistema de archivos para escribir archivos de futuros trabajos.}
    {fig:configfs}
 
@@ -267,16 +267,6 @@ Como se comento en la seccion \ref{subsection:camara_de_video}, en el alcance de
 \end{figure}
 
 Una vez capturado el fotograma se lo procesa con una secuencia de operaciones que se muestran en el fragmento \ref{cod:reconocimiento2}.
-En la linea 2 se convierte el fotograma ``img'' del formato de imagen original de tres canales azul, verde y rojo, BGR \textit{blue,green,red} de 8bits por canal, a un formato en escala de grises segun la ecuacion \ref{eq:bgr2gray}:
-\begin{equation}
-   \text{RGB[A] to Gray:} \quad Y \leftarrow 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B
-   \label{eq:bgr2gray}
-\end{equation}
-En donde la imagen resultante es de un solo canal de 8bits. Este procedimiento es necesario dado que la mayoria de las funciones de analisis de imagenes en openCV se realizan en un solo canal.\par 
-
-  El la linea 3 se realiza un fil 
-
-
 
 \begin{figure}[h]
    \begin{lstlisting}[language=python,caption={Algoritmo principal de reconocimiento de marcas en un fotograma},label={cod:reconocimiento2}]
@@ -307,12 +297,49 @@ def recognition(self,img):
    \end{lstlisting}
 \end{figure}
 
+En la linea 2 del algoritmo se convierte el formato del fotograma ``img'' de tres canales azul, verde y rojo, BGR \textit{blue,green,red} de 8bits por pixel por canal, a un formato en escala de grises de 8bits por pixel segun la ecuacion \ref{eq:bgr2gray}:
+\begin{equation}
+   \text{RGB[A] to Gray:} \quad Y \leftarrow 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B
+   \label{eq:bgr2gray}
+\end{equation}
+
+  Luego en la linea 3 se convierte el formato de escala de grises a binaria de 8bits, en donde el criterio de seleccion por 0 o 255 lo decide la variable grayThresh.
+  Un ejemplo de esta secuencia de procesamiento se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso1}.
+
+\subfigabc
+         {0.3}{reconocimiento_paso_a_paso1} {imagen original en color BGR}{fig:reconocimiento_paso_a_paso1a}
+         {0.3}{reconocimiento_paso_a_paso2} {imagen escala de grises}{fig:reconocimiento_paso_a_paso1b}
+         {0.3}{reconocimiento_paso_a_paso3} {imagen binaria}{fig:reconocimiento_paso_a_paso1c}
+         {Imagen original, escala de grises y binaria.}
+         {fig:reconocimiento_paso_a_paso1}
+
+         La imagen binaria es procesada en la linea 4 por la funcion ``findContours'' \footnote\opencvfindcontours ,que busca todos los posibles contornos pero esta paramatrizada par que devuela solo aquellos que no estan encerrados por un contorno mallor. De esta manera por ejemplo en el contorno del cuadrado sin relleno solo se muestra el contorno externo. \par
+   En la siguiente parte del algortimo se recorren todos los contornos encontrados y se le aplica una funcion que aproxima cada contorno a uno mas suavizado, en donde se filtran las irregularidades de la marca y se parametriza para que devuelva siempre un perimetro cerrado.\par
+   Luego a este perimetro se lo encierra con un rectangulo de area minima utilizando la funcion minAreaRect de la linea 15. Esto permite ahora calcular una buena aproximacion del area del perimetro y del angulo.\par
+   Con esta informacion se selecciona solamente el perimetro que tenga una area cercana a la especificada por el parametro ``targetArea''. Esto permite discriminar una marca por sobre otras.\par
+   Finalmente a la marca elegida se le calcula el desplazamiento en X e Y y su rotacion respecto a la camara. Estos son los datos que se ingresan en las ecuaciones trigonometicas vistas en la seccion \ref{subsection:trigonometria} y es lo que mermite realizar la alineacion de la pieza.
+  La secuencia de pasos mencionada se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso2}.
+
+\subfigabc
+         {0.3}{reconocimiento_paso_a_paso4} {imagen binaria con todos los permiteros encontrados}{fig:reconocimiento_paso_a_paso2a}
+         {0.3}{reconocimiento_paso_a_paso5} {imagen con los perimetros encerrados por rectangulos de ariea minima}{fig:reconocimiento_paso_a_paso2b}
+         {0.3}{reconocimiento_paso_a_paso6} {Discriminacion de la marca deseada utilizando el area como selector}{fig:reconocimiento_paso_a_paso2c}
+         {Imagen original, escala de grises y binaria.}
+         {fig:reconocimiento_paso_a_paso2}
+
+         En el apendice \ref{AppendixA} se presentan varias capturas de marcas mas complejas en donde se visualizan todos los pasos del algoritmo. 
+
+\subfigab
+         {0.48}{reconocimiento_comparativa3} {comentario}{fig:reconocimiento_compartiva3}
+         {0.48}{reconocimiento_comparativa2} {comentario}{fig:reconocimiento_compartiva2}
+         {Comparativa.}
+         {fig:reconocimiento_comparativa}
 
 \subfigtwotwo
          {0.48}{reconocimiento_comparativa1} {comentario}
-         {0.48}{reconocimiento_comparativa2} {comentario}
-         {0.48}{reconocimiento_comparativa3} {comentario}
          {0.48}{reconocimiento_comparativa4} {comentario}
+         {0.48}{reconocimiento_comparativa5} {comentario}
+         {0.48}{reconocimiento_comparativa6} {comentario}
          {Comparativa.}
          {fig:reconocimiento_comparativa}
 
@@ -329,8 +356,8 @@ def recognition(self,img):
          %{intervencion_mando_uart}{intervencion_mando_spi}
    {0.45}{no_signal}{comentario}{fig:intervencion_mando_A}
    {0.45}{no_signal}{comentario}{fig:intervencion_mando_B}
-         {Mando a distancia del controlador NK105 a) Cominicacion por UART del estado de la botonera b) Envío de datos del controlador al LCD por SPI}
-         {fig:intervencion_mando}
+   {Mando a distancia del controlador NK105 a) Cominicacion por UART del estado de la botonera b) Envío de datos del controlador al LCD por SPI}
+   {fig:intervencion_mando}
 
 
 \section{Envio de arvhivos por USB}
