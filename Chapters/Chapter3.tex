@@ -241,15 +241,67 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 
-LLEGUE HASTA ACA \ldots.
+\section{Camara de video a PocketBeagle}
+Como se comento en la seccion \ref{subsection:camara_de_video}, en el alcance de este trabajo se opto por usar la camara de un telefono celular montado en la maquina CNC y transmitir video por Wi-Fi con una apliacion.\par
+   En la fifura \ref{fig:soporte_celu1} se muestra un soporte desarrollado para sujetar el telefono solidario al eje Z de la maquina.\par
+   El dispositivo de sujecion permite ajustar la altura y rotacion facilitando el ajuste preciso.\par
 
-   \subsection{Camara de video a PocketBeagle}
+\subfiga 
+      {0.48} 
+      {soporte_celu1}
+      {Soporte de telefono implementado, con posibilidad de ajustar la altura, rotacion e inclinacion }
+      {fig:soporte_celu1}
+
+   Para recibir las tramas de video desde el celular y posteriormente procesarlas en la PocketBeagle, se implemento una serie de funciones en lenguaje Python sobre la base de la biblioteca PyOpenCV. \par
+   En el fragmento de codigo \ref{cod:reconocimiento1} se lista el el procedimiento para acceder a la camara y tomar un fotograma de video.\par
+
+\begin{figure}[h]
+   \begin{lstlisting}[language=python,caption={Conexion a la camara del telefono por Wi-Fi y captura de un fotograma para su posterior procesamiento.},label={cod:reconocimiento1}]
+   def capture():
+      vcap      = cv.VideoCapture("192.168.1.30:/video",cv.CAP_FFMPEG);
+      ret       = vcap.grab()
+      ret,frame = vcap.retrieve()
+      vcap.release()
+      return frame
+   \end{lstlisting}
+\end{figure}
+
+Una vez capturado el fotograma se lo procesa con una secuencia de operaciones que se muestran en el fragmento \ref{cod:reconocimiento2}.
+
+\begin{figure}[h]
+   \begin{lstlisting}[language=python,caption={Algoritmo principal de reconocimiento de marcas en un fotograma},label={cod:reconocimiento2}]
+
+def recognition(self,img):
+      imgray              = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+      ret, thresh         = cv.threshold(imgray, int(self.grayThresh), 0xff, cv.THRESH_BINARY_INV)
+      contours, hierarchy = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+
+      validContours         = 0
+      maxArea               = 0
+      maxAreaIndex          = 0
+      maxHull               = 0
+      maxRect               = 0
+      height,width,channels = img.shape
+
+      for i in range ( min(len(contours),10)):
+          hull = cv.approxPolyDP(contours[i],0,True) 
+          rect = cv.minAreaRect ( hull )
+          area = rect[1][0]*rect[1][1]
+          if ( area<targetArea*1.5 and area>targetArea*0.5 ):
+              if ( area>=maxArea ):
+                  maxArea      = area;
+                  maxAreaIndex = i;
+                  maxHull      = hull
+                  maxRect      = rect
+          center     = maxRect[0]
+          self.angle = maxRect[2]
+   \end{lstlisting}
+\end{figure}
+
+
 
 \section{Kernel de Linux y file system}
    \subsection{Adaptacion del devicetree para PocketBeagle}
-   \subsection{Manejador de dispositivo SPI esclavo}
-   \subsection{Decodificacion de comandos del LCD}
-\section{Aplicación de captura de teclado}
 \subsection{Aplicación de rotación y escala de GCode}
 \subsection{Algoritmos para reconocimiento de marcas}
 
