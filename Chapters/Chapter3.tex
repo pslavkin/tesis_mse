@@ -201,6 +201,11 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \subsection{Conextion USB como almacenamiento masivo}
    Otro de los inconvenientes del controlador es que la unica manera para transferirle archivos es a traves de la conexion por USB de un dispositivo de almacenamiento masivo.\par
    Dado que la PocketBeagle cuenta con una conexion USB que puede actuar como un dispositivo de almacenamiento masivo virtual, se desarrollo una tecnica para intercambiar archivos con el controlador de manera remota a traves de Wi-Fi. \par
+   En la figura \ref{fig:conexion_usb} se puede ver el conexionado fisico entre la PocketBeagle actuando como USB cliente y el controlador actuando como USB \textit{host}.
+
+\subfiga 
+   {0.35} {hard_setup5} {La PocketBeagle se comporta como un dispositivo de almacenamiento masivo. El controlador accede al sistema de archivos en busca de trabajos a procesar.}{fig:conexion_usb}
+
    La tecnologia involucrada en Linux para permitir este funcionamiento es \textit{configFS}\citep{WEBSITE:configfs}.\par.
    Se implemento un sistema de doble sistema de archivos como el que se muestra en la figura \ref{fig:configfs}.
 
@@ -243,14 +248,14 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 
 \section{Camara de video a PocketBeagle}
 Como se comento en la seccion \ref{subsection:camara_de_video}, en el alcance de este trabajo se opto por usar la camara de un telefono celular montado en la maquina CNC y transmitir video por Wi-Fi con una apliacion.\par
-   En la fifura \ref{fig:soporte_celu1} se muestra un soporte desarrollado para sujetar el telefono solidario al eje Z de la maquina.\par
+   En la fifura \ref{fig:soporte_celu} se muestra un soporte desarrollado para sujetar el telefono solidario al eje Z de la maquina. Ademas se agrego un soporte para un puntero laser que sirve para ajustar las posiciones relativas del telfono y el motor de corte\par
    El dispositivo de sujecion permite ajustar la altura y rotacion facilitando el ajuste preciso.\par
 
-\subfiga 
-      {0.48} 
-      {soporte_celu1}
-      {Soporte de telefono implementado, con posibilidad de ajustar la altura, rotacion e inclinacion }
-      {fig:soporte_celu1}
+\subfigab 
+{0.48} {soporte_celu1} {Soporte de telefono implementado, con posibilidad de ajustar la altura, rotacion e inclinacion} {fig:soporte_celu1}
+      {0.48} {soporte_celu2} {Vista superior de la maquina CNC con el soporte del celular y laser instalados.}{fig:soporte_celu2}
+      {Soporte de celular impreso en 3D.}
+      {fig:soporte_celu}
 
    Para recibir las tramas de video desde el celular y posteriormente procesarlas en la PocketBeagle, se implemento una serie de funciones en lenguaje Python sobre la base de la biblioteca PyOpenCV. \par
    En el fragmento de codigo \ref{cod:reconocimiento1} se lista el el procedimiento para acceder a la camara y tomar un fotograma de video.\par
@@ -329,43 +334,3 @@ En la linea 2 del algoritmo se convierte el formato del fotograma ``img'' de tre
 
          En el apendice \ref{AppendixA} se presentan varias capturas de marcas mas complejas en donde se visualizan todos los pasos del algoritmo. 
 
-\subfigab
-         {0.48}{reconocimiento_comparativa3} {comentario}{fig:reconocimiento_compartiva3}
-         {0.48}{reconocimiento_comparativa2} {comentario}{fig:reconocimiento_compartiva2}
-         {Comparativa.}
-         {fig:reconocimiento_comparativa}
-
-\subfigtwotwo
-         {0.48}{reconocimiento_comparativa1} {comentario}
-         {0.48}{reconocimiento_comparativa4} {comentario}
-         {0.48}{reconocimiento_comparativa5} {comentario}
-         {0.48}{reconocimiento_comparativa6} {comentario}
-         {Comparativa.}
-         {fig:reconocimiento_comparativa}
-
-\section{Kernel de Linux y file system}
-   \subsection{Adaptacion del devicetree para PocketBeagle}
-\subsection{Aplicación de rotación y escala de GCode}
-\subsection{Algoritmos para reconocimiento de marcas}
-
-\subsection{Intervencion al NK105}
-
-\section{Intervencion al NK105}
-
-\subfigab
-         %{intervencion_mando_uart}{intervencion_mando_spi}
-   {0.45}{no_signal}{comentario}{fig:intervencion_mando_A}
-   {0.45}{no_signal}{comentario}{fig:intervencion_mando_B}
-   {Mando a distancia del controlador NK105 a) Cominicacion por UART del estado de la botonera b) Envío de datos del controlador al LCD por SPI}
-   {fig:intervencion_mando}
-
-
-\section{Envio de arvhivos por USB}
-
-\subfigtwotwo
-         {0.48}{nkhack1.png} {comentario}
-         {0.48}{nkhack2.png} {comentario}
-         {0.48}{nkhack3.png} {comentario}
-         {0.48}{nkhack3.png} {comentario}
-         {Aplicacion web desarrollada para controlar la maquina, transferir archivos, gestionar la deteccion de marcas, visualizar el trabajo a cortar en tiempo real, entre otras utilidades de configuracion.}
-         {fig:nkhack}

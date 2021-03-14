@@ -39,82 +39,82 @@
    \end{figure}
 }
 
-\newcommand{\subfigbigsmallsmall}[9]{
-    \def\tempa{#1}%
-    \def\tempb{#2}%
-    \def\tempc{#3}%
-    \def\tempd{#4}%
-    \def\tempe{#5}%
-    \def\tempf{#6}%
-    \def\tempg{#7}%
-    \def\temph{#8}%
-    \def\tempi{#9}%
-    \subfigbigsmallsmallmoreparams
-}
-\newcommand{\subfigbigsmallsmallmoreparams}[1]{
-   \begin{figure}[ht]
-      \begin{center}
-         \begin{subfigure}{\tempa\textwidth}
-            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
-               \begin{subfigure}{1\textwidth}
-                  \includegraphics[width=1.0\textwidth]{\tempc}
-                  \caption{\tempd}
-               \end{subfigure}
-            }
-         \end{subfigure}
-         \begin{subfigure}{\tempb\textwidth}
-            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
-               \begin{subfigure}{1\textwidth}
-                  \includegraphics[width=1.0\textwidth]{\tempe}
-                  \caption{\tempf}
-               \end{subfigure}
-            }
-            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
-               \begin{subfigure}{1\textwidth}
-                  \includegraphics[width=1.0\textwidth]{\tempg}
-                  \caption{\temph}
-               \end{subfigure}
-            }
-         \end{subfigure}
-         \caption{\tempi}
-         \label{#1}
-      \end{center}
-   \end{figure}
-}
+%\newcommand{\subfigbigsmallsmall}[9]{
+%    \def\tempa{#1}%
+%    \def\tempb{#2}%
+%    \def\tempc{#3}%
+%    \def\tempd{#4}%
+%    \def\tempe{#5}%
+%    \def\tempf{#6}%
+%    \def\tempg{#7}%
+%    \def\temph{#8}%
+%    \def\tempi{#9}%
+%    \subfigbigsmallsmallmoreparams
+%}
+%\newcommand{\subfigbigsmallsmallmoreparams}[1]{
+%   \begin{figure}[!h]
+%      \begin{center}
+%         \begin{subfigure}{\tempa\textwidth}
+%            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+%               \begin{subfigure}{1\textwidth}
+%                  \includegraphics[width=1.0\textwidth]{\tempc}
+%                  \caption{\tempd}
+%               \end{subfigure}
+%            }
+%         \end{subfigure}
+%         \begin{subfigure}{\tempb\textwidth}
+%            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+%               \begin{subfigure}{1\textwidth}
+%                  \includegraphics[width=1.0\textwidth]{\tempe}
+%                  \caption{\tempf}
+%               \end{subfigure}
+%            }
+%            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+%               \begin{subfigure}{1\textwidth}
+%                  \includegraphics[width=1.0\textwidth]{\tempg}
+%                  \caption{\temph}
+%               \end{subfigure}
+%            }
+%         \end{subfigure}
+%         \caption{\tempi}
+%         \label{#1}
+%      \end{center}
+%   \end{figure}
+%}
 
-\newcommand{\subfigcab}[7]{
-      \begin{figure}[ht]
-         \begin{center}
-         \begin{subfigure}{#2\textwidth}
-            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
-               \begin{subfigure}{1\textwidth}
-                  \includegraphics[width=1.0\textwidth]{#3}
-                  \caption{}
-               \end{subfigure}
-            }
-            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
-               \begin{subfigure}{1\textwidth}
-                  \includegraphics[width=1.0\textwidth]{#4}
-                  \caption{}
-               \end{subfigure}
-            }
-         \end{subfigure}
-         \begin{subfigure}{#1\textwidth}
-            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
-               \begin{subfigure}{1\textwidth}
-                  \includegraphics[width=1.0\textwidth]{#5}
-                  \caption{}
-               \end{subfigure}
-            }
-         \end{subfigure}
-         \caption{#6}
-         \label{#7}
-      \end{center}
-      \end{figure}
-}
+%\newcommand{\subfigcab}[7]{
+%      \begin{figure}[ht]
+%         \begin{center}
+%         \begin{subfigure}{#2\textwidth}
+%            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+%               \begin{subfigure}{1\textwidth}
+%                  \includegraphics[width=1.0\textwidth]{#3}
+%                  \caption{}
+%               \end{subfigure}
+%            }
+%            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+%               \begin{subfigure}{1\textwidth}
+%                  \includegraphics[width=1.0\textwidth]{#4}
+%                  \caption{}
+%               \end{subfigure}
+%            }
+%         \end{subfigure}
+%         \begin{subfigure}{#1\textwidth}
+%            \tcbox[boxsep=0.2mm,left=0mm,top=0mm, right=0mm,bottom=0mm, boxrule=0.2mm, colframe=gray, colback=white]{
+%               \begin{subfigure}{1\textwidth}
+%                  \includegraphics[width=1.0\textwidth]{#5}
+%                  \caption{}
+%               \end{subfigure}
+%            }
+%         \end{subfigure}
+%         \caption{#6}
+%         \label{#7}
+%      \end{center}
+%      \end{figure}
+%}
 
 \newcommand{\subfiga}[4]{
-   \begin{figure}[h]
+   \begin{figure}[!h]
       \begin{center}
          \includegraphics[width=#1\textwidth,frame]{#2}
          \caption{#3}
@@ -136,7 +136,7 @@
     \subfigabmoreparams
 }
 \newcommand{\subfigabmoreparams}[1]{
-   \begin{figure}[h]
+   \begin{figure}[!h]
       \begin{center}
          \begin{subfigure}{\tempa\textwidth}
             \includegraphics[width=1.0\textwidth,frame]{\tempb}
@@ -167,7 +167,7 @@
     \subfigabcmoreparams
 }
 \newcommand{\subfigabcmoreparams}[5]{
-   \begin{figure}[h]
+   \begin{figure}[!h]
       \begin{center}
          \begin{subfigure}{\tempa\textwidth}
             \includegraphics[width=1.0\textwidth,frame]{\tempb}
