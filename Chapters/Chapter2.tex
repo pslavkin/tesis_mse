@@ -4,161 +4,13 @@
 
 En el presente capítulo se expone una breve reseña histórica de las máquinas CNC, su principio de funcionamiento y su uso en la industria. Luego se introducen las tecnologías más relevantes involucradas en el desarrollo de este trabajo.
 
-\section{Historia y principio de funcionamiento}
-
-Hacia finales de la década del '40, el mecánico inventor Jhon Parsons\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons_A}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada, figura \ref{fig:parsons_B}.\\
-A este invento se lo considera la primera máquina de control numérico o NC por sus siglas en inglés (\textit{numerical control}).
-\subfigab
-         {0.37}{parsons_face}{Fotografia de Jhon T. Parsons, considerado en la industria como el inventor de las máquinas NC.}{fig:parsons_A}
-         {0.6}{parsons_machine}{Una de las primeras máquinas de la industria consideradas de control numérico NC.\\ \vphantom{1}}{fig:parsons_B}
-         {Jhon Parsons, el inventor de las máquinas de control numérico junto a una de sus máquinas.}
-         {fig:parsons}
-\par
-Luego de varias décadas, con el surgimiento de las computadoras, se reemplazaron las cintas perforadas por software, dando lugar a las máquinas de control numérico computarizado o CNC por sus siglas en inglés \textit{(computer numerical control)}.
-\\
-A pesar del paso del tiempo y los avances tecnológicos, los bloques constitutivos de una máquina CNC siguen siendo los mismos que se muestran en la figura \ref{fig:cnc_main_blocks}.
-\subfiga {1}
-         {cnc_main_blocks.pdf}
-         {Los tres bloques básicos de una máquina CNC.}
-         {fig:cnc_main_blocks}
-
-\subsection{Programa de movimientos}
-   El programa de movimientos consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.\par
-   Este lenguaje fue creado por el Instituto tecnológico de Masachussets en la década del '50 y especificado en el documento NIST-RS274-D \citep{rs274}.\par
-Originalmente los ingenieros de mecanizado lo escribían manualmente en una planilla y luego, mediante una máquina de mecanografía, se transcribía a una cinta perforada que sería interpretada por el controlador de movimientos.\par
-Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}.
-\subfigtwotwo
-          {0.46}{cad_cam_primigenio1} {Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode.}
-          {0.5}{cad_cam_primigenio2} {Operadora transcribiendo la lista de operaciones del formato papel a un rollo de cinta multiperforada.}
-          {0.46}{cad_cam_primigenio3} {Lector de cinta multiperforada que controla los movimientos de la máquina.}
-          {0.5}{cad_cam_primigenio4} {Operador trabajando con una de las primeras fresadoras por control numerico.}
-          {Secuencia de pasos para operar una máquina NC primigenia.}
-          {fig:programacion_cnc_primigenia}
-
-
-          En el presente se diseña la pieza en tres dimensiones con la ayuda de software de diseño asistido por computadora CAD  (\textit{computer aided design}).\\
-          Algunos software de CAD reconocidos se listan a continuación:
-          \begin{itemize}
-             \item{FreeCAD}
-             \item{Blender}
-             \item{Rhinoceros}
-             \item{AutoCAD}
-             \item{SolidWorks}
-          \end{itemize}
-   El archivo de salida del CAD se procesa con un software de manufactura asistida por computadora CAM (\textit{computer aided manufacturing}) en donde el diseñador puede configurar los métodos y estrategias de mecanizado.\par
-          Algunos software de CAM reconocidos se listan a continuación:
-          \begin{itemize}
-             \item{RhinoCAM}
-             \item{Blender CAM}
-             \item{FreeMILL}
-             \item{Aspire}
-             \item{Mastercam}
-          \end{itemize}
-
-   El resultado final es un archivo de texto en lenguaje GCode que se almacena digitalmente y que será procesado por el controlador.\par
-          Esta secuencia es conocida como diseño CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
-\subfigtwotwo 
-            {0.48 }{cad_cnc_cuadrado}{Se diseña la pieza en 3D en un software CAD.\\ \vphantom{1}}
-            {0.48 }{cam_cnc_cuadrado}{Se diseña la estrategia de mecanizado y opcionalmente se simula el proceso en un software CAM.}
-            {0.48 }{gcode_cnc_cuadrado}{Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de máquina que leerá el controlador.}
-            {0.40 }{portada_mach3}{El sofware del controlador genera las señales que mueven el CNC y ejecutan el mecanizado.}
-            {Secuencia de pasos para operar una máquina CNC moderna.}
-            {fig:programacion_cnc_actual}
-
-\subsection{Controlador de movimientos}
-El controlador de movimientos es un equipo electrónico capaz de leer un programa en lenguaje GCode y proveer las señales eléctricas adecuadas para mover la máquina.\par
-Es usual que a la salida del controlador se conecten amplificadores de señal (\textit{drivers}) que proveen la potencia suficiente para mover los motores y mecanismos montados en la máquina.\par
-De esta manera el controlador se compone de dos etapas, controlador lógico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.
-
-\subfiga {0.5}
-         {control_and_driver.pdf}
-         {La etapa de control se suele separar en dos: controlador lógico y driver de potencia.}
-         {fig:control_and_driver}
-
-En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.\\
-En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales detallando las características principales.\\
-
-\begin{table}[h!]
-   \centering
-   \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
-   \begin{tabular}{m{0.6\textwidth}m{0.4\textwidth}}
-      \toprule
-      \textbf{Características} & \textbf{Imagen} \\ 
-      \midrule
-%-----------------------------
-      Controlador dependiente de una PC y conexión por puerto paralelo. Solución económica para máquinas  de baja performance.
-      &
-      \figtable{0.4}{controlador_paralelo} \\
-%-----------------------------
-      Controlador integrado de media performance, ideal para máquinas profesionales pero de baja complejidad. Este es el controlador que se usará en este trabajo para realizar los ensayos.
-      &
-      \figtable{0.4}{nk105} \\
-%-----------------------------
-      Controlador basado en PC sobre Windows de media performance. Este es el controlador que usa actualmente la empresa Wolfcut en sus máquinas.
-      &
-      \figtable{0.4}{edding_board} \\
-%-----------------------------
-      Controlador autónomo profesional de gran performance y opciones de operación. Este tipo de controladores se utilizan en centros de mecanizado de altísima complejidad y prestaciones sumamente exigentes. Es inusual ver este tipo de controladores en las máquinas de gama media debido a su alto costo. 
-      &
-      \figtable{0.4}{controlador_nk200} \\
-%-----------------------------
-      \bottomrule
-   \end{tabular}
-   \label{tbl:controllers}
-\end{table}
-
-
-\begin{table}[h!]
-   \centering
-   \caption[Modelos de drivers]{Modelos de drivers de motores}
-   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
-      \toprule
-      \textbf{Características} & \textbf{Imagen} \\ 
-      \midrule
-%-----------------------------
-      Driver para motores paso a paso pequeños, económicos, ideales para máquinas simples, impresoras 3D, y hobby.
-      &
-      \figtable{0.3}{driver_steper_arduino} \\
-%-----------------------------
-      Driver para motores paso a paso medianos, ideales para máquinas de media precisión y mecánica ligera.
-      &
-      \figtable{0.3}{driver_steper} \\
-%-----------------------------
-      Driver para motores BLDC (\textit{brush less direct current motors}), de potencia media, adecuados para máquinas de extrema precisión y escalables en potencia.
-      &
-      \figtable{0.3}{driver_servo} \\
-%-----------------------------
-      \bottomrule
-   \end{tabular}
-   \label{tbl:drivers}
-\end{table}
-
-
-\subsection{Máquina}
-En términos generales una máquina CNC es un conjunto de piezas electromecánicas que permiten mover el elemento de mecanizado en varias dimensiones.
-En algunas el elemento de mecanizado permanece fijo y lo que se mueve es la pieza a mecanizar.
-Suelen ser motorizadas, pero también las hay con actuadores lineales, sistemas hidráulicos o una combinación de todos estos.\par
-Dependiendo del propósito de la máquina se definen los grados de libertad del movimiento.
-Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos roboticos y solo dos para corte y grabado de piezas planas con láser.\par
-Para el desarrollo de este trabajo se estudian solamente máquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras. \par
-Se esquematiza y se muestran algunos modelos de este tipo de estructuras en la figura \ref{fig:wolfcut1}.
-
-\subfigtwotwo
-{0.48}{cnc_3d1}{Esquema general de una máquina CNC de tres ejes perpendiculares.\\ \vphantom{1}}
-            {0.48}{wolfcut3}{Máquina de tres ejes para corte y grabado láser de materiales plásticos, madera, cartón, papel, etc.}
-            {0.48}{wolfcut2}{Máquina de dos ejes de corte por cuchilla para cartón, papel, tela, etc.\\ \vphantom{1}}
-            {0.48}{wolfcut1}{Fresadora de tres ejes para corte y mecanizado de madera, plástico, cartón, aluminio, etc.}
-            {Esquema general y modelos de máquinas CNC dependiendo del tipo de material a procesar y la tecnología de corte.}
-            {fig:wolfcut1}
-
-
 \subsection{Tecnologías utilizadas}
    En el diagrama de bloques de la figura \ref{fig:system_blocks1} se muestran las partes que componen el sistema implementado.
    Para explicar como se relacionan e interactúan entre sí estos bloques, en las próximas secciones de esta memoria se describen las cualidades y funciones más destacadas de cada uno.
 
 \subfiga {0.6}
          {system_blocks1.pdf}
-         {Diagrama de bloques del sistema implementado con el objeto de identificar las tecnologías involucradas en cada bloque.}
+         {Diagrama de bloques del sistema implementado.}
          {fig:system_blocks1}
 
 \subsection{Plataforma PocketBeagle}
@@ -177,9 +29,9 @@ Se esquematiza y se muestran algunos modelos de este tipo de estructuras en la f
    Se está utilizando una distribución oficial del sistema operativo Debian compilada para esta plataforma y que se puede descargar desde el link oficial\footnote\beagleimages.
 
 \subfigab 
-         {0.60}{pocketbeagle}{Plataforma PocketBeagle de desarrollo utilizada en este trabajo.}{fig:pocketbeagle_A}
-         {0.35}{dongle_wifi}{Adaptador USB a Wi-Fi que otorga conectividad a la plataforma.}{fig:pocketbeagle_B}
-         {Plataforma de desarrollo PocketBeagle utilizada en este trabajo.}
+         {0.60}{pocketbeagle}{Plataforma PocketBeagle como unidad de procesamiento.}{fig:pocketbeagle_A}
+         {0.35}{dongle_wifi}{Adaptador USB a Wi-Fi que otorga conectividad.}{fig:pocketbeagle_B}
+         {Conjunto de herramientas adoptadas.}
          {fig:pocketbeagle}
 
          Se evaluaron plataformas más potentes como la PYNQ-Z1 \citep{WEBSITE:pynq}. Si bien las prestaciones son mayores a la PocketBeagle, también lo es el costo, y dado que este trabajo es solo un accesorio para un controlador de máquinas de segmento medio y bajo, se intentó mantener los costos y la complejidad acotada.
@@ -192,7 +44,7 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
    Para cumplir con los requisitos planteados se utilizó un arreglo de tecnologías web muy variadas, pero muy ligadas entre sí, que se muestran en la figura \ref{fig:webstack}.\\
    \subfiga {0.8}
             {webstack.pdf}
-            {Capas de software relacionadas con la aplicación web utilizadas en este trabajo.}
+            {Capas de software relacionadas con la aplicación web utilizadas.}
             {fig:webstack}
 
    Para entender la función principal de cada capa se describen algunos detalles en la siguiente lista:
@@ -203,10 +55,10 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
       Esto permite que, por ejemplo, una función de Python esté esperando datos de un archivo mientras otra procesa una imagen sin bloquear las funciones del servidor.
       }
       \item{aiohttp \citep{WEBSITE:aiohttp}: Es una biblioteca de Python que permite correr un servidor web utilizando la infraestructura de asyncio para realizar tareas de manera cooperativa y concurrete.
-      Es el motor del servidor web en este trabajo.
+      Es el motor del servidor web.
       }
       \item{HTML5.0 \citep{WEBSITE:html5}: Es el lenguaje de marcas utilizado para visualizar contenidos en la web.
-         En este trabajo se utiliza para mostrar contenido estático y también para aprovechar un mecanismo nativo de la version 5.0 que permite la reproducción de vídeo en la página web sin necesidad de otras tecnologías.
+         Se utiliza para mostrar contenido estático y también para aprovechar un mecanismo nativo de la version 5.0 que permite la reproducción de vídeo en la página web sin necesidad de otras tecnologías.
       }
       \item{CSS \citep{WEBSITE:css}: Es un lenguaje que permite definir estilos, colores, formato y modo de presentación en pantalla de una página escrita en HTML.
       Es indispensable para crear aplicaciones web atractivas y apropiadas para cada uso.
@@ -220,14 +72,14 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
          Esta íntimamente ligada con el desarrollo web y es por ello que puede aprovechar las tarjetas gráficas del ordenador del cliente para acelerar las tareas de visualización y procesamiento.
          De esta manera logra eficiencias similares a las aplicaciones nativas del sistema operativo.
       }
-      \item{Three.js \citep{WEBSITE:threejs}: Es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGL pero facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación y mejora el mantenimiento del código.
+      \item{Three.js \citep{WEBSITE:threejs}: Es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGL y facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación y mejora el mantenimiento del código.
          Se utiliza en la aplicación para visualizar el movimiento de la máquina en 3D, los trazos de corte, las correcciones de rotación, etc.
       }
       \item{Websockets \citep{WEBSITE:websockets}: Es un protocolo de comunicaciones que opera sobre el protocolo TCP/IP, similar a HTTP, pero diseñado con la premisa de lograr una comunicación bidireccional de baja latencia.
          Es de gran importancia en la aplicación para lograr una rápida respuesta de operación.
       }
       \item{socket.IO \citep{WEBSITE:socketio}: Es una biblioteca de JavaScript que utiliza Websockets para permitir la comunicación bidireccional entre el servidor web y el o los clientes.
-         En este trabajo toda la comunicación entre los scripts de JavaScript que corren en el cliente y el servidor en Python que corre en la PocketBeagle se comunican utilizando esta biblioteca.
+         Toda la comunicación entre los scripts de JavaScript que corren en el cliente y el servidor en Python que corre en la PocketBeagle se comunican utilizando esta biblioteca.
       }
    \item{OpenCV \citep{WEBSITE:opencv}: Es una biblioteca muy popular escrita en C++ para procesamiento de imágenes asistido por computadora.
          Además de contar con potentes algoritmos de procesamiento muy útiles para este trabajo, es soportada por muchas plataformas asegurando la compatibilidad entre dispositivos.
@@ -304,7 +156,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
    \end{equation}
 
 \subfigab
-         {0.45}{alineacion_offset1}{El plano B se encuentra desplazado $2$unidades en el eje x y $1$unidad en el eje Y.}{fig:alineacion_offset_A}
+         {0.45}{alineacion_offset1}{El plano B se encuentra desplazado $2$ unidades en el eje x y $1$ unidad en el eje Y.}{fig:alineacion_offset_A}
          {0.45}{alineacion_offset2}{El plano A se desplaza y corrige su posición.}{fig:alineacion_offset_B}
          {Corrección de desplazamiento. A representa el sistema de coordenadas de la máquina y las dimensiones extraídas del archivo de corte, B representa el objeto real desplazado, escalado y rotado respecto del primero}
          {fig:alineacion_offset}
@@ -363,7 +215,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
             \label{eq:alineacion_escalado}
          \end{equation}
 
-\subsection{Detection y tipos de marcas fiduciales}
+\subsection{Detección y tipos de marcas fiduciales}
    Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado es usual encontrar que las marcas son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\\
    Para un efectivo reconocimiento de una marca utilizando una cámara de vídeo algunas consideraciones deben tenerse en cuenta como ser:
    \begin{itemize}
@@ -379,7 +231,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
 \subfigtwotwo
             {0.5}{ejemplo_marcas2}{Figuras geométricas llenas o contorno} 
             {0.38}{ejemplo_marcas1}{Ejemplo de marcas fiduciales en una placa de circuito impreso PCB.}
-            {0.5}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado utilizando el software desarrollado en este trabajo.}
+            {0.5}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado utilizando el software desarrollado.}
             {0.38}{ejemplo_marcas3}{Marcas fiduciales codificadas. Se pueden utilizar para reconocer la posición y un código para diversos usos.}
             {Ejemplo de diferentes tipos de marcas fiduciales.}
             {fig:ejemplo_marcas}

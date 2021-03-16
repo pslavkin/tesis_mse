@@ -2,19 +2,19 @@
 
 \label{Chapter3}
 
-En este capítulo se desglosan los bloques principales del sistema, se explica su interconexión, se exponen los criterios de diseño y se destacan los aspectos mas relevantes de cada implementación.
+En este capítulo se desglosan los bloques principales del sistema, se explica su interconexión, se exponen los criterios de diseño y se destacan los aspectos más relevantes de cada implementación.
 
 \section{Diseño general del sistema}
 
-En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparación entre el sistema de conexionado original, figura \ref{fig:system_blocks0}, y el modificado para el reconocimiento de marcas, figura \ref{fig:system_blocks1}.
+En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparación entre la topología original, que se muestra en la figura \ref{fig:system_blocks0} y el modificado para el reconocimiento de marcas, representado en la figura \ref{fig:system_blocks1}.
 
 \subfigab 
-{0.45} {system_blocks0.pdf} {Conexión entre la máquina CNC y el controlador sin ninguna intervención.\\ \vphantom{1}} {fig:system_blocks0}
-        {0.45}{system_blocks1.pdf} {Conexión de la maquina CNC con el agregado de los bloques para el reconocimiento de marcas.} {fig:system_blocks1}
+{0.45} {system_blocks0.pdf} {Conexión entre la máquina CNC y el controlador original.} {fig:system_blocks0}
+        {0.45}{system_blocks1.pdf} {Conexión de la máquina CNC con el agregado del reconocimiento de marcas.} {fig:system_blocks1}
         {Comparación entre la conexión original de la máquina CNC y la modificada para el reconocimiento de marcas.}
         {fig:system_blocks}
 
-        En la tabla \ref{tbl:descripcion_de_bloques} se detallan las principales características de cada bloque junto a una imagen del objeto físico que representa:
+        En la tabla \ref{tbl:descripcion_de_bloques} se detallan las principales características de cada bloque junto a una imagen:
          \begin{longtable}[!h]{m{0.6\textwidth}p{0.3\textwidth}}
             \caption[Características de los bloques principales]{Descripción e imagen representativa de los bloques principales del sistema.}\\
             \toprule
@@ -27,31 +27,31 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
             \midrule
             \endhead
 %-----------------------------
-               {Wi-Fi: es una red inalámbrica compartida entre los bloques ``PocketBeagle'', ``Cámara de video'' y ``Navegador web''. No requiere tener acceso a internet. Si la tuviera, se podría acceder al sistema también desde internet.}
+               {Bloque Wi-Fi: representa una red inalámbrica compartida entre los bloques ``PocketBeagle'', ``cámara de vídeo'' y ``navegador web''. Si además contara con acceso a internet, permitiría acceder remotamente.}
                &
                \figtable{0.2}{router_wifi} \\
 %-----------------------------
-               {Navegador web: Es un dispositivo que puede correr un navegador web: ordenador personal, teléfono celular, tableta, etc. Sin embargo algunas características del software solo son aprovechables desde una pantalla mayor a 20''.}
+               {Bloque navegador web: representa un dispositivo que puede correr un navegador web: ordenador personal, teléfono celular, tableta, etc. Sin embargo para el alcance de este desarrollo algunas características solo son accesibles desde una pantalla mayor a 10''.}
                &
                \figtable{0.2}{celu_tableta_monitor} \\
 %-----------------------------
-               {PocketBeagle: es la plataforma de desarrollo elegida con el agregado de una circuitería que adapta las señales y permite intercalarse entre los bloques ``Controlador CNC'' y ``Mando a distancia''.}
+               {Bloque PocketBeagle: representa la plataforma de desarrollo elegida con el agregado de una circuitería que permite intercalarse entre los bloques ``controlador CNC'' y ``mando a distancia''.}
                &
                \figtable{0.2}{pocketbeagle} \\
 %-----------------------------
-               {Máquina CNC: es el conjunto de piezas electromecánicas motorizadas para realizar el mecanizado de piezas.}
+               {Bloque máquina CNC: representa el conjunto de piezas electromecánicas motorizadas para realizar el mecanizado de piezas.}
                &
                \figtable{0.2}{maquina_cnc_star1} \\
 %-----------------------------
-               {Controlador CNC: es el dispositivo electrónico encargado de comandar los motores de la maquina CNC para generar los movimientos de corte.}
+               {Bloque controlador CNC: representa el dispositivo electrónico encargado de comandar los motores de la máquina para generar los movimientos de corte.}
                &
                \figtable{0.2}{controlador_nk105_solo} \\
 %-----------------------------
-               {Mando a distancia: es un dispositivo electrónico cableado que se conecta al ``Controlador CNC'', cuenta con una pantalla para visualización y un teclado para interactuar con el operador de la maquina.}
+               {Bloque mando a distancia: representa el dispositivo electrónico que se conecta al controlador. Cuenta con una pantalla para visualización y un teclado para el ingreso de datos.}
                &
                \figtable{0.2}{comando_nk105_solo} \\
 %-----------------------------
-               {Cámara de video: es el dispositivo que se monta en la maquina CNC y permite capturar las imágenes que se utilizarán para el reconocimiento de marcas.\par En esta implementación se utiliza la cámara de un teléfono celular, pero podría ser otra mientras permita la transmisión de video por Wi-Fi.}
+               {Bloque cámara de vídeo: representa el dispositivo que se monta en la máquina CNC y permite capturar las imágenes que se utilizarán para el reconocimiento de marcas.\par En esta implementación se utiliza la cámara de un teléfono celular.}
                &
                \figtable{0.2}{telefono_como_camara} \\
 %-----------------------------
@@ -61,39 +61,38 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 
 \section{Bloque PocketBeagle}
 
-   El controlador elegido para este trabajo es muy popular y su buen desempeño es reconocido en la industria, pero no ofrece ninguna opción de interconexión excepto su mando a distancia a través de un cable multifilar.\par
-
-   Se estudió en detalle este cable que conecta el ``Controlador CNC'' con su ``Mando a distancia'' y se determinó que conduce dos canales de comunicación que se detallan en la siguiente lista:
+   Una de las funciones de este bloque es interceptar las señales entre el controlador y el mando para poder intervenirlas.
+   Se estudió en detalle el cable que los interconecta y se determinó que conduce dos canales de comunicación que se detallan en la siguiente lista:
    \begin{itemize}
       \item{UART: \textit{universal asynchronous receiver-transmitter} es una comunicación serial que comunica periódicamente el estado del teclado al controlador.}
-      \item{SPI: \textit{synchronous peripheral interface} es una interfaz sobre la cual se envían los datos desde el controlador a la pantalla LCD.}
+      \item{SPI: \textit{synchronous peripheral interface} es una interfaz sobre la cual se envían los datos desde el controlador a la pantalla de cristal líquido o LCD \textit{liquid crystal display}.}
    \end{itemize}
 
    Para poder interactuar con estas interfases se intercaló una tarjeta electronica que las conecta a la plataforma PocketBeagle. En la figura \ref{fig:handheld_a_pocket} se muestra esta conexión en comparación con la original.
 
 \subfigab 
-   {0.48} {handheld_a_pocket_original} { ``Controlador CNC'' conectado con su ``mando a distancia'' sin intervención.\\ \vphantom{1}}{handheld_a_pocket_original}
-   {0.48} {handheld_a_pocket_intervenido} {``Controlador CNC'' conectado con su ``nando a distancia'' intervenido por la\\ ``PocketBeagle''.}{handheld_a_pocket_intervenido}
-   {Comparación entre la conexión del controlador y su mando antes y después de ser intervenido por el accesorio desarrollado.}
+   {0.48} {handheld_a_pocket_original} { Controlador CNC conectado con el mando.\\ \vphantom{1}}{handheld_a_pocket_original}
+   {0.48} {handheld_a_pocket_intervenido} {Controlador CNC conectado con el mando pero intervenido por el bloque ``PocketBeagle''.}{handheld_a_pocket_intervenido}
+   {Comparación entre la conexión del controlador antes y después de ser intervenido por el accesorio desarrollado.}
    {fig:handheld_a_pocket}
 
-         Como la conexión entre el ``mando a distancia'' y el ``controlador NK105'' se realiza con un conector, el proceso de intercalar la ``PocketBeagle'' es un proceso reversible, no modifica la funcionalidad original del sistema y permite instalarse sin dificultades.\par
+         Como la conexión entre el mando a distancia y el controlador se realiza con un conector, el proceso de intercalar el bloque ``PocketBeagle'' es un proceso reversible, no modifica la funcionalidad original del sistema y permite instalarse sin dificultades.\par
 
-   Se desarrolló una serie de aplicaciones de software que se muestran en la figura \ref{fig:system_blocks2} para lograr dos objetivos principales que se detallan en las secciones \label{subsection:teclado_virtual} y \label{subsection:pantalla_virtial}.
 
 \subfiga {0.8}
          {system_blocks2.pdf}
-         {Diagrama de bloques del sistema implementado con el objeto de identificar las tecnologías involucradas en cada bloque.}
+         {Diagrama de bloques del software de virtualización de teclado y pantalla.}
          {fig:system_blocks2}
 
 \subsection{Teclado virtual}
 \label{subsection:teclado_virtual}
 
-      Para lograr enviar datos desde la PocketBeagle al controlador se desarrolló una aplicación en lenguaje C que corre como servicio en la PocketBeagle.\par
+      Para lograr enviar datos desde la PocketBeagle al controlador se desarrolló una aplicación en lenguaje C que corre como servicio. En la figura \ref{fig:system_blocks2} se muestra el diagrama de bloques del software.\par
       En el fragmento de código \ref{cod:handheld1} se pueden ver tres tareas o \textit{threads} que implementan: la lectura del teclado físico, la lectura de una cola virtual y el envió de los datos al controlador.\par
 
+
 \begin{figure}
-   \begin{lstlisting}[label={cod:handheld1},caption={Tarea encargada de procesar los datos del teclado físico y reenviarlos a la cola de multiplexado.}]
+   \begin{lstlisting}[caption={Tarea encargada de procesar los datos del teclado físico y reenviarlos a la cola de multiplexado.},label={cod:handheld1}]
 
    void* rcvFunc(void* niyto)
    {
@@ -110,7 +109,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 \begin{figure}
-   \begin{lstlisting}[label={cod:handheld1},caption={},title={\lstlistingname~\thelstlisting:Tarea que recibe datos del teclado virtual y los reenvía a la cola de multiplexado.}]
+   \begin{lstlisting}[caption={},label={cod:handheld1},title={\lstlistingname~\thelstlisting:Tarea que recibe datos del teclado virtual y los reenvía a la cola de multiplexado.}]
    void* rcvVirtual(void* niyto)
    {
       char buf  [ MAX_VIRTUAL_CMD_LENGHT ];
@@ -132,7 +131,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 \begin{figure}
-   \begin{lstlisting}[label={cod:handheld1},caption={},title={\lstlistingname~\thelstlisting:Tarea de multiplexado de los datos del teclado físico y virtual.}]
+   \begin{lstlisting}[caption={},label={cod:handheld1},title={\lstlistingname~\thelstlisting:Tarea de multiplexado de los datos del teclado físico y virtual.}]
    void* sendFunc(void* niyto)
    {
       struct timespec tm;
@@ -148,37 +147,36 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
    Se aprovecharon los mecanismos de colas o FIFO's \textit{first in first out} que ofrece Linux para multiplexar los datos del ``teclado'' con un nuevo bloque: ``teclado virtual''.\par
-      Con esta técnica, si se envían datos a la ``FIFO Rx'' los datos se reenvían al controlador emulando el presionado de un botón.\par
-      Al mismo tiempo se responde a la comunicación del teclado original.\par
+      Con esta técnica, si se envían datos al bloque ``FIFO Rx'' los datos se reenvían al controlador emulando el presionado de un botón y al mismo tiempo se responde a la comunicación del teclado original.
       De esta manera el controlador se puede manejar virtual o físicamente.\par
-      Dado que la recepción es a través de una FIFO, es posible instanciar mas de un teclado virtual con accesos concurrentes \citep{book:embeddedprimer}.
+      Dado que la recepción es a través de una FIFO, es posible instanciar más de un teclado virtual con accesos concurrentes \citep{book:embeddedprimer}.
 
 \subsection{Pantalla virtual}
 
       Para poder conocer el estado del controlador es necesario contar con la información que se muestra en la pantalla LCD.\par
       Se estudió en detalle las especificaciones del controlador de esta pantalla con el objetivo de emular una pantalla virtual.\par
-      Se encontró que debido a la alta velocidad de los datos y que las tramas no tienen un largo definido, no fue posible utilizar los drivers de spi del kernel y realizar esta emulación en espacio de usuario.\par
-      Para poder capturar correctamente estas tramas se implementó un driver SPI en modo esclavo \textit{spi slave} como un nuevo modulo del kernel del sistema operativo \citep{book:ldd3}.
-      Este driver, a diferencia del driver original, permite recibir cualquier longitud de trama, en cualquier momento y almacenarla en un espacio de memoria contigua.
-      Esto se logro utilizando las siguientes técnicas:
+      Debido a la alta velocidad de los datos y que las tramas no tienen un largo definido, no fue posible utilizar los drivers de SPI del \textit{kernel} y realizar esta emulación en espacio de usuario.\par
+      Para poder capturar correctamente estas tramas se implementó un driver SPI en modo esclavo \textit{SPI slave} como un nuevo módulo del sistema operativo \citep{book:ldd3}.
+      Este driver, a diferencia del original, permite recibir cualquier longitud de trama, en cualquier momento y almacenarla en un espacio de memoria contigua.
+      Esto se logró utilizando las siguientes técnicas:
       \begin{itemize}
-         \item {Interrupciones: Se utilizó una interrupción conectada a la señal de selección de chip CS \textit{chip select}. Esto permite reaccionar rápidamente cuando se inicia una transacción.}
-         \item {Acceso directo a memoria: Se utilizó el subsistema DMA \textit{direct access memory} para que las operaciones de copia de los datos que se reciben por SPI a memoria se realicen sin la intervención del procesador. Esto permite conservar los recursos del procesador para otras tareas.}
-         \item{Comunicación ínter procesos: Se utilizaron diversos métodos de IPC's \textit{interprocess commnications} que ofrece Linux para lograr un sistema reactivo con mínimo retardo \citep{book:ldd3}.}
-         \item{Operaciones de archivo: Para transferir las tramas decodificadas en espacio de kernel al espacio de usuario se utilizo el emulo el funcionamiento de un archivo.\\ De esta manera se aprovechan las herramientas de lectura del sistema operativo y se facilita el desarrollo y la integración con el software en espacio de usuario.}
-         \item{Multitarea de kernel: dentro del moduló se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepción de nuevos datos por SPI}
+         \item {Interrupciones: se utilizó una interrupción conectada a la señal de selección de chip CS \textit{chip select}. Esto permite reaccionar rápidamente cuando se inicia una transacción.}
+         \item {Acceso directo a memoria: se utilizó el subsistema DMA \textit{direct access memory} para que las operaciones de copia de los datos que se reciben por SPI a memoria se realicen sin la intervención del procesador. Esto permite conservar los recursos del procesador para otras tareas.}
+         \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's \textit{interprocess commnications} que ofrece Linux para lograr un sistema reactivo con mínimo retardo \citep{book:ldd3}.}
+         \item{Operaciones de archivo: para transferir las tramas decodificadas del espacio de \textit{kernel} al de usuario, se implementó un acceso al módulo como un archivo virtual. De esta manera se aprovechan las herramientas de lectura del sistema operativo y se facilita el desarrollo del software en espacio de usuario.}
+         \item{Multitarea en espacio de \textit{kernel}: dentro del módulo se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepción de nuevos datos por SPI.}
          \item{Indexado de memoria contigua: debido a que la escritura por DMA no permite escribir en colas circulares, se implementó un sistema de una cola lineal indexada. Esto permite poder leer y escribir sin solapamientos. Cuando está cerca del limite de utilización se reinician los índices.}
       \end{itemize}
 
-      En el diagrama de bloques de la figura \ref{fig:lcd_driver_blocks} se muestra la secuencia de pasos implementada en el moduló.
+      En el diagrama de bloques de la figura \ref{fig:lcd_driver_blocks} se muestra la secuencia de pasos implementada en el módulo.
       
 \subfiga {0.7}
          {lcd_driver_blocks.pdf}
-         {Diagrama de bloques implementados en el driver de kernel para la lectura e interpretación de las tramas de datos entre el controlador y el LCD.}
+         {Diagrama de bloques implementados en el driver de \textit{kernel} para la lectura e interpretación de las tramas de datos entre el controlador y el LCD.}
          {fig:lcd_driver_blocks}
 
 \begin{figure}[h]
-   \begin{lstlisting}[caption={Manejador de la interrupción asociada a una transacción SPI. Cuando es llamada activa toda la cadena de eventos que culmina con la actualizacion del estado de la pantalla.},label={cod:lcd_driver}]
+   \begin{lstlisting}[caption={Manejador de la interrupción asociada a una transacción SPI. Cuando es llamada, activa toda la cadena de eventos que culmina con la actualización del estado de la pantalla.},label={cod:lcd_driver}]
    static irq_handler_t csIrqHandler(unsigned int irq, void *dev_id, struct pt_regs *regs)
    {
       complete(getNewDataReady());
@@ -188,7 +186,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 \begin{figure}[h]
-   \begin{lstlisting}[caption={},label={cod:lcd_driver},title={\lstlistingname~\thelstlisting: Tarea que espera en modo bloqueante una nueva trama de datos. Utiliza uno de los métodos de comunicación interprocesos del kernel de Linux.}]
+   \begin{lstlisting}[caption={},label={cod:lcd_driver},title={\lstlistingname~\thelstlisting: Tarea que espera en modo bloqueante una nueva trama de datos. Utiliza uno de los métodos de comunicación interprocesos del \textit{kernel} de Linux.}]
 
    static int newDataFunc(void *nol)
    {
@@ -207,7 +205,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 \begin{figure}[h]
-   \begin{lstlisting}[name={caption},caption={},label=cod:lcd_driver,title={\lstlistingname~\thelstlisting: Función que bloquea a la espera de una operación de lectura desde el espacio de usuario. Cuando es llamada, copia la nueva informacion de la pantalla.}]
+   \begin{lstlisting}[caption={},label=cod:lcd_driver,title={\lstlistingname~\thelstlisting: Función que bloquea a la espera de una operación de lectura desde el espacio de usuario. Cuando es llamada, copia la nueva informacion de la pantalla.}]
    static ssize_t lcd_read( struct file *filp, char __user *buf, size_t count, loff_t *f_pos )
    {
       size_t len=0;
@@ -230,40 +228,38 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 
 \subsection{Sistema virtual completo}
       Trabajando en conjunto, el teclado y la pantalla virtual son todo lo necesario para tomar control de la máquina desde la PocketBeagle.\par
-      El teclado virtual corre como servicio del sistema operativo y se encarga de la comunicación UART.\\
-      La pantalla virtual corre como módulo del kernel y atiende la interfaz SPI.\par
+      El teclado virtual corre como servicio del sistema operativo y se encarga de la comunicación UART. La pantalla virtual corre como módulo del \textit{kernel} y atiende la interfaz SPI.\par
 
-      En la foto de la figura \ref{fig:handheld_lcd_on_action} se puede ver en la pantalla del ``mando a distancia'' una operación de ejemplo en la cual se ingresan los números ``1234'' sin presionar los botones del teclado físico sino que se envían desde una consola de comandos de la PocketBeagle.\par
-      Dada lo complejidad y la falta de información oficial, el desarrollo y puesta a punto de estos dos subsistemas representaron aproximadamente el 50\% del total del trabajo.\par
+      En la foto de la figura \ref{fig:handheld_lcd_on_action} se puede ver en la pantalla LCD el ingreso de los números ``1234'' sin presionar los botones del teclado físico sino que se envían desde una consola de comandos de la PocketBeagle.\par
+      Dada la complejidad y la falta de información oficial, el desarrollo y puesta a punto de estos dos subsistemas representaron aproximadamente el 50\% del total del trabajo.\par
 
 \subfiga {1}
          {handheld_lcd_on_action}
-         {Control de la maquina mediante la PocketBeagle. Se envían datos a una FIFO y un servicio los direcciona al controlador. Los datos del LCD son capturados por el driver y mostrados en la consola. Se puede ver la sincronía entre el mando a distancia y el virtual.}
+         {Control de la máquina mediante la PocketBeagle. Se envían datos a una FIFO y un servicio los direcciona al controlador. Los datos del LCD son capturados por el driver y mostrados en la consola. Se puede ver la sincronía entre el mando a distancia y el virtual.}
          {fig:handheld_lcd_on_action}
 
 
 \subsection{Conexión USB como dispositivo de almacenamiento}
-   Otro de los inconvenientes del controlador radica en que la única posibilidad de transferirle archivos es a través un dispositivo de almacenamiento masivo USB.\par
-   La PocketBeagle cuenta con una conexión USB cliente que puede actuar como un dispositivo de almacenamiento masivo virtual.
+La única opción para transferir archivos al controlador es a través un dispositivo de almacenamiento USB o \textit{pendrive}.\par
+   La PocketBeagle cuenta con una conexión USB cliente que puede actuar como un dispositivo de almacenamiento virtual.
    Sobre esta tecnología se desarrolló una técnica para intercambiar archivos con el controlador de manera remota a través de Wi-Fi.\par
-   En la figura \ref{fig:conexion_usb} se puede ver el conexionado físico entre la PocketBeagle actuando como USB cliente y el controlador actuando como USB anfitrión \textit{host}.
+   En la figura \ref{fig:conexion_usb} se puede ver el conexionado físico entre la PocketBeagle actuando como USB cliente y el controlador actuando como USB anfitrión o \textit{host}.
 
 \subfiga 
    {0.35} {hard_setup5} {La PocketBeagle se comporta como un dispositivo de almacenamiento. El controlador accede al sistema de archivos en busca de trabajos a procesar.}{fig:conexion_usb}
 
-   La tecnología involucrada en Linux para permitir este funcionamiento es \textit{configFS}\citep{WEBSITE:configfs}.\par.
+   La tecnología involucrada en Linux para permitir este funcionamiento es \textit{configFS}\citep{WEBSITE:configfs}.\par
    Se implementó un sistema de intercambio de doble sistema de archivos como el que se muestra en la figura \ref{fig:configfs}.
-   Con este método mientras el controlador accede a un sistema de archivos con trabajos a procesar, la PocketBeagle puede escribir en otro.
+   Con este método mientras el controlador accede a un sistema de archivos con trabajos a procesar, la PocketBeagle puede escribir en otro.\par
    Cuando se desea transferir un nuevo archivo al controlador, simplemente se invierten estos dos sistemas: el de lectura pasa a ser escritura y viceversa.
 
 \subfigab 
    {0.48} {configfs1} {El controlador lee nuevos archivos del sistema de archivos 1 en verde. La aplicación escribe futuros trabajos en el sistema de archivos 2 en rojo.}{fig:configfs1}
    {0.48} {configfs2} {El controlador lee nuevos archivos del sistema de archivos 2 en rojo. La aplicación escribe futuros trabajos en el sistema de archivos 1 en verde.}{fig:configfs2}
-   {Doble sistema de archivos. El verde se presenta al controlador como un dispositivo de almacenamiento masivo con archivos para ejecutar. El rojo se presenta a la aplicación como un sistema de archivos para escribir futuros trabajos.}
+   {Técnica de doble sistema de archivos para transferir información al controlador.}
    {fig:configfs}
 
-   En el script mostrado en el listado \ref{cod:configfs} se aprovecha el lenguaje \textit{bash} para implementar este sistema dual en muy pocas lineas.\par
-   Este script corre como servicio en la PocketBeagle.
+   En el script mostrado en el listado \ref{cod:configfs} se aprovecha el lenguaje \textit{bash} para implementar este sistema dual en muy pocas lineas y corre como servicio en la PocketBeagle.
 
 \begin{figure}[h]
    \begin{lstlisting}[language=bash,caption={Implementación de doble sistema de archivos conectado con la tecnología configFS. Se aprovecha la potencia de \textit{bash} y se corre como servicio.},label={cod:configfs}]
@@ -292,20 +288,20 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 
-\section{Cámara de video a PocketBeagle}
-Como se comentó en la sección \ref{subsection:camara_de_video}, en el alcance de este trabajo se optó por usar la cámara de un teléfono celular montado en la máquina CNC y transmitir video por Wi-Fi con una paliación.\par
+\section{Cámara de vídeo a PocketBeagle}
+Como se comentó en la sección \ref{subsection:camara_de_video}, en el alcance de este trabajo se optó por usar la cámara de un teléfono celular montado en la máquina CNC y transmitir vídeo por Wi-Fi con una aplicación.\par
    En la figura \ref{fig:soporte_celu} se muestra un soporte desarrollado para sujetar el teléfono al eje Z de la máquina. \par
-   Además se agregó un soporte para un puntero laser que sirve para ajustar las posiciones relativas del teléfono y el motor de corte\par
-   El dispositivo de sujeción permite ajustar la altura y rotación y permite un ajuste preciso.\par
+   Además se agregó un soporte para un puntero laser que sirve para ajustar las posiciones relativas del teléfono y el motor de corte.\par
+   El dispositivo de sujeción permite ajustar la altura y rotación de manera precisa.\par
 
 \subfigab 
 {0.48} {soporte_celu1} {Soporte de teléfono implementado, con posibilidad de ajustar la altura, rotación e inclinación} {fig:soporte_celu1}
-      {0.48} {soporte_celu2} {Vista superior de la maquina CNC con el soporte del celular y laser instalados.}{fig:soporte_celu2}
+{0.48} {soporte_celu2} {Vista superior de la máquina CNC con el soporte del celular y laser instalados.\\ \vphantom{1}}{fig:soporte_celu2}
       {Soporte de celular y puntero laser solidarios al eje Z.}
       {fig:soporte_celu}
 
-      Para recibir las tramas de video desde el celular y posteriormente procesarlas en la PocketBeagle, se implementó una serie de funciones en lenguaje Python sobre la base de la biblioteca PyOpenCV\footnote{\pyopencvlink}\par
-   En el fragmento de código \ref{cod:reconocimiento1} se lista el procedimiento para acceder a la cámara y tomar un fotograma de video.\par
+      Para recibir las tramas de vídeo desde el celular y procesarlas en la PocketBeagle, se implementó una serie de funciones en lenguaje Python sobre la base de la biblioteca PyOpenCV\footnote{\pyopencvlink}\par
+   En el fragmento de código \ref{cod:reconocimiento1} se lista el procedimiento para acceder a la cámara y tomar un fotograma de vídeo.\par
 
 \begin{figure}[h]
    \begin{lstlisting}[language=python,caption={Conexión a la cámara del teléfono por Wi-Fi y captura de un fotograma para su posterior procesamiento.},label={cod:reconocimiento1}]
@@ -349,41 +345,41 @@ def recognition(self,img):
    \end{lstlisting}
 \end{figure}
 
-En la línea 2 del algoritmo se convierte el formato del fotograma ``img'' de tres canales azul, verde y rojo, BGR \textit{blue,green,red} de 8bits por pixel por canal a escala de grises de 8bits por pixel según la ecuación \ref{eq:bgr2gray}:
+El fotograma ``img'' esta representado por tres canales: azul, verde y rojo o BGR \textit{blue, green, red}.
+Cada pixel de cada canal esta representado por 8 bits de datos. \par
+En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de grises según la ecuación \ref{eq:bgr2gray}:
 \begin{equation}
    \text{RGB[A] to Gray:} \quad Y \leftarrow 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B
    \label{eq:bgr2gray}
 \end{equation}
 
-  Luego en la linea 3 se convierte el formato de escala de grises a binaria de 8bits, en dónde el criterio de selección por 0 o 255 lo decide la variable grayThresh.\par
+  Luego en la línea 3 se convierte el formato de escala de grises a binaria de 8 bits, en dónde el criterio de selección por 0 o 255 lo decide la variable ``grayThresh''.\par
   Un ejemplo de esta secuencia de procesamiento se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso1}.
 
 \subfigabc
          {0.3}{reconocimiento_paso_a_paso1} {Imagen original en color BGR.}{fig:reconocimiento_paso_a_paso1a}
-         {0.3}{reconocimiento_paso_a_paso2} {Imagen escala de grises.}{fig:reconocimiento_paso_a_paso1b}
-         {0.3}{reconocimiento_paso_a_paso3} {Imagen binaria.}{fig:reconocimiento_paso_a_paso1c}
-         {Imagen original, escala de grises y binaria obtenidas mediante un algoritmo en python como parte del proceso de reconocimiento de marcas.}
+         {0.3}{reconocimiento_paso_a_paso2} {Imagen escala de grises. \\ \vphantom{1}}{fig:reconocimiento_paso_a_paso1b}
+         {0.3}{reconocimiento_paso_a_paso3} {Imagen binaria.\\ \vphantom{1}}{fig:reconocimiento_paso_a_paso1c}
+         {Imagen original, escala de grises y binaria obtenidas mediante un algoritmo en Python como parte del proceso de reconocimiento de marcas.}
          {fig:reconocimiento_paso_a_paso1}
 
-         La imagen binaria es procesada en la línea 4 por la función ``findContours'' \footnote\opencvfindcontours ,que busca todos los posibles contornos.\par
-         Sin embargo esta parametrizada para que retorne solo aquellos que no están encerrados por un contorno mayor.\par
+         La imagen binaria es procesada en la línea 4 por la función ``findContours'' \footnote\opencvfindcontours que busca todos los posibles contornos.\par
+         Sin embargo se configura para que devuelva solo aquellos que no están encerrados por un contorno mayor.\par
          En el ejemplo de la figura \ref{fig:reconocimiento_paso_a_paso2b} se puede ver que los cuadrados sin relleno son detectados solo por su contorno externo.\par
-   En la siguiente parte del algoritmo se recorren todos los contornos encontrados y se le aplica una función que aproxima cada contorno a uno mas suave.\par
-   Este algoritmo pretende filtrar irregularidades de la marca o de la captura de video y se configura para que devuelva siempre un perímetro cerrado.\par
-   Se utiliza la función minAreaRect en la linea 15 para encontrar un rectángulo de area mínima que encierre completamente al perímetro.\par
-   Esto permite calcular una buena aproximación del área y del anguló.\par
-   Con esta información se selecciona solamente el perímetro que tenga una área cercana a la especificada por el parámetro ``targetArea''. \par
-   Esto permite al usuario discriminar una marca por sobre otras.\par
-   Finalmente a la marca elegida se le calcula el desplazamiento en X e Y y su rotación respecto a la cámara.\par
+   En la siguiente parte del algoritmo se recorren todos los contornos encontrados y se le aplica una función que aproxima cada contorno a uno más suave.\par
+   Este algoritmo pretende filtrar irregularidades de la marca o de la captura de vídeo y se configura para que devuelva siempre un perímetro cerrado.\par
+   Se utiliza la función minAreaRect en la línea 15 para encontrar un rectángulo de área mínima que encierre completamente al perímetro. Esto permite calcular una buena aproximación del área y del ángulo.\par
+   Finalmente se selecciona solamente la marca que tenga una área cercana a la especificada por el parámetro ``targetArea'' y le permite al usuario discriminar una marca por sobre otras.\par
+   A la marca resultante se le calcula el desplazamiento en X e Y y su rotación respecto a la cámara.\par
    Estos son los datos que se ingresan en las ecuaciones trigonométricas vistas en la sección \ref{subsection:trigonometria} y es lo que permite realizar la alineación de la pieza.\par
   La secuencia de pasos mencionada se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso2}.
 
 \subfigabc
-         {0.3}{reconocimiento_paso_a_paso4} {Imagen binaria con todos los perímetros encontrados.}{fig:reconocimiento_paso_a_paso2a}
+{0.3}{reconocimiento_paso_a_paso4} {Imagen con todos los perímetros externos encontrados.}{fig:reconocimiento_paso_a_paso2a}
          {0.3}{reconocimiento_paso_a_paso5} {Imagen con los perímetros encerrados por rectángulos de área mínima.}{fig:reconocimiento_paso_a_paso2b}
-         {0.3}{reconocimiento_paso_a_paso6} {Discriminación de la marca deseada utilizando el área como selector.}{fig:reconocimiento_paso_a_paso2c}
-         {Proceso de filtrado y selección de perímetros dentro de la imagen. Como resultado se obtiene el centro y rotación de la marca con el area especificada.}
+         {0.3}{reconocimiento_paso_a_paso6} {Se indica centro y ángulo de la marca elegida con borde verde.}{fig:reconocimiento_paso_a_paso2c}
+         {Proceso de filtrado y selección de perímetros dentro de la imagen. Como resultado se obtiene el centro y rotación de la marca con el área especificada.}
          {fig:reconocimiento_paso_a_paso2}
 
-         En el apéndice \ref{AppendixA} se presentan mas ejemplos de capturas de marcas mas complejas en donde se visualizan todos los pasos del algoritmo.\par
+         En el apéndice \ref{AppendixA} se presentan más ejemplos de capturas de marcas más complejas en donde se visualizan todos los pasos del algoritmo.\par
 

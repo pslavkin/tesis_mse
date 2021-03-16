@@ -1,15 +1,163 @@
 % Chapter 1 
 \chapter{Introducción general} % Main chapter title
 
-En el presente capítulo se introducen ejemplos de uso de las máquinas CNC y las dificultades que presentan para alinearse con las piezas a mecanizar. Luego se comparan soluciones de otros fabricantes y finalmente se comenta acerca de la motivación, el alcance y los objetivos de la propia.
+En el presente capítulo se introducen ejemplos de uso de las máquinas de control numérico y las dificultades que presentan para alinearse con las piezas a mecanizar. Luego se comparan soluciones de otros fabricantes y finalmente se comenta acerca de la motivación, el alcance y los objetivos de la propia.
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
 
 %----------------------------------------------------------------------------------------
-\section{Mecanizados CNC en 2D}
+\section{Historia y principio de funcionamiento}
 
-En la actualidad, muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas} se realizan utilizando máquinas de control numérico computarizado o CNC \citep{WEBSITE:cncwiki} (\textit{computer numerical control)}.
+Hacia finales de la década del '40, el mecánico inventor Jhon Parsons\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons_A}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada, figura \ref{fig:parsons_B}.\\
+A este invento se lo considera la primera máquina de control numérico o NC por sus siglas en inglés (\textit{numerical control}).
+\subfigab
+         {0.37}{parsons_face}{Fotografia de Jhon T. Parsons, considerado en la industria como el inventor de las máquinas NC.}{fig:parsons_A}
+         {0.6}{parsons_machine}{Una de las primeras máquinas de la industria consideradas de control numérico NC.\\ \vphantom{1}}{fig:parsons_B}
+         {Jhon Parsons, el inventor de las máquinas de control numérico junto a una de sus máquinas.}
+         {fig:parsons}
+\par
+Luego de varias décadas, con el surgimiento de las computadoras, se reemplazaron las cintas perforadas por software, dando lugar a las máquinas de control numérico computarizado o CNC por sus siglas en inglés \textit{(computer numerical control)}.
+\\
+A pesar del paso del tiempo y los avances tecnológicos, los bloques constitutivos de una máquina CNC siguen siendo los mismos que se muestran en la figura \ref{fig:cnc_main_blocks}.
+\subfiga {1}
+         {cnc_main_blocks.pdf}
+         {Los tres bloques básicos de una máquina CNC.}
+         {fig:cnc_main_blocks}
+
+\subsection{Programa de movimientos}
+   El programa de movimientos consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.\par
+   Este lenguaje fue creado por el Instituto tecnológico de Masachussets en la década del '50 y especificado en el documento NIST-RS274-D \citep{rs274}.\par
+Originalmente los ingenieros de mecanizado lo escribían manualmente en una planilla y luego, mediante una máquina de mecanografía, se transcribía a una cinta perforada que sería interpretada por el controlador de movimientos.\par
+Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}.
+\subfigtwotwo
+          {0.46}{cad_cam_primigenio1} {Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode.}
+          {0.5}{cad_cam_primigenio2} {Operadora transcribiendo la lista de operaciones del formato papel a un rollo de cinta multiperforada.}
+          {0.46}{cad_cam_primigenio3} {Lector de cinta multiperforada que controla los movimientos de la máquina.}
+          {0.5}{cad_cam_primigenio4} {Operador trabajando con una de las primeras fresadoras por control numerico.}
+          {Secuencia de pasos para operar una máquina NC primigenia.}
+          {fig:programacion_cnc_primigenia}
+
+
+          En el presente se diseña la pieza en tres dimensiones con la ayuda de software de diseño asistido por computadora CAD  (\textit{computer aided design}).\\
+          Algunos software de CAD reconocidos se listan a continuación:
+          \begin{itemize}
+             \item{FreeCAD}
+             \item{Blender}
+             \item{Rhinoceros}
+             \item{AutoCAD}
+             \item{SolidWorks}
+          \end{itemize}
+   El archivo de salida del CAD se procesa con un software de manufactura asistida por computadora CAM (\textit{computer aided manufacturing}) en donde el diseñador puede configurar los métodos y estrategias de mecanizado.\par
+          Algunos software de CAM reconocidos se listan a continuación:
+          \begin{itemize}
+             \item{RhinoCAM}
+             \item{Blender CAM}
+             \item{FreeMILL}
+             \item{Aspire}
+             \item{Mastercam}
+          \end{itemize}
+
+   El resultado final es un archivo de texto en lenguaje GCode que se almacena digitalmente y que será procesado por el controlador.\par
+          Esta secuencia es conocida como diseño CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
+\subfigtwotwo 
+            {0.48 }{cad_cnc_cuadrado}{Se diseña la pieza en 3D en un software CAD.\\ \vphantom{1}}
+            {0.48 }{cam_cnc_cuadrado}{Se diseña la estrategia de mecanizado y opcionalmente se simula el proceso en un software CAM.}
+            {0.48 }{gcode_cnc_cuadrado}{Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de máquina que leerá el controlador.}
+            {0.40 }{portada_mach3}{El sofware del controlador genera las señales que mueven el CNC y ejecutan el mecanizado.}
+            {Secuencia de pasos para operar una máquina CNC moderna.}
+            {fig:programacion_cnc_actual}
+
+\subsection{Controlador de movimientos}
+El controlador de movimientos es un equipo electrónico capaz de leer un programa en lenguaje GCode y proveer las señales eléctricas adecuadas para mover la máquina.\par
+Es usual que a la salida del controlador se conecten amplificadores de señal (\textit{drivers}) que proveen la potencia suficiente para mover los motores y mecanismos montados en la máquina.\par
+De esta manera el controlador se compone de dos etapas, controlador lógico y drivers como se aprecia en la figura \ref{fig:control_and_driver}.
+
+\subfiga {0.5}
+         {control_and_driver.pdf}
+         {La etapa de control se suele separar en dos: controlador lógico y driver de potencia.}
+         {fig:control_and_driver}
+
+En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.\\
+En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales detallando las características principales.\\
+
+\begin{table}[h!]
+   \centering
+   \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
+   \begin{tabular}{m{0.6\textwidth}m{0.4\textwidth}}
+      \toprule
+      \textbf{Características} & \textbf{Imagen} \\ 
+      \midrule
+%-----------------------------
+      Controlador dependiente de una PC y conexión por puerto paralelo. Solución económica para máquinas  de baja performance.
+      &
+      \figtable{0.4}{controlador_paralelo} \\
+%-----------------------------
+      Controlador integrado de media performance, ideal para máquinas profesionales pero de baja complejidad. Este es el controlador que se usará para realizar los ensayos.
+      &
+      \figtable{0.4}{nk105} \\
+%-----------------------------
+      Controlador basado en PC sobre Windows de media performance. Este es el controlador que usa actualmente la empresa Wolfcut en sus máquinas.
+      &
+      \figtable{0.4}{edding_board} \\
+%-----------------------------
+      Controlador autónomo profesional de gran performance y opciones de operación. Este tipo de controladores se utilizan en centros de mecanizado de altísima complejidad y prestaciones sumamente exigentes. Es inusual ver este tipo de controladores en las máquinas de gama media debido a su alto costo. 
+      &
+      \figtable{0.4}{controlador_nk200} \\
+%-----------------------------
+      \bottomrule
+   \end{tabular}
+   \label{tbl:controllers}
+\end{table}
+
+
+\begin{table}[h!]
+   \centering
+   \caption[Modelos de drivers]{Modelos de drivers de motores}
+   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
+      \toprule
+      \textbf{Características} & \textbf{Imagen} \\ 
+      \midrule
+%-----------------------------
+      Driver para motores paso a paso pequeños, económicos, ideales para máquinas simples, impresoras 3D, y hobby.
+      &
+      \figtable{0.3}{driver_steper_arduino} \\
+%-----------------------------
+      Driver para motores paso a paso medianos, ideales para máquinas de media precisión y mecánica ligera.
+      &
+      \figtable{0.3}{driver_steper} \\
+%-----------------------------
+      Driver para motores BLDC (\textit{brush less direct current motors}), de potencia media, adecuados para máquinas de extrema precisión y escalables en potencia.
+      &
+      \figtable{0.3}{driver_servo} \\
+%-----------------------------
+      \bottomrule
+   \end{tabular}
+   \label{tbl:drivers}
+\end{table}
+
+
+\subsection{Máquina}
+En términos generales una máquina CNC es un conjunto de piezas electromecánicas que permiten mover el elemento de mecanizado en varias dimensiones.
+En algunas el elemento de mecanizado permanece fijo y lo que se mueve es la pieza a mecanizar.
+Suelen ser motorizadas, pero también las hay con actuadores lineales, sistemas hidráulicos o una combinación de todos estos.\par
+Dependiendo del propósito de la máquina se definen los grados de libertad del movimiento.
+Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos roboticos y solo dos para corte y grabado de piezas planas con láser.\par
+Para el desarrollo de este trabajo se estudian solamente máquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras. \par
+Se esquematiza y se muestran algunos modelos de este tipo de estructuras en la figura \ref{fig:wolfcut1}.
+
+\subfigtwotwo
+{0.48}{cnc_3d1}{Esquema general de una máquina CNC de tres ejes perpendiculares.\\ \vphantom{1}}
+            {0.48}{wolfcut3}{Máquina de tres ejes para corte y grabado láser de materiales plásticos, madera, cartón, papel, etc.}
+            {0.48}{wolfcut2}{Máquina de dos ejes de corte por cuchilla para cartón, papel, tela, etc.\\ \vphantom{1}}
+            {0.48}{wolfcut1}{Fresadora de tres ejes para corte y mecanizado de madera, plástico, cartón, aluminio, etc.}
+            {Esquema general y modelos de máquinas CNC dependiendo del tipo de material a procesar y la tecnología de corte.}
+            {fig:wolfcut1}
+
+
+\section{Mecanizados de piezas por control numérico}
+
+En la actualidad muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas} se realizan utilizando máquinas de control numérico computarizado o CNC \citep{WEBSITE:cncwiki} (\textit{computer numerical control)}.
 
 \subfigtwotwo 
          {0.40}{Piezas_mecanizadas4}{Máquina CNC ejecutando el corte de piezas en madera para mobiliarios.} 
@@ -19,7 +167,7 @@ En la actualidad, muchos de los procesos industriales que involucran el mecaniza
          {Ejemplos de piezas mecanizadas mediante máquinas CNC.}
          {fig:piezas_mecanizadas}
 
-         El proceso de mecanizar piezas utilizando esta tecnología se esquematiza en la figura \ref{fig:pos_sin_marcas} y consiste en una serie de pasos como los que se enumeran a continuación:
+         El proceso de mecanizar piezas utilizando esta tecnología se esquematiza en la figura \ref{fig:pos_sin_marcas} y consiste en una serie de pasos como los que se enumera a continuación:
 
 \begin{enumerate}
    \item{Posicionar la placa del material a cortar en la mesa de corte.}
@@ -66,13 +214,13 @@ En la actualidad, muchos de los procesos industriales que involucran el mecaniza
          {fig:pos_con_marcas}
 
 
-\section{Soluciones de mercado}
+\section{Software para el reconocimiento de marcas}
    En la tabla \ref{tbl:competitors} se destacan algunos desarrollos de software que permiten extenderse o adaptarse para soportar el reconocimiento de marcas.
    Se puede ver que la mayoría de las soluciones del mercado están basadas en PC y eso aumenta el costo general del sistema, disminuye la fiabilidad y limita el acceso desde multiples plataformas.
    Se ha podido constatar que además del costo de hardware, licencias o extensiones de software, el costo de las cámaras utilizadas son privativos para el segmento de máquinas de gama baja o media que es el segmento principal de este trabajo.\par
+   La empresa interesada, Wolfcut \footnote{\wolfcutlink}, utiliza actualmente uno de estos sistemas con algunos resultados adversos.
    No se ha encontrado ningún sistema que utilice una cámara con conexión inalámbrica, y tampoco aprovechando el uso de la cámara de un teléfono celular.\par
    Por otra parte tampoco se ha encontrado alguna solución completa de código abierto y colaborativo que facilite el crecimiento del proyecto con la ayuda de la extensa comunidad de usuarios, desarrolladores y entusiastas.
-
 
 \begin{table}[h!]
    \centering
@@ -103,6 +251,13 @@ En la actualidad, muchos de los procesos industriales que involucran el mecaniza
    \label{tbl:competitors}
 \end{table}
 
+\section{Empresa interesada}
+Este trabajo se realiza en el marco de una colaboración con la empresa española Wolfcut, la cual fabrica y comercializa máquinas de control numérico en toda Europa.\par
+Se pueden ver algunos de sus productos en su página web \wolfcutlink.\par
+Cuenta con más de 20 años de experiencia en el rubro y algunas innovaciones en el área de reconocimiento de marcas.\par
+Sin embargo las soluciones que ha utilizado hasta el momento requieren el uso de una PC con Windows para su funcionamiento y la empresa considera que estas tecnologías no son adecuadas para el ámbito industrial de sus clientes.\par
+Es por ello que se trabajó en conjunto para lograr una solución embebida.\par
+
 \section{Motivación y alcance}
    La principal motivación de este trabajo es lograr extender las capacidades de un controlador embebido de uso profesional y dotarlo de visión artificial para el reconocimiento de marcas fiduciales. \\
    Con los argumentos y la experiencia de la empresa Wolfcut, se determinó que uno de los controladores de uso profesional más popular del mercado es el NK105 de la firma Weihong \citep{WEBSITE:nk105} que se muestra en la figura \ref{fig:nk105}.
@@ -111,10 +266,11 @@ En la actualidad, muchos de los procesos industriales que involucran el mecaniza
       {Controlador NK105 de la firma Weihong elegido para extender sus funciones y dotarlo de lectura de marcas.}
       {fig:nk105}
 
-   Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuración.
+   Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuración.\par
    No provee una API definida por el fabricante ni una interfase física para poder conectarse y extender sus funciones. \par
    Por otro lado, al estar basado internamente en una FPGA y no depender de una PC para funcionar, es reconocido por sus excelentes resultados de corte, su estabilidad en trabajos extensos y una excelente fiabilidad. \par
-   Las capacidades de operación del NK105 son relativamente simples, pero de nivel profesional con un mercado ya consolidado y muy extenso en todo el mundo.
+   Las capacidades de operación del NK105 son relativamente simples, pero de nivel profesional con un mercado ya consolidado y muy extenso en todo el mundo.\par
+   Ademas este modelo pertenece a una familia de soluciones de complejidad creciente, pero que comparten el controlador. Las soluciones que se apliquen a este modelo se pueden extender a toda la familia.
    El alcance de este trabajo se limita a intervenir y dotar de lectura de marcas al controlador NK105 y obtener resultados comparables con otras soluciones de mercado.
 
 %----------------------------------------------------------------------------------------
