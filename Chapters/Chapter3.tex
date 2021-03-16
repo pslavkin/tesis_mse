@@ -14,7 +14,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
         {Comparación entre la conexión original de la máquina CNC y la modificada para el reconocimiento de marcas.}
         {fig:system_blocks}
 
-        En la tabla \ref{tbl:descripcion_de_bloques} se detallan las principales características de cada bloque junto a una imagen:
+        En la tabla \ref{tbl:descripcion_de_bloques} se detallan las principales características de cada bloque junto a una imagen representativa:
          \begin{longtable}[!h]{m{0.6\textwidth}p{0.3\textwidth}}
             \caption[Características de los bloques principales]{Descripción e imagen representativa de los bloques principales del sistema.}\\
             \toprule
@@ -31,13 +31,13 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
                &
                \figtable{0.2}{router_wifi} \\
 %-----------------------------
-               {Bloque navegador web: representa un dispositivo que puede correr un navegador web: ordenador personal, teléfono celular, tableta, etc. Sin embargo para el alcance de este desarrollo algunas características solo son accesibles desde una pantalla mayor a 10''.}
+               {Bloque navegador web: representa un dispositivo que puede correr un navegador web: ordenador personal, teléfono celular, tableta, etc. Sin embargo para el alcance de este desarrollo se sugieren pantallas mayores a 10''.}
                &
                \figtable{0.2}{celu_tableta_monitor} \\
 %-----------------------------
                {Bloque PocketBeagle: representa la plataforma de desarrollo elegida con el agregado de una circuitería que permite intercalarse entre los bloques ``controlador CNC'' y ``mando a distancia''.}
                &
-               \figtable{0.2}{pocketbeagle} \\
+               \figtable{0.2}{hard_setup5} \\
 %-----------------------------
                {Bloque máquina CNC: representa el conjunto de piezas electromecánicas motorizadas para realizar el mecanizado de piezas.}
                &
@@ -68,7 +68,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
       \item{SPI: \textit{synchronous peripheral interface} es una interfaz sobre la cual se envían los datos desde el controlador a la pantalla de cristal líquido o LCD \textit{liquid crystal display}.}
    \end{itemize}
 
-   Para poder interactuar con estas interfases se intercaló una tarjeta electronica que las conecta a la plataforma PocketBeagle. En la figura \ref{fig:handheld_a_pocket} se muestra esta conexión en comparación con la original.
+   Para poder interactuar con estas interfases se intercaló una tarjeta electrónica que las conecta a la plataforma PocketBeagle. En la figura \ref{fig:handheld_a_pocket} se muestra esta conexión en comparación con la original.
 
 \subfigab 
    {0.48} {handheld_a_pocket_original} { Controlador CNC conectado con el mando.\\ \vphantom{1}}{handheld_a_pocket_original}
@@ -88,12 +88,10 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \label{subsection:teclado_virtual}
 
       Para lograr enviar datos desde la PocketBeagle al controlador se desarrolló una aplicación en lenguaje C que corre como servicio. En la figura \ref{fig:system_blocks2} se muestra el diagrama de bloques del software.\par
-      En el fragmento de código \ref{cod:handheld1} se pueden ver tres tareas o \textit{threads} que implementan: la lectura del teclado físico, la lectura de una cola virtual y el envió de los datos al controlador.\par
+      En los fragmentos de código \ref{cod:handheld1}, \ref{cod:handheld2} y \ref{cod:handheld3} se pueden ver tres tareas o \textit{threads} que implementan: la lectura del teclado físico, la lectura de una cola virtual y el envió de los datos al controlador respectivamente.\par
 
-
-\begin{figure}
+\begin{figure}[!h]
    \begin{lstlisting}[caption={Tarea encargada de procesar los datos del teclado físico y reenviarlos a la cola de multiplexado.},label={cod:handheld1}]
-
    void* rcvFunc(void* niyto)
    {
       char frame[FRAME_SIZE];
@@ -108,8 +106,8 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
    \end{lstlisting}
 \end{figure}
 
-\begin{figure}
-   \begin{lstlisting}[caption={},label={cod:handheld1},title={\lstlistingname~\thelstlisting:Tarea que recibe datos del teclado virtual y los reenvía a la cola de multiplexado.}]
+\begin{figure}[!h]
+   \begin{lstlisting}[caption={Tarea que recibe datos del teclado virtual y los reenvía a la cola de multiplexado.},label={cod:handheld2}]
    void* rcvVirtual(void* niyto)
    {
       char buf  [ MAX_VIRTUAL_CMD_LENGHT ];
@@ -130,8 +128,8 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
    \end{lstlisting}
 \end{figure}
 
-\begin{figure}
-   \begin{lstlisting}[caption={},label={cod:handheld1},title={\lstlistingname~\thelstlisting:Tarea de multiplexado de los datos del teclado físico y virtual.}]
+\begin{figure}[!h]
+   \begin{lstlisting}[label={cod:handheld3},caption={Tarea de multiplexado de los datos del teclado físico y virtual.}]
    void* sendFunc(void* niyto)
    {
       struct timespec tm;
@@ -147,7 +145,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
    Se aprovecharon los mecanismos de colas o FIFO's \textit{first in first out} que ofrece Linux para multiplexar los datos del ``teclado'' con un nuevo bloque: ``teclado virtual''.\par
-      Con esta técnica, si se envían datos al bloque ``FIFO Rx'' los datos se reenvían al controlador emulando el presionado de un botón y al mismo tiempo se responde a la comunicación del teclado original.
+      Con esta técnica, si se envían datos al bloque ``FIFO Rx'' los datos se reenvían al controlador emulando el presionado de un botón y al mismo tiempo se atiende la comunicación del teclado original.
       De esta manera el controlador se puede manejar virtual o físicamente.\par
       Dado que la recepción es a través de una FIFO, es posible instanciar más de un teclado virtual con accesos concurrentes \citep{book:embeddedprimer}.
 
@@ -167,7 +165,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
          \item{Multitarea en espacio de \textit{kernel}: dentro del módulo se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepción de nuevos datos por SPI.}
          \item{Indexado de memoria contigua: debido a que la escritura por DMA no permite escribir en colas circulares, se implementó un sistema de una cola lineal indexada. Esto permite poder leer y escribir sin solapamientos. Cuando está cerca del limite de utilización se reinician los índices.}
       \end{itemize}
-
+      En los fragmentos de código \ref{cod:lcd_driver1}, \ref{cod:lcd_driver2} y \ref{cod:lcd_driver3} se destacan algunas de esta técnicas.\par
       En el diagrama de bloques de la figura \ref{fig:lcd_driver_blocks} se muestra la secuencia de pasos implementada en el módulo.
       
 \subfiga {0.7}
@@ -176,7 +174,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
          {fig:lcd_driver_blocks}
 
 \begin{figure}[h]
-   \begin{lstlisting}[caption={Manejador de la interrupción asociada a una transacción SPI. Cuando es llamada, activa toda la cadena de eventos que culmina con la actualización del estado de la pantalla.},label={cod:lcd_driver}]
+   \begin{lstlisting}[caption={Manejador de la interrupción asociada a una transacción SPI. Cuando es llamada, activa toda la cadena de eventos que culmina con la actualización del estado de la pantalla.},label={cod:lcd_driver1}]
    static irq_handler_t csIrqHandler(unsigned int irq, void *dev_id, struct pt_regs *regs)
    {
       complete(getNewDataReady());
@@ -186,7 +184,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 \begin{figure}[h]
-   \begin{lstlisting}[caption={},label={cod:lcd_driver},title={\lstlistingname~\thelstlisting: Tarea que espera en modo bloqueante una nueva trama de datos. Utiliza uno de los métodos de comunicación interprocesos del \textit{kernel} de Linux.}]
+   \begin{lstlisting}[label={cod:lcd_driver2},caption={Tarea que espera en modo bloqueante una nueva trama de datos. Utiliza uno de los métodos de comunicación interprocesos del \textit{kernel} de Linux.}]
 
    static int newDataFunc(void *nol)
    {
@@ -205,7 +203,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \end{figure}
 
 \begin{figure}[h]
-   \begin{lstlisting}[caption={},label=cod:lcd_driver,title={\lstlistingname~\thelstlisting: Función que bloquea a la espera de una operación de lectura desde el espacio de usuario. Cuando es llamada, copia la nueva informacion de la pantalla.}]
+   \begin{lstlisting}[label={cod:lcd_driver3},caption={Función que bloquea a la espera de una operación de lectura desde el espacio de usuario. Cuando es llamada, copia la nueva informacion de la pantalla.}]
    static ssize_t lcd_read( struct file *filp, char __user *buf, size_t count, loff_t *f_pos )
    {
       size_t len=0;
@@ -230,7 +228,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
       Trabajando en conjunto, el teclado y la pantalla virtual son todo lo necesario para tomar control de la máquina desde la PocketBeagle.\par
       El teclado virtual corre como servicio del sistema operativo y se encarga de la comunicación UART. La pantalla virtual corre como módulo del \textit{kernel} y atiende la interfaz SPI.\par
 
-      En la foto de la figura \ref{fig:handheld_lcd_on_action} se puede ver en la pantalla LCD el ingreso de los números ``1234'' sin presionar los botones del teclado físico sino que se envían desde una consola de comandos de la PocketBeagle.\par
+      En el ejemplo de la figura \ref{fig:handheld_lcd_on_action} se puede ver en la pantalla LCD el ingreso de los números ``1234'' sin presionar los botones del teclado físico. Estos son enviados desde una consola de comandos de la PocketBeagle.\par
       Dada la complejidad y la falta de información oficial, el desarrollo y puesta a punto de estos dos subsistemas representaron aproximadamente el 50\% del total del trabajo.\par
 
 \subfiga {1}
@@ -246,9 +244,9 @@ La única opción para transferir archivos al controlador es a través un dispos
    En la figura \ref{fig:conexion_usb} se puede ver el conexionado físico entre la PocketBeagle actuando como USB cliente y el controlador actuando como USB anfitrión o \textit{host}.
 
 \subfiga 
-   {0.35} {hard_setup5} {La PocketBeagle se comporta como un dispositivo de almacenamiento. El controlador accede al sistema de archivos en busca de trabajos a procesar.}{fig:conexion_usb}
+   {0.35} {hard_setup6} {La PocketBeagle se comporta como un dispositivo de almacenamiento. El controlador accede al sistema de archivos en busca de trabajos a procesar.}{fig:conexion_usb}
 
-   La tecnología involucrada en Linux para permitir este funcionamiento es \textit{configFS}\citep{WEBSITE:configfs}.\par
+   La tecnología involucrada en Linux para permitir este funcionamiento es \mbox{\textit{configFS}\citep{WEBSITE:configfs}}.\par
    Se implementó un sistema de intercambio de doble sistema de archivos como el que se muestra en la figura \ref{fig:configfs}.
    Con este método mientras el controlador accede a un sistema de archivos con trabajos a procesar, la PocketBeagle puede escribir en otro.\par
    Cuando se desea transferir un nuevo archivo al controlador, simplemente se invierten estos dos sistemas: el de lectura pasa a ser escritura y viceversa.
@@ -259,7 +257,7 @@ La única opción para transferir archivos al controlador es a través un dispos
    {Técnica de doble sistema de archivos para transferir información al controlador.}
    {fig:configfs}
 
-   En el script mostrado en el listado \ref{cod:configfs} se aprovecha el lenguaje \textit{bash} para implementar este sistema dual en muy pocas lineas y corre como servicio en la PocketBeagle.
+   En el script mostrado en el listado \ref{cod:configfs} se aprovecha el lenguaje \textit{bash} para implementar este sistema dual en muy pocas líneas y corre como servicio en la PocketBeagle.
 
 \begin{figure}[h]
    \begin{lstlisting}[language=bash,caption={Implementación de doble sistema de archivos conectado con la tecnología configFS. Se aprovecha la potencia de \textit{bash} y se corre como servicio.},label={cod:configfs}]
@@ -289,15 +287,15 @@ La única opción para transferir archivos al controlador es a través un dispos
 
 
 \section{Cámara de vídeo a PocketBeagle}
-Como se comentó en la sección \ref{subsection:camara_de_video}, en el alcance de este trabajo se optó por usar la cámara de un teléfono celular montado en la máquina CNC y transmitir vídeo por Wi-Fi con una aplicación.\par
+Como se comentó en la sección \ref{section:camara_de_video}, en el alcance de este trabajo se optó por usar la cámara de un teléfono celular montado en la máquina CNC y transmitir vídeo por Wi-Fi con una aplicación.\par
    En la figura \ref{fig:soporte_celu} se muestra un soporte desarrollado para sujetar el teléfono al eje Z de la máquina. \par
-   Además se agregó un soporte para un puntero laser que sirve para ajustar las posiciones relativas del teléfono y el motor de corte.\par
+   Además se agregó un soporte para un puntero láser que sirve para ajustar las posiciones relativas del teléfono y el motor de corte.\par
    El dispositivo de sujeción permite ajustar la altura y rotación de manera precisa.\par
 
 \subfigab 
 {0.48} {soporte_celu1} {Soporte de teléfono implementado, con posibilidad de ajustar la altura, rotación e inclinación} {fig:soporte_celu1}
-{0.48} {soporte_celu2} {Vista superior de la máquina CNC con el soporte del celular y laser instalados.\\ \vphantom{1}}{fig:soporte_celu2}
-      {Soporte de celular y puntero laser solidarios al eje Z.}
+{0.48} {soporte_celu2} {Vista superior de la máquina CNC con el soporte del celular y láser instalados.\\ \vphantom{1}}{fig:soporte_celu2}
+      {Soporte de celular y puntero láser solidarios al eje Z.}
       {fig:soporte_celu}
 
       Para recibir las tramas de vídeo desde el celular y procesarlas en la PocketBeagle, se implementó una serie de funciones en lenguaje Python sobre la base de la biblioteca PyOpenCV\footnote{\pyopencvlink}\par
@@ -345,15 +343,15 @@ def recognition(self,img):
    \end{lstlisting}
 \end{figure}
 
-El fotograma ``img'' esta representado por tres canales: azul, verde y rojo o BGR \textit{blue, green, red}.
-Cada pixel de cada canal esta representado por 8 bits de datos. \par
+El fotograma ``img'' está formado por tres canales: azul, verde y rojo o BGR \textit{blue, green, red}.
+A su vez cada pixel de cada canal está representado por 8 bits de datos. \par
 En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de grises según la ecuación \ref{eq:bgr2gray}:
 \begin{equation}
    \text{RGB[A] to Gray:} \quad Y \leftarrow 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B
    \label{eq:bgr2gray}
 \end{equation}
 
-  Luego en la línea 3 se convierte el formato de escala de grises a binaria de 8 bits, en dónde el criterio de selección por 0 o 255 lo decide la variable ``grayThresh''.\par
+  Luego en la línea 3 se convierte el formato de escala de grises a binaria de 8 bits, en donde el criterio de selección por 0 o 255 lo decide la variable ``grayThresh''.\par
   Un ejemplo de esta secuencia de procesamiento se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso1}.
 
 \subfigabc
@@ -365,13 +363,13 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
 
          La imagen binaria es procesada en la línea 4 por la función ``findContours'' \footnote\opencvfindcontours que busca todos los posibles contornos.\par
          Sin embargo se configura para que devuelva solo aquellos que no están encerrados por un contorno mayor.\par
-         En el ejemplo de la figura \ref{fig:reconocimiento_paso_a_paso2b} se puede ver que los cuadrados sin relleno son detectados solo por su contorno externo.\par
+         En el ejemplo de la figura \ref{fig:reconocimiento_paso_a_paso2b} se puede ver este efecto en los cuadrados sin relleno que son detectados solo por su contorno externo.\par
    En la siguiente parte del algoritmo se recorren todos los contornos encontrados y se le aplica una función que aproxima cada contorno a uno más suave.\par
    Este algoritmo pretende filtrar irregularidades de la marca o de la captura de vídeo y se configura para que devuelva siempre un perímetro cerrado.\par
    Se utiliza la función minAreaRect en la línea 15 para encontrar un rectángulo de área mínima que encierre completamente al perímetro. Esto permite calcular una buena aproximación del área y del ángulo.\par
    Finalmente se selecciona solamente la marca que tenga una área cercana a la especificada por el parámetro ``targetArea'' y le permite al usuario discriminar una marca por sobre otras.\par
    A la marca resultante se le calcula el desplazamiento en X e Y y su rotación respecto a la cámara.\par
-   Estos son los datos que se ingresan en las ecuaciones trigonométricas vistas en la sección \ref{subsection:trigonometria} y es lo que permite realizar la alineación de la pieza.\par
+   Estos son los datos que se ingresan en las ecuaciones trigonométricas vistas en la sección \ref{section:trigonometria} y es lo que permite realizar la alineación de la pieza.\par
   La secuencia de pasos mencionada se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso2}.
 
 \subfigabc

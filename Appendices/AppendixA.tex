@@ -3,17 +3,30 @@
 \chapter{Ejemplos del proceso de reconocimiento de marcas} % Main appendix title
 \label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
+         Se exponen algunos ejemplos de reconocimiento de marcas presentados en una secuencia que se detalla en la siguiente lista:
+         \begin{itemize}
+            \item{Paso 1: imagen original a color.}
+            \item{Paso 2: escala de grises.}
+            \item{Paso 3: imagen binaria.}
+            \item{Paso 4: detección de todos los bordes externos.}
+            \item{Paso 5: cálculo de área mínima rectangular.}
+            \item{Paso 6: cálculo de ángulo y posición de la marca seleccionada.}
+         \end{itemize}
+
+         Se puede ver en la imagen \ref{fig:reconocimiento_comparativa1b} que si la imagen es irregular, la cantidad de contornos detectados esta tan grande que afecta el rendimiento del algoritmo de detección y la performance del sistema. \par
+         Para mitigar este efecto, en los algoritmos se limita la cantidad de bordes permitidos.
 
 \subfigab
-         {0.48}{reconocimiento_comparativa8} {comentario}{fig:reconocimiento_compartiva3}
-         {0.48}{reconocimiento_comparativa9} {comentario}{fig:reconocimiento_compartiva2}
-         {Comparativa.}
+         {0.48}{reconocimiento_comparativa8} {Marcas variadas en contraste con un led de 5 mm para interpretar la escala de las marcas.}{fig:reconocimiento_compartiva1a}
+         {0.48}{reconocimiento_comparativa9} {Imagen mas compleja para destacar la cantidad de contornos encontrados en los pasos 5 y 6.}{fig:reconocimiento_comparativa1b}
+         {Secuencia de reconocimiento de marcas.}
          {fig:reconocimiento_comparativa1}
 
+         En la figura \ref{fig:reconocimiento_comparativa2a} pasos 4 y 5 se destaca el efecto de un contorno que está formado por la unión de muchas figuras. Sin embargo la detección de área mínima lo toma como un solo contorno. Esto se debe a que las figuras se están tocando en algunos puntos, y el algoritmo lo considera un solo perímetro irregular.
 \subfigab
-         {0.48}{reconocimiento_comparativa7} {comentario}{fig:reconocimiento_compartiva5}
-         {0.48}{reconocimiento_comparativa4} {comentario}{fig:reconocimiento_compartiva6}
-         {Comparativa.}
+         {0.48}{reconocimiento_comparativa7} {Contorno conformado por muchas figuras en contacto que es procesado como un solo perímetro cerrado}{fig:reconocimiento_compartiva2a}
+         {0.48}{reconocimiento_comparativa4} {Ejemplo nominal de reconocimiento. Se detalla como los cuadrados sin relleno son tomados por su contorno exterior}{fig:reconocimiento_compartiva2b}
+         {Secuencia de reconocimiento de marcas.}
          {fig:reconocimiento_comparativa2}
 
 

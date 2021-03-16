@@ -1,7 +1,7 @@
 % Chapter 1 
 \chapter{Introducción general} % Main chapter title
 
-En el presente capítulo se introducen ejemplos de uso de las máquinas de control numérico y las dificultades que presentan para alinearse con las piezas a mecanizar. Luego se comparan soluciones de otros fabricantes y finalmente se comenta acerca de la motivación, el alcance y los objetivos de la propia.
+En el presente capítulo se explica el principio de funcionamiento de las máquinas de control numérico y las dificultades que presentan para alinearse con las piezas a mecanizar. Se exponen soluciones de alineación existentes y finalmente se comenta acerca de la motivación, el alcance y los objetivos de la propia.
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
@@ -34,7 +34,7 @@ Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:pro
           {0.46}{cad_cam_primigenio1} {Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode.}
           {0.5}{cad_cam_primigenio2} {Operadora transcribiendo la lista de operaciones del formato papel a un rollo de cinta multiperforada.}
           {0.46}{cad_cam_primigenio3} {Lector de cinta multiperforada que controla los movimientos de la máquina.}
-          {0.5}{cad_cam_primigenio4} {Operador trabajando con una de las primeras fresadoras por control numerico.}
+          {0.46}{cad_cam_primigenio4} {Operador trabajando con una de las primeras fresadoras por control numerico.}
           {Secuencia de pasos para operar una máquina NC primigenia.}
           {fig:programacion_cnc_primigenia}
 
@@ -81,7 +81,7 @@ De esta manera el controlador se compone de dos etapas, controlador lógico y dr
 En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.\\
 En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales detallando las características principales.\\
 
-\begin{table}[h!]
+\begin{table}[!hb]
    \centering
    \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
    \begin{tabular}{m{0.6\textwidth}m{0.4\textwidth}}
@@ -137,7 +137,7 @@ En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelo
 \end{table}
 
 
-\subsection{Máquina}
+\subsection{Máquina de control numérico}
 En términos generales una máquina CNC es un conjunto de piezas electromecánicas que permiten mover el elemento de mecanizado en varias dimensiones.
 En algunas el elemento de mecanizado permanece fijo y lo que se mueve es la pieza a mecanizar.
 Suelen ser motorizadas, pero también las hay con actuadores lineales, sistemas hidráulicos o una combinación de todos estos.\par
@@ -177,7 +177,7 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
 \end{enumerate}
 
 \subfigab
-         {0.48}{pos_sin_marcas1}{Placa a cortar fijada a la mesa de corte y fresa de corte en posición.}{fig:pos_sin_marcas_A}
+         {0.46}{pos_sin_marcas1}{Placa a cortar fijada a la mesa de corte y fresa de corte en posición.}{fig:pos_sin_marcas_A}
          {0.48}{pos_sin_marcas2}{Pieza cortada.\\ \hphantom{1}}{fig:pos_sin_marcas_B}
          {Esquema de corte de una letra A en una placa de material virgen.}
          {fig:pos_sin_marcas}
@@ -216,9 +216,9 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
 
 \section{Software para el reconocimiento de marcas}
    En la tabla \ref{tbl:competitors} se destacan algunos desarrollos de software que permiten extenderse o adaptarse para soportar el reconocimiento de marcas.
-   Se puede ver que la mayoría de las soluciones del mercado están basadas en PC y eso aumenta el costo general del sistema, disminuye la fiabilidad y limita el acceso desde multiples plataformas.
-   Se ha podido constatar que además del costo de hardware, licencias o extensiones de software, el costo de las cámaras utilizadas son privativos para el segmento de máquinas de gama baja o media que es el segmento principal de este trabajo.\par
-   La empresa interesada, Wolfcut \footnote{\wolfcutlink}, utiliza actualmente uno de estos sistemas con algunos resultados adversos.
+   Se puede ver que la mayoría de las soluciones del mercado están basadas en PC y eso aumenta el costo general del sistema, disminuye la fiabilidad y limita el acceso desde multiples plataformas.\par
+   Se ha podido constatar que además del costo de hardware, licencias o extensiones de software, el costo de las cámaras utilizadas son privativos para el segmento de máquinas de gama baja o media que es el segmento principal de este trabajo.
+   La empresa interesada, Wolfcut \footnote{\wolfcutlink}, utiliza actualmente uno de estos sistemas con algunos resultados adversos.\par
    No se ha encontrado ningún sistema que utilice una cámara con conexión inalámbrica, y tampoco aprovechando el uso de la cámara de un teléfono celular.\par
    Por otra parte tampoco se ha encontrado alguna solución completa de código abierto y colaborativo que facilite el crecimiento del proyecto con la ayuda de la extensa comunidad de usuarios, desarrolladores y entusiastas.
 
@@ -268,9 +268,9 @@ Es por ello que se trabajó en conjunto para lograr una solución embebida.\par
 
    Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuración.\par
    No provee una API definida por el fabricante ni una interfase física para poder conectarse y extender sus funciones. \par
-   Por otro lado, al estar basado internamente en una FPGA y no depender de una PC para funcionar, es reconocido por sus excelentes resultados de corte, su estabilidad en trabajos extensos y una excelente fiabilidad. \par
+   Por otro lado, al estar basado internamente en una FPGA y no depender de una PC para funcionar, es reconocido por sus excelentes resultados de corte, su estabilidad en trabajos extensos ,una excelente fiabilidad, y un costo muy accesible. \par
    Las capacidades de operación del NK105 son relativamente simples, pero de nivel profesional con un mercado ya consolidado y muy extenso en todo el mundo.\par
-   Ademas este modelo pertenece a una familia de soluciones de complejidad creciente, pero que comparten el controlador. Las soluciones que se apliquen a este modelo se pueden extender a toda la familia.
+   Además este modelo pertenece a una familia de soluciones de complejidad creciente, pero que comparten el controlador. Las soluciones que se le apliquen se pueden extender a toda la familia.\par
    El alcance de este trabajo se limita a intervenir y dotar de lectura de marcas al controlador NK105 y obtener resultados comparables con otras soluciones de mercado.
 
 %----------------------------------------------------------------------------------------

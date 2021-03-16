@@ -4,7 +4,7 @@
 
 En el presente capítulo se expone una breve reseña histórica de las máquinas CNC, su principio de funcionamiento y su uso en la industria. Luego se introducen las tecnologías más relevantes involucradas en el desarrollo de este trabajo.
 
-\subsection{Tecnologías utilizadas}
+\section{Tecnologías utilizadas}
    En el diagrama de bloques de la figura \ref{fig:system_blocks1} se muestran las partes que componen el sistema implementado.
    Para explicar como se relacionan e interactúan entre sí estos bloques, en las próximas secciones de esta memoria se describen las cualidades y funciones más destacadas de cada uno.
 
@@ -13,7 +13,7 @@ En el presente capítulo se expone una breve reseña histórica de las máquinas
          {Diagrama de bloques del sistema implementado.}
          {fig:system_blocks1}
 
-\subsection{Plataforma PocketBeagle}
+\section{Plataforma PocketBeagle}
    PocketBeagle es un miembro del ecosistema de plataformas de desarrollo BeagleBoard. \citep{WEBSITE:beagleboard}.
    Las características de esta plataforma, que se muestra en la figura \ref{fig:pocketbeagle}.A, y que son relevantes para este trabajo son las siguientes:
    \begin{itemize}
@@ -36,7 +36,7 @@ En el presente capítulo se expone una breve reseña histórica de las máquinas
 
          Se evaluaron plataformas más potentes como la PYNQ-Z1 \citep{WEBSITE:pynq}. Si bien las prestaciones son mayores a la PocketBeagle, también lo es el costo, y dado que este trabajo es solo un accesorio para un controlador de máquinas de segmento medio y bajo, se intentó mantener los costos y la complejidad acotada.
 
-\subsection{Aplicación web}
+\section{Aplicación web}
    La interfaz de usuario se desarrolló utilizando tecnologías web para permitir acceder desde cualquier dispositivo con un navegador web.\par
    Los argumentos a favor de esta tecnología están basados en la falta de aplicaciones para el manejo de máquinas CNC que sean independientes del sistema operativo del ordenador del cliente.\par
 Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbox{macOS\footnote\macos}, y deben contar con un segundo ordenador para poder interactuar con el CNC.\par
@@ -90,8 +90,8 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
       }
 \end{itemize}
 
-\subsection{Cámara de vídeo}
-\label{subsection:camara_de_video}
+\section{Cámara de vídeo}
+\label{section:camara_de_video}
    Los criterios para la selección de la cámara de vídeo se basaron principalmente en la interfaz de comunicación, los costos, la calidad de imagen y la facilidad de adquisición en mercado local. 
    Con dichos criterios se confeccionó la tabla \ref{tab:camara_selection} con las opciones más destacadas calificando de 0 a 5.
 
@@ -132,8 +132,8 @@ Por lo tanto para el alcance de este trabajo se optó por usar la cámara de un 
          {fig:ipwebcam}
 
 
-\subsection{Trigonometría de alineación}
-\label{subsection:trigonometria}
+\section{Trigonometría de alineación}
+\label{section:trigonometria}
 
    El objetivo del método es poder conocer la dimensión, la posición y la rotación de un objeto relativo a la máquina. \par
 
@@ -215,7 +215,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
             \label{eq:alineacion_escalado}
          \end{equation}
 
-\subsection{Detección y tipos de marcas fiduciales}
+\section{Detección y tipos de marcas fiduciales}
    Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado es usual encontrar que las marcas son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\\
    Para un efectivo reconocimiento de una marca utilizando una cámara de vídeo algunas consideraciones deben tenerse en cuenta como ser:
    \begin{itemize}
