@@ -147,20 +147,20 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
    Se aprovecharon los mecanismos de colas o FIFO's \textit{first in first out} que ofrece Linux para multiplexar los datos del ``teclado'' con un nuevo bloque: ``teclado virtual''.\par
       Con esta técnica, si se envían datos al bloque ``FIFO Rx'' los datos se reenvían al controlador emulando el presionado de un botón y al mismo tiempo se atiende la comunicación del teclado original.
       De esta manera el controlador se puede manejar virtual o físicamente.\par
-      Dado que la recepción es a través de una FIFO, es posible instanciar más de un teclado virtual con accesos concurrentes \citep{book:embeddedprimer}.
+      Dado que la recepción es a través de una FIFO, es posible instanciar más de un teclado virtual con accesos concurrentes \citep{embeddedprimer}.
 
 \subsection{Pantalla virtual}
 
       Para poder conocer el estado del controlador es necesario contar con la información que se muestra en la pantalla LCD.\par
       Se estudió en detalle las especificaciones del controlador de esta pantalla con el objetivo de emular una pantalla virtual.\par
       Debido a la alta velocidad de los datos y que las tramas no tienen un largo definido, no fue posible utilizar los drivers de SPI del \textit{kernel} y realizar esta emulación en espacio de usuario.\par
-      Para poder capturar correctamente estas tramas se implementó un driver SPI en modo esclavo \textit{SPI slave} como un nuevo módulo del sistema operativo \citep{book:ldd3}.
+      Para poder capturar correctamente estas tramas se implementó un driver SPI en modo esclavo \textit{SPI slave} como un nuevo módulo del sistema operativo \citep{ldd3}.
       Este driver, a diferencia del original, permite recibir cualquier longitud de trama, en cualquier momento y almacenarla en un espacio de memoria contigua.
       Esto se logró utilizando las siguientes técnicas:
       \begin{itemize}
          \item {Interrupciones: se utilizó una interrupción conectada a la señal de selección de chip CS \textit{chip select}. Esto permite reaccionar rápidamente cuando se inicia una transacción.}
          \item {Acceso directo a memoria: se utilizó el subsistema DMA \textit{direct access memory} para que las operaciones de copia de los datos que se reciben por SPI a memoria se realicen sin la intervención del procesador. Esto permite conservar los recursos del procesador para otras tareas.}
-         \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's \textit{interprocess commnications} que ofrece Linux para lograr un sistema reactivo con mínimo retardo \citep{book:ldd3}.}
+         \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's \textit{interprocess commnications} que ofrece Linux para lograr un sistema reactivo con mínimo retardo \citep{ldd3}.}
          \item{Operaciones de archivo: para transferir las tramas decodificadas del espacio de \textit{kernel} al de usuario, se implementó un acceso al módulo como un archivo virtual. De esta manera se aprovechan las herramientas de lectura del sistema operativo y se facilita el desarrollo del software en espacio de usuario.}
          \item{Multitarea en espacio de \textit{kernel}: dentro del módulo se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepción de nuevos datos por SPI.}
          \item{Indexado de memoria contigua: debido a que la escritura por DMA no permite escribir en colas circulares, se implementó un sistema de una cola lineal indexada. Esto permite poder leer y escribir sin solapamientos. Cuando está cerca del limite de utilización se reinician los índices.}
@@ -168,7 +168,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
       En los fragmentos de código \ref{cod:lcd_driver1}, \ref{cod:lcd_driver2} y \ref{cod:lcd_driver3} se destacan algunas de esta técnicas.\par
       En el diagrama de bloques de la figura \ref{fig:lcd_driver_blocks} se muestra la secuencia de pasos implementada en el módulo.
       
-\subfiga {0.7}
+\subfiga {1}
          {lcd_driver_blocks.pdf}
          {Diagrama de bloques implementados en el driver de \textit{kernel} para la lectura e interpretación de las tramas de datos entre el controlador y el LCD.}
          {fig:lcd_driver_blocks}
@@ -370,7 +370,7 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
    Finalmente se selecciona solamente la marca que tenga una área cercana a la especificada por el parámetro ``targetArea'' y le permite al usuario discriminar una marca por sobre otras.\par
    A la marca resultante se le calcula el desplazamiento en X e Y y su rotación respecto a la cámara.\par
    Estos son los datos que se ingresan en las ecuaciones trigonométricas vistas en la sección \ref{section:trigonometria} y es lo que permite realizar la alineación de la pieza.\par
-  La secuencia de pasos mencionada se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso2}.
+   La secuencia de pasos mencionada se puede ver en la figura \ref{fig:reconocimiento_paso_a_paso2}.
 
 \subfigabc
 {0.3}{reconocimiento_paso_a_paso4} {Imagen con todos los perímetros externos encontrados.}{fig:reconocimiento_paso_a_paso2a}
@@ -380,4 +380,57 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
          {fig:reconocimiento_paso_a_paso2}
 
          En el apéndice \ref{AppendixA} se presentan más ejemplos de capturas de marcas más complejas en donde se visualizan todos los pasos del algoritmo.\par
+
+\section{Software de control}
+
+   El software de control expone los servicios de teclado y pantalla virtual desarrollados, en una pagina web que permite el control total de la maquina.\par
+   Se utilizaron las tecnologias descriptas en la seccion \ref{tecnologias_utilizadas} y se pueden ver algunas capturas en la figura \ref{fig:web_control1}.
+
+\subfigab 
+{0.48} {web_control1} {Pantalla de standby del equipo monitoreada desde la pagina web.} {fig:web_control1a}
+{0.48} {web_control2} {Operacion de puesta a cero de las coordenadas de la maquina desde la pagina web.}{fig:web_control1b}
+      {Pagina de control de la maquina a traves de una pagina web.}
+      {fig:web_control1}
+
+   A diferencia del mando a distancia cableado, el control a traves de esta pagina web se puede hacer desde cualquier dispositivo con acceso a la red a la cual pertenece la PocketBeagle.\par
+   Por otra parte se agrego una funcionalidad extra que el dispositivo original no cuenta, que es poder enviar la maquina a las coordenadas precisas que se ingresen. Esta funcion es un ejemplo de las posibilidades que adiciona el accesioro.\par
+
+\section{Software de lectura de marcas nkHACK}
+
+Sobre la base del desarrollo de la pagina web de control, se extendio la aplicacion y se implemento el sistema de alineacion por lectura de marcas.
+   En la figura \ref{fig:web_mach1} se puede ver la presentacion general de esta nueva pagina.
+
+\subfigab 
+{0.48} {web_mach1} {Pantalla de visualizacion y posicion de la maquina simulada, las coordenadas actuales, la camara y el trabajo en 3D a mecanizar.} {fig:web_mach1a}
+{0.48} {web_mach2} {Opciones de configuracion de la camara. Se puede ver ahora la camara con imagen binaria detectando una marca de 3.3mm de lado.}{fig:web_mach1b}
+      {Pagina de control y reconocimiento de marcas.}
+      {fig:web_mach1}
+
+Algunas de las posibilidades en esta pagina se detallan en la siguiente lista:
+\begin{itemize}
+   \item{Carga del modelo en 3D de la maquina directamente desde el programa de CAD. Por el momento se soporta el programa Rhinoceros, pero se puede extender a otros formatos. }
+   \item{Moviento en tiempo real de la maquina simulada segun el recorrido del trabajo.}
+   \item{Carga de los archivos de trabajo GCode para visualizar y alinear.}
+   \item{Marcas de registro leidas directamente desde el archivo GCode, ingresada manualmente, o una combinacion de ambas.}
+   \item{Posibilidad de desplazar, rotar y escalar manualmente un trazo de corte.}
+   \item{Posibilidad de desplazar, rotar y escalar manualmente un trazo de corte.}
+
+   \item{Escala del pixel de la camara en X e Y independientemente.}
+   \item{Ingreso de la dimension del tamano de la marca.}
+   \item{Ingreso de la direccion web de la fuente de video.}
+   \item{Intercambio entre video original a color o imagen binaria.}
+   \item{Calibracion del nivel de decision para el filtrado de escala de grises a imagen binaria.}
+   \item{Zoom digital de la imagen capturada en tiempo real para segmentar el area de analisis.}
+   \item{Transferencia del archivo de corte al controlador.}
+   \item{Ejecucion del archivo de corte cargado en el controlador con un boton.}
+   \item{Alineacion del trabajo de corte en modo manual, marca por marca.}
+   \item{Alineacion del trabajo de corte automaticamente con un solo boton, alinea, transfiere y corta.}
+   \item{Customizacion completa de la interfaz, permitiendo setear transparencias a cada una de la partes, menus, camara, coordenadas, trazos, maquina, etc.}
+   \item{Grilla de trabajo customizable.}
+   \item{Acceso a la pagina de control sin cerrar esta pagina.}
+\end{itemize}
+
+
+
+
 
