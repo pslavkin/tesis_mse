@@ -16,7 +16,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 
         En la tabla \ref{tbl:descripcion_de_bloques} se detallan las principales características de cada bloque junto a una imagen representativa:
 
-         \begin{longtable}[!h]{m{0.6\textwidth}p{0.3\textwidth}}
+         \begin{longtable}[!h]{m{0.6\textwidth}p{0.35\textwidth}}
             \caption[Características de los bloques principales]{Descripción e imagen representativa de los bloques principales del sistema.}\\
             \toprule
                \textbf{Características del bloque} & \textbf{Imagen}\\ 
@@ -30,31 +30,31 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 %-----------------------------
                {Bloque Wi-Fi: representa una red inalámbrica compartida entre los bloques ``PocketBeagle'', ``cámara de vídeo'' y ``navegador web''. Si además contara con acceso a internet, permitiría acceder remotamente.}
                &
-               \figtable{0.2}{router_wifi} \\
+               \figtable{0.35}{router_wifi} \\
 %-----------------------------
                {Bloque navegador web: representa un dispositivo que puede correr un navegador web: ordenador personal, teléfono celular, tableta, etc. Sin embargo para el alcance de este desarrollo se sugieren pantallas mayores a 10''.}
                &
-               \figtable{0.2}{celu_tableta_monitor} \\
+               \figtable{0.35}{celu_tableta_monitor} \\
 %-----------------------------
                {Bloque PocketBeagle: representa la plataforma de desarrollo elegida con el agregado de una circuitería que permite intercalarse entre los bloques ``controlador CNC'' y ``mando a distancia''.}
                &
-               \figtable{0.2}{hard_setup5} \\
+               \figtable{0.35}{hard_setup5} \\
 %-----------------------------
                {Bloque máquina CNC: representa el conjunto de piezas electromecánicas motorizadas para realizar el mecanizado de piezas.}
                &
-               \figtable{0.2}{maquina_cnc_star1} \\
+               \figtable{0.35}{maquina_cnc_star1} \\
 %-----------------------------
                {Bloque controlador CNC: representa el dispositivo electrónico encargado de comandar los motores de la máquina para generar los movimientos de corte.}
                &
-               \figtable{0.2}{controlador_nk105_solo} \\
+               \figtable{0.35}{controlador_nk105_solo} \\
 %-----------------------------
                {Bloque mando a distancia: representa el dispositivo electrónico que se conecta al controlador. Cuenta con una pantalla para visualización y un teclado para el ingreso de datos.}
                &
-               \figtable{0.2}{comando_nk105_solo} \\
+               \figtable{0.35}{comando_nk105_solo} \\
 %-----------------------------
                {Bloque cámara de vídeo: representa el dispositivo que se monta en la máquina CNC y permite capturar las imágenes que se utilizarán para el reconocimiento de marcas.\par En esta implementación se utiliza la cámara de un teléfono celular.}
                &
-               \figtable{0.2}{telefono_como_camara} \\
+               \figtable{0.35}{telefono_como_camara} \\
 %-----------------------------
                \bottomrule
             \label{tbl:descripcion_de_bloques}
@@ -245,7 +245,7 @@ La única opción para transferir archivos al controlador es a través un dispos
    En la figura \ref{fig:conexion_usb} se puede ver el conexionado físico entre la PocketBeagle actuando como USB cliente y el controlador actuando como USB anfitrión o \textit{host}.
 
 \subfiga 
-   {0.35} {hard_setup6} {La PocketBeagle se comporta como un dispositivo de almacenamiento. El controlador accede al sistema de archivos en busca de trabajos a procesar.}{fig:conexion_usb}
+   {0.55} {hard_setup6} {La PocketBeagle se comporta como un dispositivo de almacenamiento. El controlador accede al sistema de archivos en busca de trabajos a procesar.}{fig:conexion_usb}
 
    La tecnología involucrada en Linux para permitir este funcionamiento es \mbox{\textit{configFS}\citep{WEBSITE:configfs}}.\par
    Se implementó un sistema de intercambio de doble sistema de archivos como el que se muestra en la figura \ref{fig:configfs}.
@@ -385,7 +385,7 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
 \section{Software de control}
 
    El software de control expone los servicios de teclado y pantalla virtual desarrollados, en una pagina web que permite el control total de la maquina.\par
-   Se utilizaron las tecnologias descriptas en la seccion \ref{tecnologias_utilizadas} y se pueden ver algunas capturas en la figura \ref{fig:web_control1}.
+   Se utilizaron las tecnologias descriptas en la seccion \ref{section:tecnologias_utilizadas} y se pueden ver algunas capturas en la figura \ref{fig:web_control1}.
 
 \subfigab 
 {0.48} {web_control1} {Pantalla de standby del equipo monitoreada desde la pagina web.} {fig:web_control1a}
@@ -432,6 +432,61 @@ Algunas de las posibilidades en esta pagina se detallan en la siguiente lista:
 \end{itemize}
 
 
+\section{Calibracion de la camara}
+   Para utilizar un fotograma de video como medida para el desplazamiento de una marca, es necesario conocer la distancia que representa cada pixel.
+   Para obtenerlo se aplican las ecuaciones lineales \ref{eq:pixel_dim}:
+   \begin{equation}
+      \begin{aligned}
+         pixel_x&=\frac{dim_x}{pixeles_x} \\
+         pixel_y&=\frac{dim_y}{pixeles_y}
+      \end{aligned}
+      \label{eq:pixel_dim}
+   \end{equation}
+donde:
+\begin{itemize}
+   \item{$pixel_x,pixel_y$: dimension en mm de cada pixel en direccion x e y.}
+   \item{$pixeles_x, pixeles_y$: numero de pixeles de cada fotograma en direccion x e y.}
+   \item{$dim_x, dim_y$: medida en mm del fotograma en direccion x e y.}
+\end{itemize}
+
+Se ingresan las dimensiones en milimetros de ancho y alto de un cuadro con la ayuda de una regla, y el software realiza el resto de los calculos.\par
+
+Sin embargo si la camara no esta perfectamente perpendicular a la marca, la dimension de los pixeles en la imagen tienen una dimension diferente dependiendo de su posicion.  \par
+Por otro lado aparece un segundo efecto de distorcion de la linealidad en funcino del tipo de lente de la camara y la distancia al objetivo.\par
+
+En la figura \ref{fig:calibracion} se puede ver la captura de una regla en una toma perpendicular y otra en angulo y se puede apreciar que en el ultimo caso se distorcionan las medidas. \par
+
+Estas distorciones afectan la dimension de cada pixel e impactan directamente en el error de alineacion.\par
+
+Para mitigar este problema se desarrollaron dos tecnicas:
+\begin{itemize}
+\item{Zoom: para minimizar el efecto de la curvatura de la imagen en los bordes, se posiciona la camara a cierta distancia tal que permita recortar y descartar los bordes.\\
+      En la figura \ref{fig:calibracion_zoom} se aplica esta correccion a las imagenes de la figura \ref{fig:calibracion} y se puede apreciar que en la zona reducida ahora la distorcion es menos apreciable.}
+   \item{Centrado: se utiliza la dimension del pixel como una aproximacion, pero luego se itera el acercamiendo de la maquina hasta que la marca se posiciona en el centro de la imagen con un error parametrizable en el software.\\
+         Este procedimiento aletarga el proceso de alineacion, pero minimiza los efectos de error mencionados, debido a que la distancia entre el centro de la imagen y la marca tienden a cero pixeles.\\
+         En la figura \ref{fig:calibracion_centrado} se muestra una marca detectada a cierta distancia de lo esperado y como al aplicar este metodo, se logra luego de varias iteraciones posicionar exactamente la marca en el centro de la imagen en donde el los errores de la no linealidad de la imagen son despreciables}
+   \end{itemize}
+
+
+\subfigabc
+   {0.3} {calibracion2} {Toma perpendicular. Se puede ver cierta linealidad en toda la imagen.\\ \vphantom{1}} {fig:calibracion1a}
+   {0.3} {calibracion1} {Toma en angulo. Se puede ver la distorcion de las medidas de la regla en funcion de la posicion en la imagen.} {fig:calibracion1b}
+   {0.3} {calibracion5} {Fotografia tomada por una lente de gran angular ``ojo de pez'' que resalta el efecto de distorcion.} {fig:calibracion1c}
+   {Revelacion del efecto de distorcion de las medidas en funcion del angulo de captura de la imagen, tipo de lente y distancia al objetivo.}
+   {fig:calibracion}
+
+\subfigabc
+   {0.3} {calibracion_zoom1} {Recorte de imagen perpendicular. Se aprecia cierta linealidad en la imagen.} {fig:calibracion_zoom_a}
+   {0.3} {calibracion_zoom2} {Recorte de una imagen tomada en angulo. Aun con la distorcion generada, el recorte permite tomar una zona local sensiblemente mas lineal que la imagen completa.} {fig:calibracion_zoom_b}
+   {0.3} {calibracion_zoom3} {Recorte de una imagen tomada con gran angular. Aun se puede apreciar algo de distorcion.} {fig:calibracion_zoom_b}
+   {Analisis de la distorcion en las medidas de imagenes tomadas en diferentes escenarios y recortadas para tomar solo una zona central de la imagen y reducir la distorcion.}
+   {fig:calibracion_zoom}
+
+\subfigab
+{0.48} {calibracion_centrado1} {Marca encontrada a cierta distancia del centro de la imagen. El desplazamiento real depende de la medida de cada pixel y de la linealidad de la imagen.\\ \vphantom{1}}{fig:calibracion_centrado_a}
+{0.48} {calibracion_centrado2} {Interacion de movimientos que ubica la marca en el centro de la imagen. El desplazamiento del centro es practicamente nulo, y por lo tanto no depende de la dimension de los pixeles ni la linealidad de la imagen.}{fig:calibracion_centrado_a}
+   {Metodo de iteracion de movimientos para el centrado de la marca en el centro de la imagen y la mitigacion de los efectos alineales en el fotograma.}
+   {fig:calibracion_centrado}
 
 \section{Secuencia de pasos para alinear}
 
@@ -503,6 +558,5 @@ Algunas de las posibilidades en esta pagina se detallan en la siguiente lista:
             \label{tbl:descripcion_de_bloques}
          \end{longtable}
 
-\section{Bloque PocketBeagle}
 
 
