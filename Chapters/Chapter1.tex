@@ -9,11 +9,11 @@ En el presente capítulo se explica el principio de funcionamiento de las máqui
 %----------------------------------------------------------------------------------------
 \section{Historia y principio de funcionamiento}
 
-Hacia finales de la década del '40, el mecánico inventor Jhon Parsons\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons_A}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada, figura \ref{fig:parsons_B}.\\
+Hacia finales de la década del '40, el mecánico inventor Jhon Parsons\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons_A}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada como se muestra en la figura \ref{fig:parsons_B}.\\
 A este invento se lo considera la primera máquina de control numérico o NC por sus siglas en inglés (\textit{numerical control}).
 \subfigab
          {0.37}{parsons_face}{Fotografia de Jhon T. Parsons, considerado en la industria como el inventor de las máquinas NC.}{fig:parsons_A}
-         {0.6}{parsons_machine}{Una de las primeras máquinas de la industria consideradas de control numérico NC.\\ \vphantom{1}}{fig:parsons_B}
+         {0.6}{parsons_machine}{Una de las primeras máquinas de la industria consideradas de control numérico.\\ \vphantom{1}}{fig:parsons_B}
          {Jhon Parsons, el inventor de las máquinas de control numérico junto a una de sus máquinas.}
          {fig:parsons}
 \par
@@ -28,18 +28,18 @@ A pesar del paso del tiempo y los avances tecnológicos, los bloques constitutiv
 \subsection{Programa de movimientos}
    El programa de movimientos consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.\par
    Este lenguaje fue creado por el Instituto tecnológico de Masachussets en la década del '50 y especificado en el documento NIST-RS274-D \citep{rs274}.\par
-Originalmente los ingenieros de mecanizado lo escribían manualmente en una planilla y luego, mediante una máquina de mecanografía, se transcribía a una cinta perforada que sería interpretada por el controlador de movimientos.\par
-Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}.
+Originalmente los ingenieros de mecanizado lo escribían manualmente en una planilla y luego, mediante una máquina de mecanografía, se transcribía a una cinta perforada que era interpretada por el controlador de movimientos.\par
+Se pueden ver algunas imágenes de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}.
 \subfigtwotwo
           {0.46}{cad_cam_primigenio1} {Ingeniero escribiendo en papel la lista de operaciones para mecanizar una pieza en lenguaje GCode.}
           {0.5}{cad_cam_primigenio2} {Operadora transcribiendo la lista de operaciones del formato papel a un rollo de cinta multiperforada.}
           {0.46}{cad_cam_primigenio3} {Lector de cinta multiperforada que controla los movimientos de la máquina.}
-          {0.46}{cad_cam_primigenio4} {Operador trabajando con una de las primeras fresadoras por control numerico.}
+          {0.46}{cad_cam_primigenio4} {Operador trabajando con una de las primeras fresadoras por control numérico.}
           {Secuencia de pasos para operar una máquina NC primigenia.}
           {fig:programacion_cnc_primigenia}
 
 
-          En el presente se diseña la pieza en tres dimensiones con la ayuda de software de diseño asistido por computadora CAD  (\textit{computer aided design}).\\
+          En el presente se diseña la pieza en tres dimensiones con la ayuda de software de diseño asistido por computadora o CAD (\textit{computer aided design}) por sus siglas en inglés.\\
           Algunos software de CAD reconocidos se listan a continuación:
           \begin{itemize}
              \item{FreeCAD}
@@ -48,7 +48,7 @@ Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:pro
              \item{AutoCAD}
              \item{SolidWorks}
           \end{itemize}
-   El archivo de salida del CAD se procesa con un software de manufactura asistida por computadora CAM (\textit{computer aided manufacturing}) en donde el diseñador puede configurar los métodos y estrategias de mecanizado.\par
+   El archivo de salida del CAD se procesa con un software de manufactura asistida por computadora o CAM (\textit{computer aided manufacturing}) por sus siglas en inglés, en donde el diseñador puede configurar los métodos y estrategias de mecanizado.\par
           Algunos software de CAM reconocidos se listan a continuación:
           \begin{itemize}
              \item{RhinoCAM}
@@ -61,8 +61,8 @@ Se pueden ver algunas fotos de este primigenio proceso en la figura \ref{fig:pro
    El resultado final es un archivo de texto en lenguaje GCode que se almacena digitalmente y que será procesado por el controlador.\par
           Esta secuencia es conocida como diseño CAD/CAM y se muestra en la figura \ref{fig:programacion_cnc_actual}
 \subfigtwotwo 
-            {0.48 }{cad_cnc_cuadrado}{Se diseña la pieza en 3D en un software CAD.\\ \vphantom{1}}
-            {0.48 }{cam_cnc_cuadrado}{Se diseña la estrategia de mecanizado y opcionalmente se simula el proceso en un software CAM.}
+            {0.48 }{cad_cnc_cuadrado}{Se diseña la pieza en 3D en un software de diseño asistido por computadora CAD.\\ \vphantom{1}\\ \vphantom{1}}
+            {0.48 }{cam_cnc_cuadrado}{Se diseña la estrategia de mecanizado y opcionalmente se simula el proceso en un software de manufactura asistido por computadora CAM.}
             {0.48 }{gcode_cnc_cuadrado}{Se exporta desde el CAM un archivo en lenguaje GCode con las instrucciones de máquina que leerá el controlador.}
             {0.40 }{portada_mach3}{El sofware del controlador genera las señales que mueven el CNC y ejecutan el mecanizado.}
             {Secuencia de pasos para operar una máquina CNC moderna.}
@@ -81,43 +81,50 @@ De esta manera el controlador se compone de dos etapas, controlador lógico y dr
 En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.\\
 En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales detallando las características principales.\\
 
-\begin{table}[!hb]
-   \centering
-   \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado}
-   \begin{tabular}{m{0.6\textwidth}m{0.4\textwidth}}
-      \toprule
-      \textbf{Características} & \textbf{Imagen} \\ 
-      \midrule
+      \begin{longtable}[!h]{m{0.53\textwidth}p{0.4\textwidth}}
+         \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado.}\\
+         \toprule
+         \textbf{Características} & \textbf{Imagen}\\
+         \midrule
+         \endfirsthead
+         \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado. Continuación}\\
+         \toprule
+         \textbf{Características} & \textbf{Imagen}\\
+         \midrule
+         \endhead
 %-----------------------------
-      Controlador dependiente de una PC y conexión por puerto paralelo. Solución económica para máquinas  de baja performance.
-      &
-      \figtable{0.4}{controlador_paralelo} \\
+            Controlador dependiente de una PC y conexión por puerto paralelo. Solución económica para máquinas  de baja performance.
+            &
+            \figtable{0.4}{controlador_paralelo} \\
 %-----------------------------
-      Controlador integrado de media performance, ideal para máquinas profesionales pero de baja complejidad. Este es el controlador que se usará para realizar los ensayos.
-      &
-      \figtable{0.4}{nk105} \\
+            Controlador integrado de media performance, ideal para máquinas profesionales pero de baja complejidad. Este es el controlador que se usará para realizar los ensayos.
+            &
+            \figtable{0.4}{nk105} \\
 %-----------------------------
-      Controlador basado en PC sobre Windows de media performance. Este es el controlador que usa actualmente la empresa Wolfcut en sus máquinas.
-      &
-      \figtable{0.4}{edding_board} \\
+            Controlador basado en PC sobre Windows de media performance. Este es el controlador que usa actualmente la empresa Wolfcut en sus máquinas.
+            &
+            \figtable{0.4}{edding_board} \\
 %-----------------------------
-      Controlador autónomo profesional de gran performance y opciones de operación. Este tipo de controladores se utilizan en centros de mecanizado de altísima complejidad y prestaciones sumamente exigentes. Es inusual ver este tipo de controladores en las máquinas de gama media debido a su alto costo. 
-      &
-      \figtable{0.4}{controlador_nk200} \\
+            Controlador autónomo profesional de gran performance y opciones de operación. Este tipo de controladores se utilizan en centros de mecanizado de altísima complejidad y prestaciones sumamente exigentes. Es inusual ver este tipo de controladores en las máquinas de gama media debido a su alto costo. 
+            &
+            \figtable{0.4}{controlador_nk200} \\
 %-----------------------------
-      \bottomrule
-   \end{tabular}
-   \label{tbl:controllers}
-\end{table}
+            \bottomrule
+            \label{tbl:controllers}
+         \end{longtable}
 
 
-\begin{table}[h!]
-   \centering
-   \caption[Modelos de drivers]{Modelos de drivers de motores}
-   \begin{tabular}{m{0.7\textwidth}m{0.3\textwidth}}
-      \toprule
-      \textbf{Características} & \textbf{Imagen} \\ 
-      \midrule
+      \begin{longtable}[!h]{m{0.63\textwidth}p{0.3\textwidth}} %la suma tiene que ser 0.93 sino se sale de margen..
+   \caption[Modelos de drivers]{Modelos de drivers de motores.}\\
+         \toprule
+         \textbf{Características} & \textbf{Imagen}\\
+         \midrule
+         \endfirsthead
+         \caption[Modelos de drivers]{Modelos de drivers de motores. Continuación}\\
+         \toprule
+         \textbf{Características} & \textbf{Imagen}\\
+         \midrule
+         \endhead
 %-----------------------------
       Driver para motores paso a paso pequeños, económicos, ideales para máquinas simples, impresoras 3D, y hobby.
       &
@@ -132,9 +139,8 @@ En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelo
       \figtable{0.3}{driver_servo} \\
 %-----------------------------
       \bottomrule
-   \end{tabular}
-   \label{tbl:drivers}
-\end{table}
+      \label{tbl:drivers}
+   \end{longtable}
 
 
 \subsection{Máquina de control numérico}
@@ -142,7 +148,7 @@ En términos generales una máquina CNC es un conjunto de piezas electromecánic
 En algunas el elemento de mecanizado permanece fijo y lo que se mueve es la pieza a mecanizar.
 Suelen ser motorizadas, pero también las hay con actuadores lineales, sistemas hidráulicos o una combinación de todos estos.\par
 Dependiendo del propósito de la máquina se definen los grados de libertad del movimiento.
-Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos roboticos y solo dos para corte y grabado de piezas planas con láser.\par
+Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis ejes para centros de mecanizado de piezas complejas, seis para brazos robóticos y solo dos para corte y grabado de piezas planas con láser.\par
 Para el desarrollo de este trabajo se estudian solamente máquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras. \par
 Se esquematiza y se muestran algunos modelos de este tipo de estructuras en la figura \ref{fig:wolfcut1}.
 
@@ -160,14 +166,15 @@ Se esquematiza y se muestran algunos modelos de este tipo de estructuras en la f
 En la actualidad muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas} se realizan utilizando máquinas de control numérico computarizado o CNC \citep{WEBSITE:cncwiki} (\textit{computer numerical control)}.
 
 \subfigtwotwo 
-         {0.40}{Piezas_mecanizadas4}{Máquina CNC ejecutando el corte de piezas en madera para mobiliarios.} 
-         {0.39}{piezas_mecanizadas2}{Placa de circuito impreso realizado mediante el fresado del contorno de sus pistas.}
-         {0.36}{piezas_mecanizadas1}{Corte y fresado en placa de aluminio para obtener un repuesto de una máquina herramienta.}
-         {0.40}{piezas_mecanizadas5}{Corte de logos y letras en madera. \\ \vphantom{10}\\ \vphantom{10}}
+         {0.48}{Piezas_mecanizadas4}{Máquina CNC ejecutando el corte de piezas en madera para mobiliarios.} 
+         {0.48}{piezas_mecanizadas2}{Placa de circuito impreso realizado mediante el fresado del contorno de sus pistas.}
+         {0.48}{piezas_mecanizadas1}{Corte y fresado en placa de aluminio para obtener un repuesto de una máquina herramienta.}
+         {0.48}{piezas_mecanizadas5}{Corte de logos y letras en madera. \\ \vphantom{10}\\ \vphantom{10}}
          {Ejemplos de piezas mecanizadas mediante máquinas CNC.}
          {fig:piezas_mecanizadas}
 
-         El proceso de mecanizar piezas utilizando esta tecnología se esquematiza en la figura \ref{fig:pos_sin_marcas} y consiste en una serie de pasos como los que se enumera a continuación:
+
+         El proceso de mecanizar piezas utilizando esta tecnología se esquematiza en la figura \ref{fig:pos_sin_marcas} y consiste en una serie de pasos que se enumeran a continuación:
 
 \begin{enumerate}
    \item{Posicionar la placa del material a cortar en la mesa de corte.}
@@ -216,11 +223,11 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
 
 \section{Software para el reconocimiento de marcas}
    En la tabla \ref{tbl:competitors} se destacan algunos desarrollos de software que permiten extenderse o adaptarse para soportar el reconocimiento de marcas.
-   Se puede ver que la mayoría de las soluciones del mercado están basadas en PC y eso aumenta el costo general del sistema, disminuye la fiabilidad y limita el acceso desde multiples plataformas.\par
-   Se ha podido constatar que además del costo de hardware, licencias o extensiones de software, el costo de las cámaras utilizadas son privativos para el segmento de máquinas de gama baja o media que es el segmento principal de este trabajo.
+   Se puede ver que la mayoría de las soluciones del mercado están basadas en PC y eso aumenta el costo general del sistema, disminuye la fiabilidad y limita el acceso desde múltiples plataformas.\par
+   Se ha podido constatar que además del costo de hardware, licencias y/o extensiones de software, el costo de las cámaras de video requeridas en estos sistemas son muy costosas.\par
    La empresa interesada, Wolfcut \footnote{\wolfcutlink}, utiliza actualmente uno de estos sistemas con algunos resultados adversos.\par
-   No se ha encontrado ningún sistema que utilice una cámara con conexión inalámbrica, y tampoco aprovechando el uso de la cámara de un teléfono celular.\par
-   Por otra parte tampoco se ha encontrado alguna solución completa de código abierto y colaborativo que facilite el crecimiento del proyecto con la ayuda de la extensa comunidad de usuarios, desarrolladores y entusiastas.
+   No se ha encontrado ningún sistema que utilice una cámara con conexión inalámbrica, y tampoco que aproveche el uso de la cámara de un teléfono celular.\par
+   Tampoco se ha encontrado una solución completa de código abierto y colaborativo que facilite el crecimiento del proyecto con la ayuda de la extensa comunidad de usuarios, desarrolladores y entusiastas.
 
 \begin{table}[h!]
    \centering
@@ -230,19 +237,22 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
       \textbf{Características} & \textbf{Imagen} \\ 
       \midrule
 %-----------------------------
-      EddingCNC \citep{WEBSITE:eddingcnc}: Software basado en PC sobre Windows al cual varios fabricantes como GES \citep{WEBSITE:gescnc} y Wolfcut \citep{WEBSITE:wolfcut} lo han extendido para soportar reconocimiento de marcas.
+      EddingCNC \citep{WEBSITE:eddingcnc}: software basado en PC sobre Windows al cual varios fabricantes como
+      GES %\citep{WEBSITE:gescnc} me corrigieron que no van referncias aca..
+      y Wolfcut %\citep{WEBSITE:wolfcut}
+      lo han extendido para soportar reconocimiento de marcas.
       &
       \figtable{0.5}{edding_cnc_camera} \\
 %-----------------------------
-      myCNC \citep{WEBSITE:mycnc}: Esta aplicación de la empresa pv-automation \citep{WEBSITE:pvautomation} ofrece un sistema de visión artificial y reconocimiento de marcas basado en una PC industrial y cámaras USB.
+      myCNC \citep{WEBSITE:mycnc}: esta aplicación de la empresa pv-automation \citep{WEBSITE:pvautomation} ofrece un sistema de visión artificial y reconocimiento de marcas basado en una PC industrial y cámaras USB.
       &
       \figtable{0.5}{mycnc_camera} \\
 %-----------------------------
-      Machinekit \citep{WEBSITE:machinekit}: Es un software de control que opera sobre Linux al cual se le han hecho algunas intervenciones para el reconocimiento de marcas.
+      Machinekit \citep{WEBSITE:machinekit}: es un software de control que opera sobre Linux al cual se le han hecho algunas intervenciones para el reconocimiento de marcas.
       &
       \figtable{0.5}{linuxcnc_camera} \\
 %-----------------------------
-      Summa \citep{WEBSITE:summacnc}: Es una línea de máquinas de corte de contornos, principalmente en papel, que cuenta con lectura de marcas integrado en sus sistemas embebidos.
+      Summa \citep{WEBSITE:summacnc}: es una línea de máquinas de corte de contornos, principalmente en papel, que cuenta con lectura de marcas integrada en sus sistemas embebidos.
       &
       \figtable{0.5}{summa_camera} \\
 %-----------------------------
@@ -263,14 +273,14 @@ Es por ello que se trabajó en conjunto para lograr una solución embebida.\par
    Con los argumentos y la experiencia de la empresa Wolfcut, se determinó que uno de los controladores de uso profesional más popular del mercado es el NK105 de la firma Weihong \citep{WEBSITE:nk105} que se muestra en la figura \ref{fig:nk105}.
    \subfiga{0.6}
       {nk105}
-      {Controlador NK105 de la firma Weihong elegido para extender sus funciones y dotarlo de lectura de marcas.}
+      {Controlador NK105 de la firma Weihong.}
       {fig:nk105}
 
    Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuración.\par
-   No provee una API definida por el fabricante ni una interfase física para poder conectarse y extender sus funciones. \par
-   Por otro lado, al estar basado internamente en una FPGA y no depender de una PC para funcionar, es reconocido por sus excelentes resultados de corte, su estabilidad en trabajos extensos ,una excelente fiabilidad, y un costo muy accesible. \par
+   No provee una API (\textit{application programming interface}) definida por el fabricante ni una canal físico para conectarse y extender sus funciones. \par
+   Por otro lado, gracias a su diseño basado en FPGA (\textit{field programmable gate array}) y no depender de una PC para funcionar es reconocido por: excelentes resultados de corte, gran estabilidad en trabajos extensos, muy buena fiabilidad y un costo muy accesible. \par
    Las capacidades de operación del NK105 son relativamente simples, pero de nivel profesional con un mercado ya consolidado y muy extenso en todo el mundo.\par
-   Además este modelo pertenece a una familia de soluciones de complejidad creciente, pero que comparten el controlador. Las soluciones que se le apliquen se pueden extender a toda la familia.\par
+   Además este modelo pertenece a una familia de soluciones de complejidad creciente, pero que comparten el controlador. Las extensiones que se incorporen en este se pueden aplicar a toda la familia.\par
    El alcance de este trabajo se limita a intervenir y dotar de lectura de marcas al controlador NK105 y obtener resultados comparables con otras soluciones de mercado.
 
 %----------------------------------------------------------------------------------------

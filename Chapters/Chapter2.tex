@@ -2,7 +2,7 @@
 
 \label{Chapter2}
 
-En el presente capítulo se introducen las tecnologías más relevantes involucradas, se explica el álgebra y la geometría asociada a la alineación de dos planosy finalmente los criterios y selección de marcas de registro.
+En el presente capítulo se introducen las tecnologías más relevantes involucradas, se explica el álgebra y la geometría asociada a la alineación de planos y finalmente los criterios y selección de marcas de registro.
 
 \section{Tecnologías utilizadas}
 \label{section:tecnologias_utilizadas}
@@ -24,10 +24,10 @@ En el presente capítulo se introducen las tecnologías más relevantes involucr
       \item{72 pines de expansion, UART, SPI, I2C, entre otras.}
       \item{USB de alta velocidad.}
    \end{itemize}
-   Durante la carrera de maestría se obtuvo experiencia en el uso de otra plataforma de la misma familia, la BeagleBoneBlack\footnote\beagleboneblack, sobre la cual se corrió un sistema operativo Linux y se desarrollaron drivers para manejar interfases de comunicación.
-   Dicha experiencia permitió argumentar que la PocketBeagle cuenta con las interfases de comunicación necesarias y es capaz de correr el software requerido para este trabajo a una fracción del costo y tamaño. \par
+   Durante la carrera de maestría se obtuvo experiencia en el uso de otra plataforma de la misma familia, la BeagleBoneBlack\footnote\beagleboneblack, sobre la cual se corrió un sistema operativo Linux y se desarrollaron drivers para manejar interfaces de comunicación.\par
+   Dicha experiencia permitió argumentar que la PocketBeagle cuenta con las interfaces de comunicación necesarias y es capaz de correr el software requerido para este trabajo a una fracción del costo y tamaño. \par
    La única falencia es que no cuenta con una interfaz Wi-Fi ni Ethernet pero se resolvió utilizando un adaptador USB como se destaca en la figura \ref{fig:pocketbeagle_B}.\par
-   Se está utilizando una distribución oficial del sistema operativo Debian compilada para esta plataforma y que se puede descargar desde el link oficial\footnote\beagleimages.
+   Se está utilizando una distribución oficial del sistema operativo Debian compilada para esta plataforma que se puede descargar desde el link oficial\footnote\beagleimages.
 
 \subfigab 
          {0.60}{pocketbeagle}{Plataforma PocketBeagle como unidad de procesamiento.}{fig:pocketbeagle_A}
@@ -50,36 +50,37 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
 
    Para entender la función principal de cada capa se describen algunos detalles en la siguiente lista:
    \begin{itemize}
-      \item{Python \citep{WEBSITE:python}: Es un poderoso y popular lenguaje de programación en el cual se corre principalmente el servidor web, y las funciones de procesamiento de imágenes. La imagen del sistema operativo de la PocketBeagle ya cuenta con Python versión 3 instalado por defecto, lo que asegura compatibilidad.
+      \item{Python \citep{WEBSITE:python}: Es un poderoso y popular lenguaje de programación en el cual se corre principalmente el servidor web, y las funciones de procesamiento de imágenes.\par
+         La imagen del sistema operativo de la PocketBeagle ya cuenta con Python versión 3 instalado por defecto, lo que asegura compatibilidad.
       }
-      \item{asyncio \citep{WEBSITE:asyncio}: Es una biblioteca para Python que permite correr una única tarea que administra muchas de manera concurrente y cooperativa.
+      \item{asyncio \citep{WEBSITE:asyncio}: Es una biblioteca para Python que permite correr una única tarea que administra muchas de manera concurrente y cooperativa.\par
       Esto permite que, por ejemplo, una función de Python esté esperando datos de un archivo mientras otra procesa una imagen sin bloquear las funciones del servidor.
       }
       \item{aiohttp \citep{WEBSITE:aiohttp}: Es una biblioteca de Python que permite correr un servidor web utilizando la infraestructura de asyncio para realizar tareas de manera cooperativa y concurrete.
       Es el motor del servidor web.
       }
-      \item{HTML5.0 \citep{WEBSITE:html5}: Es el lenguaje de marcas utilizado para visualizar contenidos en la web.
+      \item{HTML 5.0 \citep{WEBSITE:html5}: Es el lenguaje de marcas utilizado para visualizar contenidos en la web.\par
          Se utiliza para mostrar contenido estático y también para aprovechar un mecanismo nativo de la version 5.0 que permite la reproducción de vídeo en la página web sin necesidad de otras tecnologías.
       }
-      \item{CSS \citep{WEBSITE:css}: Es un lenguaje que permite definir estilos, colores, formato y modo de presentación en pantalla de una página escrita en HTML.
+      \item{CSS \citep{WEBSITE:css}: Es un lenguaje que permite definir estilos, colores, formato y modo de presentación en pantalla de una página escrita en HTML.\par
       Es indispensable para crear aplicaciones web atractivas y apropiadas para cada uso.
       }
-      \item{JavaScript \citep{WEBSITE:javascript}: Es un lenguaje de programación intrínsecamente relacionado con HTML que permite la creación de páginas web dinámicas.
-         La mayoría de los navegadores modernos soportan este lenguaje y esto permite que la aplicación que se desarrolla pueda correr en cualquier plataforma que cuente con un navegador web.
-         Más del 90\% de la aplicación web desarrollada está codificada en lenguaje JavaScript: los cálculos de alineación, la interacción con el usuario, etc.
-         También se utilizan bibliotecas de terceros para diferentes usos escritas en este lenguaje, lo que permite reutilizar código.
+      \item{JavaScript \citep{WEBSITE:javascript}: Es un lenguaje de programación intrínsecamente relacionado con HTML que permite la creación de páginas web dinámicas.\par
+         La mayoría de los navegadores modernos soportan este lenguaje y esto permite que la aplicación que se desarrolla pueda correr en cualquier plataforma que cuente con un navegador web.\par
+         Más del 90\% de la aplicación web desarrollada está codificada en lenguaje JavaScript: los cálculos de alineación, la interacción con el usuario, etc.\par
+         También se utilizan bibliotecas de terceros para diferentes usos, escritas en este lenguaje, lo que permite reutilizar código.
       }
-      \item{WebGL \citep{WEBSITE:webgl}: Es una biblioteca gráfica (\textit{Web graphics library}) escrita en JavaScript, que permite definir y visualizar objetos en tres dimensiones en una página web.
-         Esta íntimamente ligada con el desarrollo web y es por ello que puede aprovechar las tarjetas gráficas del ordenador del cliente para acelerar las tareas de visualización y procesamiento.
+      \item{WebGL \citep{WEBSITE:webgl}: Es una biblioteca gráfica (\textit{Web graphics library}) escrita en JavaScript, que permite definir y visualizar objetos en tres dimensiones en una página web.\par
+         Esta íntimamente ligada con el desarrollo web y es por ello que puede aprovechar las tarjetas gráficas del ordenador del cliente para acelerar las tareas de visualización y procesamiento.\par
          De esta manera logra eficiencias similares a las aplicaciones nativas del sistema operativo.
       }
-      \item{Three.js \citep{WEBSITE:threejs}: Es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGL y facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación y mejora el mantenimiento del código.
+      \item{Three.js \citep{WEBSITE:threejs}: Es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGL y facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación y mejora el mantenimiento del código.\par
          Se utiliza en la aplicación para visualizar el movimiento de la máquina en 3D, los trazos de corte, las correcciones de rotación, etc.
       }
-      \item{Websockets \citep{WEBSITE:websockets}: Es un protocolo de comunicaciones que opera sobre el protocolo TCP/IP, similar a HTTP, pero diseñado con la premisa de lograr una comunicación bidireccional de baja latencia.
+      \item{Websockets \citep{WEBSITE:websockets}: Es un protocolo de comunicaciones que opera sobre el protocolo TCP/IP, similar a HTTP, pero diseñado con la premisa de lograr una comunicación bidireccional de baja latencia.\par
          Es de gran importancia en la aplicación para lograr una rápida respuesta de operación.
       }
-      \item{socket.IO \citep{WEBSITE:socketio}: Es una biblioteca de JavaScript que utiliza Websockets para permitir la comunicación bidireccional entre el servidor web y el o los clientes.
+      \item{socket.IO \citep{WEBSITE:socketio}: Es una biblioteca de JavaScript que utiliza Websockets para permitir la comunicación bidireccional entre el servidor web y el o los clientes.\par
          Toda la comunicación entre los scripts de JavaScript que corren en el cliente y el servidor en Python que corre en la PocketBeagle se comunican utilizando esta biblioteca.
       }
    \item{OpenCV \citep{WEBSITE:opencv}: Es una biblioteca muy popular escrita en C++ para procesamiento de imágenes asistido por computadora.
@@ -87,7 +88,7 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
          En particular la PocketBeagle utiliza la biblioteca libopencv-dev extraída de los repositorios oficiales de Debian.
       }
    \item{PyOpenCV \citep{WEBSITE:pyopencv}: Es una biblioteca de Python que permite utilizar las funciones de OpenCV.
-         Dado que este trabajo está escrito en Python, se utiliza esta biblioteca para el procesamiento de marcas, la cual a su vez utiliza libopencv-dev del sistema operativo.
+         Dado que este trabajo está escrito en Python, se utiliza esta biblioteca para el procesamiento de marcas que internamente utiliza libopencv-dev del sistema operativo.
       }
 \end{itemize}
 
@@ -123,7 +124,7 @@ Por lo tanto para el alcance de este trabajo se optó por usar la cámara de un 
 
    Esta opción resuelve el problema de la longitud del cable dado que transmite por Wi-Fi, pero también permite utilizar varios modelos de teléfonos simultáneamente sin cambiar el software y poder tomar imágenes desde diferentes ángulos. \par
 
-  Esta aplicación cuenta además con una interfaz web desde la cual se pueden ajustar los parámetros de la cámara más importantes: zoom, brillo, desplazamiento, resolución y calidad de imagen.
+  Esta aplicación cuenta además con una interfaz web desde donde se pueden ajustar los parámetros de la cámara más importantes: zoom, brillo, desplazamiento, resolución y calidad de imagen.
 
 
 \subfigab
@@ -159,7 +160,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
 \subfigab
          {0.45}{alineacion_offset1}{El plano B se encuentra desplazado $2$ unidades en el eje x y $1$ unidad en el eje Y.}{fig:alineacion_offset_A}
          {0.45}{alineacion_offset2}{El plano A se desplaza y corrige su posición.}{fig:alineacion_offset_B}
-         {Corrección de desplazamiento. A representa el sistema de coordenadas de la máquina y las dimensiones extraídas del archivo de corte, B representa el objeto real desplazado, escalado y rotado respecto del primero}
+         {Corrección de desplazamiento. A representa el sistema de coordenadas de la máquina y las dimensiones extraídas del archivo de corte, B representa el objeto real desplazado, escalado y rotado respecto del primero.}
          {fig:alineacion_offset}
 
          Ahora, si se considera el punto 2, como se muestra en la figura \ref{fig:alineacion_rotacion1}, se puede calcular la rotación relativa entre B y A.\par
@@ -230,7 +231,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
    Algunos ejemplos de marcas fiduciales se muestran en la figura \ref{fig:ejemplo_marcas}.
 
 \subfigtwotwo
-            {0.5}{ejemplo_marcas2}{Figuras geométricas llenas o contorno} 
+            {0.5}{ejemplo_marcas2}{Figuras geométricas llenas o solo su contorno.} 
             {0.38}{ejemplo_marcas1}{Ejemplo de marcas fiduciales en una placa de circuito impreso PCB.}
             {0.5}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado utilizando el software desarrollado.}
             {0.38}{ejemplo_marcas3}{Marcas fiduciales codificadas. Se pueden utilizar para reconocer la posición y un código para diversos usos.}
