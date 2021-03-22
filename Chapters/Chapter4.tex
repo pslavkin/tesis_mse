@@ -1,16 +1,86 @@
 \chapter{Ensayos y resultados} % Main chapter title
 \label{Chapter4}
 
+En el presente capitulo se describen los ensayos mas relevantes, los procedimientos de cada ensayo y se listan los materiales y herramientas utilizadas.
+
+\section{Listado de herramientas}
+
+Durante los ensayos, ademas de las herramientas convencionales para el desarrollo de sistemas embebidos, se utilizaron las siguientes herramientasespecificas:
+\begin{enumerate}
+   \item{Maquinna de control numerico Start126 de la firma BGMA industrial. \footnote{\url{https://www.bgma-industrial.com.ar/}}}
+   \item{Telefono movil Sambsung J7.}
+   \item{Impresora HP LaserJet 1025nw.}
+   \item{Regla de $1m$ metalica.}
+   \item{Puntero laser de uso hogareno.}
+   \item{Plataforma de desarrollo PocketBeagle.}
+   \item{Controlador NK105 de la firma Weihong.}
+   \item{Drivers de motores paso a paso M542 de la firma Leadshine.}
+\end{enumerate}
+
 \section{Pruebas funcionales del hardware}
 \label{sec:pruebasHW}
 
-\subsection{Validación de tramas SPI}
+\subsection{Acceso concurrente al driver SPI}
+El acceso al modulo del \textit{kernel} que maneja el SPI, se realiza mediante operaciones de entrada y salida del sistema operativo.\par
+Cuando el modulo recibe una peticino de abrir el archivo, resitra en una lista un descriptor de esta operacion y la mantiene hasta que se recibe la operacion de cerrar. \par
+Esta lista permite sostener accesos multiples al \textit{driver}. Esa caracteristica es muy util para monitorear la maquina remotamente sin la capa de software.
+Se realizaron pruebas con cuatro accesos concurrentes al mismo driver y se verifico la integridad y la sincronia de la informacion de cada cliente.\par
+En la figura \ref{fig:acceso_multiple_spi} se muestra una captura de estos accesos desde una conexion remota por \textit{ssh} (\textit{secure shell}) \footnote{\url{https://www.ucl.ac.uk/isd/what-ssh-and-how-do-i-use-it}} desde un ordenador a la PocketBeagle.
+
+\subfiga
+{0.7} {acceso_multiple_spi} {Acceso concurrente al modulo de manejo de SPI desde una conexion ssh. Se puede ver la sincronia entre los cuatro accesos y el registro de cada acceso en los mensajes del \textit{kernel}.}{fig:acceso_multiple_spi}
+
+
 \subsection{Validación de tramas UART}
 \subsection{Precisión de centro y ángulo de las marcas}
 
 \section{Pruebas funcionales del software}
-\subsection{Ensayos con diferentes cámaras y resoluciones de video}
+\subsection{Ensayos con diferentesresoluciones de video}
+%esto se puede probar
+
 \subsection{Validación del error de rotación del GCode}
 \subsection{Validación del error de alineación}
-\subsection{Ensayo general de caja negra con diferentes archivos de mecanizado}
+\subsection{Ensayo con archivos de mecanizado}
+
+Se diseno un archivo de mecanizado de una letra ``A'' con un circulo central como plantilla de puebas.\par
+Al contar con lineas rectas, anguladas y circunferencias lo hace especialmente util para encontrar los limites de la tecnica de alineacion. \par
+Para las pruebas se imprimio el trazado con una impresora laser en hoja A4, y la hoja se sujeto a una base de madera para asegurar la planitud. Con esto se simula una pieza previamente impresa que se desea mecanizar como se muestra en la figura \ref{tabla_madera_con_hoja}.\par
+
+   \subfiga{0.6} {tabla_madera_con_hoja} {Placa de madera con la impresion del trabajo de corte pegada. Esto permite ubicar la pieza en diferentes posiciones y probar los resultados del sistema de alineacion.} {fig:tabla_madera_con_hoja}
+
+   Se realizaron cinco operaciones con diferentes rotaciones y desplazamientos y se recolecto el maximo error de corte y el porcentaje del trabajo que es cortado por debajo de la mitad de dicho error. Este ultimo es un estimador a veces mas util que el error maximo.\par
+   En la figura \ref{fig:ensayo_A} se muestra una secuencia de imagenes tomadas durante el proceso de corte simulado.
+
+   \subfigthreethree
+      {ensayo_A_1}
+      {ensayo_A_2}
+      {ensayo_A_3}
+      {ensayo_A_4}
+      {ensayo_A_5}
+      {ensayo_A_6}
+      {Secuancia de pasos para los ensayos de corte simulado. Se utiliza el recuadro rojo en el centro de la imagen como testigo del error maximo.}
+      {fig:ensayo_A}
+
+      \begin{longtable}[!h]{m{0.15\textwidth}m{0.15\textwidth}m{0.15\textwidth}m{0.15\textwidth}m{0.15\textwidth}m{0.15\textwidth}}
+            \caption[Ensayos de corte simulado]{Informacion recolectada durante repetidos ensayos a un mismo diseno de corte pero posicionado en diferentes angulos y desplazamientos.}\\
+            \toprule
+               \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Maximo} \\ 
+            \midrule
+            \endfirsthead
+            \caption[Ensayos de corte simulado]{Informacion recolectada durante repetidos ensayos a un mismo diseno de corte pero posicionado en diferentes angulos y desplazamientos.}\\
+            \toprule
+               \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Maximo} \\ 
+            \midrule
+            \endhead
+%-----------------------------
+            {1.7} & {0.5}& {nose}  & {nose} & {1} & {1}\\
+            {15.4} & {0.5}& {-2.14} & {1.98} & {1} & {1}\\ 
+            {faltan hacer mas} & {0.5}& {-2.14} & {1.98} & {1} & {1}\\ 
+%-----------------------------
+               \bottomrule
+            \label{tbl:ensayo_A}
+         \end{longtable}
+
+
+
 
