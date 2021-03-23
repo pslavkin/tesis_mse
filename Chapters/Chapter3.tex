@@ -385,17 +385,17 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
 
 \section{Software de control}
 
-   El software de control expone los servicios de teclado y pantalla virtual en una página web que permite el control total de la máquina.\par
+   El software de control facilita el uso de los servicios de teclado y pantalla virtual en una cómoda página web y permite el control total de la máquina como si se tratara del mando a distancia original del equipo.\par
    Se utilizaron las tecnologías descritas en la sección \ref{section:tecnologias_utilizadas} y se pueden ver algunas imágenes de esta interfaz en la figura \ref{fig:web_control1}.
 
 \subfigab 
-{0.48} {web_control1} {Pantalla de inicio del equipo monitoreada desde la página web.} {fig:web_control1a}
+{0.48} {web_control1} {Pantalla de coordenadas del equipo monitoreada desde la página web.} {fig:web_control1a}
 {0.48} {web_control2} {Operación de puesta a cero de las coordenadas de la máquina desde la página web.}{fig:web_control1b}
       {Página web de control de la máquina. Ejemplos de operación.}
       {fig:web_control1}
 
    A diferencia del mando a distancia cableado, el control a través de esta página web se puede hacer desde cualquier dispositivo con acceso a la red Wi-Fi compartida con la PocketBeagle.\par
-   Por otra parte se agregó una funcionalidad adicional al controlador original, con la cual es posible enviar a la máquina las coordenadas precisas que se ingresen. Esta función es un ejemplo de las posibilidades que permite este accesorio.\par
+   Por otra parte se agregó una funcionalidad adicional al controlador original, con la cual es posible ubicar la máquina en coordenadas precisas. Esta función es un ejemplo de las posibilidades de automatización que permite este accesorio.\par
 
 \section{Software de lectura de marcas nkHACK}
 
@@ -403,36 +403,36 @@ Sobre la base del desarrollo de la página web de control, se extendió la aplic
    En la figuras \ref{fig:web_mach1} y \ref{fig:web_mach2} se pueden ver aspectos destacados de esta página.
 
 \subfiga
-{0.8} {web_mach1} {Pantalla principal del software. Se visualiza el modelo de la máquina CNC, las coordenadas actuales, la cámara y el trabajo a mecanizar.} {fig:web_mach1}
+{0.8} {web_mach1} {Pantalla principal del software nkHACK. Se visualiza el modelo de la máquina CNC, las coordenadas actuales, la imagen de la cámara y el trabajo a mecanizar.} {fig:web_mach1}
 
 \subfiga
-{0.8} {web_mach2} {Opciones de configuración de la cámara. Se puede ver la imagen binaria detectando una marca de 3.3mm de lado.}{fig:web_mach2}
+{0.8} {web_mach2} {Software nkHACK. Menu de configuración de la cámara. Se puede ver la imagen capturada en modo binaria en la cuál se ha detectado una marca de 3.3mm de lado.}{fig:web_mach2}
 
 Algunas de las funcionalidades de esta página se detallan en la siguiente lista:
 \begin{itemize}
-   \item{Carga del modelo en 3D de la máquina directamente desde el programa de CAD.}
+   \item{Carga del modelo en 3D de la máquina directamente en formato del programa de CAD.}
    \item{Movimiento en tiempo real de la máquina simulada según el recorrido del trabajo.}
    \item{Carga de los archivos GCode para visualizar y alinear.}
-   \item{Marcas de registro leídas directamente desde el archivo GCode, ingresada manualmente, o una combinación de ambas.}
-   \item{Posibilidad de desplazar, rotar y escalar manualmente un trazo de corte.}
-   \item{Configuración del tamaño del píxel de la cámara en X e Y independientemente.}
-   \item{Ingreso de la dimensión del tamaño de la marca.}
-   \item{Ingreso de la ruta web de la cámara de vídeo.}
-   \item{Intercambio entre vídeo original a color o imagen binaria.}
-   \item{Calibración del nivel de la sensibilidad de la conversión de escala de grises a imagen binaria.}
+   \item{Las marcas de registro son leídas directamente desde el archivo GCode, ingresadas manualmente, o una combinación de ambas.}
+   \item{Posibilidad de desplazar, rotar y escalar manualmente un trabajo de corte.}
+   \item{Configuración del ancho y alto del píxel de la imagen.}
+   \item{Ingreso de las dimensiones de las marcas.}
+   \item{Ingreso de la dirección web de la cámara de vídeo.}
+   \item{Intercambio entre vídeo a color o imagen binaria.}
+   \item{Calibración del nivel de sensibilidad de la imagen binaria.}
    \item{Zoom digital de la imagen capturada en tiempo real para segmentar el área de análisis.}
    \item{Transferencia del archivo de corte al controlador.}
-   \item{Ejecución del archivo de corte cargado en el controlador con un solo botón.}
-   \item{Alineación del trabajo de corte en modo manual, marca por marca.}
+   \item{Ejecución del archivo de corte cargado en el controlador.}
+   \item{Alineación del trabajo de corte en modo manual o automático.}
    \item{Un solo botón asignado para las tareas de: corregir la alineación según las marcas, transferir el archivo y solicitar el corte.}
-   \item{Opciones de ajuste de la interfaz visual que permiten ocultar: menús, cámara, coordenadas, trazos, máquina, etc.}
-   \item{Grilla de trabajo ajustable.}
-   \item{Acceso a la página de control manual del dispositivo sin cerrar la de simulación.}
+   \item{Opciones de ajuste de la interfaz visual que permiten ocultar: menús, imagen de la cámara, coordenadas, trazos, modelo de la máquina, etc.}
+   \item{Grilla de la mesa de trabajo ajustable.}
+   \item{Acceso a la página de control manual del dispositivo sin cerrar la simulación.}
 \end{itemize}
 
 
 \section{Calibración de la cámara} 
-   Para utilizar un fotograma de video como medida para el desplazamiento de una marca, es necesario conocer la distancia que representa cada píxel.\par
+   Para extraer de un fotograma de vídeo el desplazamiento de una marca al centro de la imagen, es necesario conocer la distancia que representa cada píxel.\par
    Para obtenerlo se aplican las ecuaciones lineales \ref{eq:pixel_dim}:
    \begin{equation}
       \begin{aligned}
@@ -445,27 +445,22 @@ donde:
 \begin{itemize}
    \item{$pixel_x,pixel_y$: dimensión en mm de cada píxel en dirección X e Y.}
    \item{$pixeles_x, pixeles_y$: número de píxeles de cada fotograma en dirección X e Y.}
-   \item{$dim_x, dim_y$: medida en mm del fotograma en dirección x e y.}
+   \item{$dim_x, dim_y$: medida en mm del fotograma en dirección X e Y.}
 \end{itemize}
 
-Se ingresan las dimensiones de ancho y alto de un fotograma con la ayuda de una regla, y el software realiza el resto de los cálculos.\par
+Para estimar la medida de un píxel se ingresan las dimensiones de ancho y alto de un fotograma con la ayuda de una regla, y el software realiza el resto de los cálculos.\par
 
-Sin embargo si la cámara no está perfectamente perpendicular a la marca, la dimensión de los píxeles en la imagen es diferente dependiendo de su posición.\par
-Por otro lado aparece un segundo efecto de distorsión que responde al tipo de lente de la cámara y la distancia al objetivo.\par
+Sin embargo si la cámara no está perfectamente perpendicular a la mesa de trabajo, la dimensión de los píxeles cambia según su posición.\par
+Otro efecto no deseado ocurre según el tipo de lente de la cámara y la distancia al objetivo.\par
 
-En la figura \ref{fig:calibracion} se puede ver la captura de una regla en una toma perpendicular y otra en ángulo. Se puede apreciar que en el último caso se distorsionan las medidas.\par
+En la figura \ref{fig:calibracion1a} se puede ver la imagen de una regla capturada con una cámara perpendicular y en la \ref{fig:calibracion1b} otra capturada a cierto ángulo. Se puede apreciar que en el último caso se distorsionan las medidas notablemente.\par 
 
-Estas alteraciones afectan la dimensión de cada píxel impactan directamente en el error de alineación.\par
+Estas alteraciones afectan la dimensión de cada píxel e impactan directamente en el error de alineación.\par
 
 Para mitigar este problema se desarrollaron dos técnicas:
 \begin{itemize}
-\item{Zoom: para minimizar el efecto de la curvatura de la imagen en los bordes, se posiciona la cámara a cierta distancia tal que permita recortar y descartar los bordes.\\
+\item{Zoom: para minimizar el efecto de la curvatura de la imagen en los bordes, se posiciona la cámara a cierta distancia tal que permita recortar y descartar los bordes.\par
       En la figura \ref{fig:calibracion_zoom} se aplica esta corrección a las imágenes de la figura \ref{fig:calibracion} y se puede apreciar que en la zona reducida ahora la distorsión es menos apreciable.}
-   \item{Centrado: se utiliza la dimensión del píxel como una aproximación, pero luego se itera el movimiento de la máquina hasta que la marca se posiciona en el centro de la imagen con un error parametrizable en el software.\\
-         Este procedimiento aletarga el proceso de alineación, pero minimiza los efectos de error mencionados, debido a que la distancia entre el centro de la imagen y la marca tienden a cero píxeles.\\
-         En la figura \ref{fig:calibracion_centrado} se muestra una marca a cierta distancia del centro de la imagen. Luego de varias iteraciones, se posiciona la marca justo en el centro de la imagen en donde los errores son despreciables.}
-   \end{itemize}
-
 
 \subfigabc
    {0.3} {calibracion2} {Toma perpendicular. Se puede ver cierta linealidad en toda la imagen.\\ \vphantom{1}} {fig:calibracion1a}
@@ -475,24 +470,29 @@ Para mitigar este problema se desarrollaron dos técnicas:
    {fig:calibracion}
 
 \subfigabc
-   {0.3} {calibracion_zoom1} {Recorte de imagen perpendicular. La imagen original y la recortada presentan similar linealidad.} {fig:calibracion_zoom_a}
+{0.3} {calibracion_zoom1} {Recorte de imagen perpendicular. La imagen original y la recortada presentan una linealidad similar.\\ \vphantom{1}\\ \vphantom{1}} {fig:calibracion_zoom_a}
    {0.3} {calibracion_zoom2} {Recorte de una imagen tomada en ángulo. Aún con la distorsión generada, el recorte permite tomar una zona local sensiblemente mas lineal que la imagen completa.} {fig:calibracion_zoom_b}
-   {0.3} {calibracion_zoom3} {Recorte de una imagen tomada con una lente gran angular. Aún se puede apreciar algo de distorsión pero menor que la imagen original.} {fig:calibracion_zoom_b}
-   {Análisis de la distorsión en las medidas de imágenes tomadas en diferentes escenarios y recortadas para tomar solo una zona central de la imagen y reducir la distorsión.}
+   {0.3} {calibracion_zoom3} {Recorte de una imagen tomada con una lente gran angular. Aún se puede apreciar algo de distorsión pero menor que la imagen original.\\ \vphantom{1}} {fig:calibracion_zoom_b}
+   {Análisis de la distorsión en las imágenes tomadas en diferentes escenarios. Se aplican técnicas de recorte para mitigar el defecto.}
    {fig:calibracion_zoom}
+
+   \item{Centrado: se utiliza la dimensión del píxel como una aproximación, pero luego se itera el movimiento de la máquina hasta que la marca se posiciona justo en el centro de la imagen.\par
+         Este procedimiento aletarga el proceso de alineación, pero minimiza los efectos de error mencionados, debido a que la distancia entre el centro de la imagen y la marca tienden a cero píxeles.\par
+         En la figura \ref{fig:calibracion_centrado} se muestra una marca a cierta distancia del centro de la imagen. Luego de varias iteraciones, se posiciona la marca justo en el centro donde los errores son despreciables.}
+   \end{itemize}
 
 \subfigab
 {0.48} {calibracion_centrado1} {Marca desplazada $-5.22mm$ en X y $2.77mm$ en Y respecto del centro de la imagen. El desplazamiento real depende de la medida de cada píxel y de la linealidad de la imagen.\\ \vphantom{1}}{fig:calibracion_centrado_a}
-{0.48} {calibracion_centrado2} {Interacción de movimientos que ubica la marca en el centro de la imagen. El desplazamiento del centro es prácticamente nulo, y por lo tanto no depende de la dimensión de los píxeles ni de la linealidad de la imagen.}{fig:calibracion_centrado_a}
+{0.48} {calibracion_centrado2} {Interacción de movimientos que ubica la marca en el centro de la imagen. El desplazamiento es prácticamente nulo, y por lo tanto no depende de la dimensión de los píxeles ni de la linealidad de la imagen.}{fig:calibracion_centrado_a}
    {Método de iteración de movimientos para el centrado de la marca y la mitigación de los efectos alineales en el fotograma.}
    {fig:calibracion_centrado}
 
 \section{Secuencia de pasos para alinear}
 
 En el software nkHACK se implementaron dos métodos de alineación: manual y automático.\par
-En la tabla \ref{tbl:alineacion_paso_a_paso} se detalla el método manual con una imagen representativa de las acciones ejecutadas en cada una.
+En la tabla \ref{tbl:alineacion_paso_a_paso} se detalla el método manual con una imagen representativa de las acciones ejecutadas en cada paso.
 
-         \begin{longtable}[!h]{m{0.53\textwidth}p{0.40\textwidth}}
+         \begin{longtable}[!h]{m{0.48\textwidth}p{0.45\textwidth}}
             \caption[Secuencia de pasos para alinear un trabajo]{Detalle paso a paso de la secuencia necesaria para alinear y cortar un trabajo.}\\
             \toprule
                \textbf{Procedimiento} & \textbf{Imagen}\\ 
@@ -504,79 +504,72 @@ En la tabla \ref{tbl:alineacion_paso_a_paso} se detalla el método manual con un
             \midrule
             \endhead
 %-----------------------------
-               {Referencia: se mueve la máquina utilizando la página de control o el mando a distancia hasta que el punto $(0,0)$ de la pieza esté en zona de visión. Este punto no es una marca sino una referencia de coordenadas.\par
-               En esa posición se resetear las coordenadas de la máquina a $(0,0)$. De esta manera ambos sistemas de coordenadas, el de la máquina y el de la pieza son prácticamente coincidentes.}
+               {Referencia: se mueve la máquina hasta que el punto $(0,0)$ de la pieza esté en zona de visión.\par 
+               En esa posición se resetea las coordenadas de la máquina a la posición $(0,0)$. De esta manera ambos sistemas de coordenadas son prácticamente coincidentes.}
                &
-               \figtable{0.40}{mark0} \\
+               \figtable{0.45}{mark0} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Marca 1: al presionar el botón ``Goto 1'' la máquina se posiciona en zona de visión de la primera marca.\par
-               Si la reconoce, se puede continuar con el paso ``centrado 1''.\par
-               Otra opción es saltarse el siguiente paso y utilizar las estimaciones obtenidas de la imagen para realizar las correcciones de desplazamiento en X e Y y el ángulo de la marca para poder ubicar la segunda marca.}
+               {Marca 1: al presionar el botón ``Goto 1'' la máquina se posiciona en zona de visión de la primera marca.}
                &
-               \figtable{0.40}{mark1} \\
+               \figtable{0.45}{mark1} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Centrado 1: se presiona el botón \textit{``align one''} y el software itera los movimientos hasta que se logra ubicar la primera marca en el centro de la imagen con un error menor al especificado.\par
-               Esta técnica mitiga los errores de escala y distorsión de la imagen.\par
+               {Centrado 1: al presionar el botón \textit{``align one''} el software itera hasta que logra ubicar la primera marca en el centro de la imagen.\par
             Luego se calcula el desplazamiento en X e Y y el ángulo de la marca como estimación de la rotación de la pieza.}
                &
-               \figtable{0.40}{mark1_aligned} \\
+               \figtable{0.45}{mark1_aligned} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Marca 2: al presionar \textit{``Goto 2''}, el software utiliza los datos de posición y ángulo estimados en la primera marca para posicionarse sobre la segunda.\par
-                  Si esta última es reconocida se puede continuar con el paso ``centrado 2''.\par
-               Otra opción es saltarse el siguiente paso y utilizar las estimaciones obtenidas de la imagen para realizar las correcciones de escala en X e Y y determinar el ángulo definitivo para la pieza.}
+               {Marca 2: al presionar \textit{``Goto 2''}, el software utiliza los datos de posición y ángulo estimados en la primera marca para posicionarse sobre la segunda.}
                &
-               \figtable{0.40}{mark2} \\
+               \figtable{0.45}{mark2} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Centrado 2: al presionar el botón \textit{``align one''} el software itera los movimientos de la máquina hasta que logra ubicar la segunda marca en el centro de la imagen con un error menor al especificado en los parámetros.\par
+               {Centrado 2: al presionar el botón \textit{``align one''} el software itera hasta que logra ubicar la segunda marca en el centro de la imagen.\par
                Luego se aplica un factor de escala en X e Y y se calcula el ángulo definitivo de la pieza.}
                &
-               \figtable{0.40}{mark2_aligned} \\
+               \figtable{0.45}{mark2_aligned} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Marca 3: si la pieza estuviera escalada proporcionalmente en los dos ejes, no haría falta aplicar este paso.\par
-               Si el escalado fuera diferente en X e Y, o para mitigar errores de escala de la propia máquina, al presionar \textit{``Goto 3''}, el software ubica la tercera marca y si la reconoce continúa con el paso ``centrado 3''.\par
-            Otra opción es saltearse el siguiente paso y utilizar las estimaciones obtenidas de la imagen para realizar las correcciones de la escala en Y.}
+               {Marca 3: al presionar \textit{``Goto 3''}, el software ubica la tercera marca.}
                &
-               \figtable{0.40}{mark3_aligned} \\
+               \figtable{0.45}{mark3_aligned} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
-%-----------------------------
-               {Centrado 3: al presionar el botón \textit{``align one''} el software itera los movimientos de la máquina hasta ubicar la tercera marca en el centro de la imagen con un error menor al especificado en los parámetros.\par
-               Luego se aplica un factor de escala solamente en Y.}
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%%-----------------------------
+               {Centrado 3: al presionar el botón \textit{``align one''} el software itera hasta ubicar la tercera marca en el centro de la imagen.\par
+               Luego se aplica un factor de escala en Y.}
                &
-               \figtable{0.40}{mark3_aligned} \\
+               \figtable{0.45}{mark3_aligned} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Transformación: con las estimaciones de escalas en X e Y y el ángulo de rotación de la pieza se convierte el archivo GCode original en uno nuevo y se eliminan del proceso de corte las marcas para que no sean procesadas por el controlador.\par
-                  Con la técnica de intercambio de archivos que corre como servicio en la PocketBeagle y que se explicó en la sección \label{subsection:usb_mass} se envía el nuevo archivo al controlador.}
+               {Transformación: con las estimaciones de escalas en X e Y y el ángulo de rotación de la pieza se convierte el archivo GCode original y se eliminan las marcas.\par
+                  Se envía el nuevo archivo al controlador.}
                &
-               \figtable{0.40}{mark_transform} \\
+               \figtable{0.45}{mark_transform} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Toma de archivos: en este paso el software automatiza la carga del archivo desde el USB virtual al controlador y se ordena la ejecución.}
+               {Toma de archivos: se carga el archivo desde el USB virtual al controlador.}
                &
-               \figtable{0.40}{mark_pick_file1}
-               \figtable{0.40}{mark_pick_file2} \\
+               \figtable{0.45}{mark_pick_file1}
+               \figtable{0.45}{mark_pick_file2} \\
 %-----------------------------
-               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
+%               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
                {Corte: el controlador ejecuta el trabajo de corte independientemente del software nkHACK.\par
                Este último solo monitorea el avance y permite visualizar el proceso a través de la cámara en tiempo real.}
                &
-               \figtable{0.40}{mark_path1}
-               \figtable{0.40}{mark_path2}
-               \figtable{0.40}{mark_path3} \\
+               \figtable{0.45}{mark_path1}
+               \figtable{0.45}{mark_path2}
+               \figtable{0.45}{mark_path3} \\
 %-----------------------------
                \bottomrule
             \label{tbl:alineacion_paso_a_paso}
