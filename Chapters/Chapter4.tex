@@ -1,17 +1,17 @@
 \chapter{Ensayos y resultados} % Main chapter title
 \label{Chapter4}
 
-En el presente capitulo se describen los ensayos mas relevantes, los procedimientos de cada ensayo y se listan los materiales y herramientas utilizadas.
+En el presente capítulo se describen los ensayos mas relevantes, los procedimientos de cada uno, las herramientas y los materiales utilizados.
 
 \section{Listado de herramientas}
 
-Durante los ensayos, ademas de las herramientas convencionales para el desarrollo de sistemas embebidos, se utilizaron las siguientes herramientasespecificas:
+Durante los ensayos, además de las herramientas convencionales para el desarrollo de sistemas embebidos, se utilizaron las siguientes herramientas específicas:
 \begin{enumerate}
-   \item{Maquinna de control numerico Start126 de la firma BGMA industrial. \footnote{\url{https://www.bgma-industrial.com.ar/}}}
-   \item{Telefono movil Sambsung J7.}
+   \item{Maquina de control numérico modelo Start126 de la firma BGMA industrial. \footnote{\url{https://www.bgma-industrial.com.ar/}}}
+   \item{Teléfono móvil Samsung J7.}
    \item{Impresora HP LaserJet 1025nw.}
-   \item{Regla de $1m$ metalica.}
-   \item{Puntero laser de uso hogareno.}
+   \item{Regla de $1m$ metálica.}
+   \item{Puntero laser de uso doméstico.}
    \item{Plataforma de desarrollo PocketBeagle.}
    \item{Controlador NK105 de la firma Weihong.}
    \item{Drivers de motores paso a paso M542 de la firma Leadshine.}
@@ -22,25 +22,26 @@ Durante los ensayos, ademas de las herramientas convencionales para el desarroll
 
 \subsection{Acceso concurrente al driver SPI}
 El acceso al modulo del \textit{kernel} que maneja el SPI, se realiza mediante operaciones de entrada y salida del sistema operativo.\par
-Cuando el modulo recibe una peticino de abrir el archivo, resitra en una lista un descriptor de esta operacion y la mantiene hasta que se recibe la operacion de cerrar. \par
-Esta lista permite sostener accesos multiples al \textit{driver}. Esa caracteristica es muy util para monitorear la maquina remotamente sin la capa de software.
-Se realizaron pruebas con cuatro accesos concurrentes al mismo driver y se verifico la integridad y la sincronia de la informacion de cada cliente.\par
-En la figura \ref{fig:acceso_multiple_spi} se muestra una captura de estos accesos desde una conexion remota por \textit{ssh} (\textit{secure shell}) \footnote{\url{https://www.ucl.ac.uk/isd/what-ssh-and-how-do-i-use-it}} desde un ordenador a la PocketBeagle.
+Cuando recibe una petición de abrir el archivo, registra en una lista un descriptor de esta operación y lo mantiene hasta que se recibe la operación de cerrar. \par
+Esta lista permite sostener accesos multiples al \textit{driver}. Esa característica es muy útil para monitorear la máquina remotamente sin la capa de software.\par
+Se realizaron pruebas con cuatro accesos concurrentes al mismo driver y se verificó la integridad y la sincronía de la información de cada cliente.\par
+En la figura \ref{fig:acceso_multiple_spi} se muestra una captura de estos accesos desde una conexión remota por \textit{SSH} (\textit{secure shell}) \footnote{\url{https://www.ucl.ac.uk/isd/what-ssh-and-how-do-i-use-it}} desde un ordenador a la PocketBeagle.
 
 \subfiga
-{0.7} {acceso_multiple_spi} {Acceso concurrente al modulo de manejo de SPI desde una conexion ssh. Se puede ver la sincronia entre los cuatro accesos y el registro de cada acceso en los mensajes del \textit{kernel}.}{fig:acceso_multiple_spi}
+{0.7} {acceso_multiple_spi} {Acceso concurrente al módulo de manejo de SPI desde una conexión SSH. Se puede ver la sincronía entre los cuatro accesos y el registro de cada acceso en los mensajes del \textit{kernel}.}{fig:acceso_multiple_spi}
 
 
 \subsection{Ensayo con archivos de mecanizado}
 
-Se diseno un archivo de mecanizado de una letra ``A'' con un circulo central como plantilla de puebas.\par
-Al contar con lineas rectas, anguladas y circunferencias lo hace especialmente util para encontrar los limites de la tecnica de alineacion. \par
-Para las pruebas se imprimio el trazado con una impresora laser en hoja A4, y la hoja se sujeto a una base de madera para asegurar la planitud. Con esto se simula una pieza previamente impresa que se desea mecanizar como se muestra en la figura \ref{tabla_madera_con_hoja}.\par
+Se diseño un archivo de mecanizado de una letra ``A'' con un círculo central como plantilla de pruebas.\par
+Est archivo cuenta con lineas rectas, anguladas y circunferencias que lo hace especialmente útil para encontrar los limites de la técnica de alineación. \par
+Para las pruebas se imprimió el trazado con una impresora laser en hoja A4, y se sujetó a una base de madera para asegurar la planitud. Con esto se simula una pieza previamente impresa que se desea mecanizar como se muestra en la figura \ref{tabla_madera_con_hoja}.\par
 
-   \subfiga{0.6} {tabla_madera_con_hoja} {Placa de madera con la impresion del trabajo de corte pegada. Esto permite ubicar la pieza en diferentes posiciones y probar los resultados del sistema de alineacion.} {fig:tabla_madera_con_hoja}
+   \subfiga{0.6} {tabla_madera_con_hoja} {Placa de madera con la impresión del trabajo de corte pegada. Esto permite ubicar la pieza en diferentes posiciones y probar los resultados del sistema de alineación.} {fig:tabla_madera_con_hoja}
 
-   Se realizaron cinco operaciones con diferentes rotaciones y desplazamientos y se recolecto el maximo error de corte que se detalla en la tabla \ref{tbl:ensayo_A}.\par
-   Durante una de las simulaciones de corte se tomaron una secuencia de imagenes que se muestra en la figura \ref{fig:ensayo_A}. Se puede ver el recuadro rojo en el centro de la imagen que se uso para registrar el error.\par
+   Se realizaron cinco operaciones con diferentes rotaciones y desplazamientos y se recolectó el máximo error de corte que se detalla en la tabla \ref{tbl:ensayo_A}.\par
+   Durante una de las simulaciones de corte se tomó una secuencia de imágenes que se muestran en la figura \ref{fig:ensayo_A}.\par
+   Se puede ver el recuadro rojo en el centro de la imagen que se usó para registrar el error.\par
 
    \subfigthreethree
       {ensayo_A_1}
@@ -49,18 +50,18 @@ Para las pruebas se imprimio el trazado con una impresora laser en hoja A4, y la
       {ensayo_A_4}
       {ensayo_A_5}
       {ensayo_A_6}
-      {Secuancia de pasos para los ensayos de corte simulado. Se utiliza el recuadro rojo en el centro de la imagen como testigo del error maximo.}
+      {Secuencia de pasos para los ensayos de corte simulado. Se utiliza el recuadro rojo en el centro de la imagen como testigo del error máximo.}
       {fig:ensayo_A}
 
       \begin{longtable}[!h]{m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}}
-            \caption[Ensayos de corte simulado]{Informacion recolectada durante repetidos ensayos a un mismo diseno de corte pero posicionado en diferentes angulos y desplazamientos.}\\
+            \caption[Ensayos de corte simulado]{Información recolectada durante repetidos ensayos a un mismo diseño de corte pero posicionado en diferentes ángulos y desplazamientos.}\\
             \toprule
-               \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Maximo} \\ 
+               \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Máximo} \\ 
             \midrule
             \endfirsthead
 %            \caption[Ensayos de corte simulado]{Informacion recolectada durante repetidos ensayos a un mismo diseno de corte pero posicionado en diferentes angulos y desplazamientos.}\\
 %            \toprule
-%               \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Maximo} \\ 
+%               \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Máximo} \\ 
 %            \midrule
 %            \endhead
 %-----------------------------
@@ -74,26 +75,26 @@ Para las pruebas se imprimio el trazado con una impresora laser en hoja A4, y la
             \label{tbl:ensayo_A}
          \end{longtable}
 
-         Se encontro que el error sigue cierta relacion con el angulo de posicionamiento y desplazamiento.\par
-      Sin embargo durante el analisis se encontro que tanto la mesa de corte utilzada como la impresora laser utilizada para los ensayos tienen distorciones no lineales. Por ejemplo la mesa de corte no respecta las medidas a lo largo de todo el eje X, se encontraron ciertas zonas con mayor error que otras. \par
-      Tambien se encontro que el sistema es muy susceptible a minimos cambios en la altura del objeto a cortar. Es mas notable aun cuando se trata de una simulacion, dado que en la camara son explificados estos efectos que en un corte real podrian desaparecer.\par
-      Se concluye que para lograr reducir los errores de corte se requiere de algunas herramientas de medicion patron y un ajuste fino tanto a la mesa de corto como la calibracion de la impresora laser.\par
-      Con dichas herramientas se podra desacoplar el error de la trigonometria de alineacion con los problemas mecanicos.
+         Se encontró que el error sigue cierta relación con el ángulo de posicionamiento y desplazamiento.\par
+      Sin embargo durante el análisis se determinó que tanto la mesa de corte utilizada como la impresora láser tienen distorsiones no lineales.\par
+      Por ejemplo la mesa de corte no respecta las medidas a lo largo de todo el eje X. Hay ciertas zonas con mayor error que otras. \par
+      También se encontró que el sistema es muy susceptible a los cambios en la altura del objeto a cortar. Es mas notable cuando se trata de una simulación, dado que en la cámara son amplificados.\par
+      Se concluye que para lograr reducir los errores de corte se requiere de algunas herramientas de medición patrón, un ajuste fino tanto a la mesa de corte y la calibración de la impresora láser.\par
+      Con dichas herramientas se espera poder desacoplar el error de la trigonometría de alineación con los problemas mecánicos.
 
 
 \subsection{Ensayos con impresiones escaladas}
 
-Para validar la caracteristica de escalado del software se genero un trazo rectangular cuadrado de 150mm x 150mm, y una version del mismo escalado a 140mm x 130mm, como se muestra en la figura \ref{fig:cuadrado_escalado}.\par
-   En el primer ensayo se procede a cortar el archivo original con su archovo de corte GCode correcto. \par
-   En el segundo ensayo se mantiene el archivo GCode, pero se intenta cortar el cuadardo impreso en escala reducida.
-   En la figura \ref{fig:ensayo_cuadrado_original} se puede ver parte del proceso de reconocimiento y simulacion para el trazo original.\par
-   En la figura \ref{fig:ensayo_cuadrado_escalado} se puede ver parte del proceso de reconocimiento y simulacion para el trazo escalado. En esta caso se aprecia que las marcas estan mucha mas distantes que lo que deberian estar, debido a la escala, pero que aun asi, son reconocidas y el software escala correctamente el trazo.
-
+Para validar la característica de escalado del software se generó un trazo rectangular cuadrado de 150mm x 150mm, y una versión del mismo escalado a 140mm x 130mm, como se muestra en la figura \ref{fig:cuadrado_escalado}.\par
+   En el primer ensayo se procede a cortar el archivo original con su archivo de corte GCode correcto. \par
+   En el segundo ensayo se mantiene el archivo GCode, pero se intenta cortar el cuadrado impreso en escala reducida.\par
+   En la figura \ref{fig:ensayo_cuadrado_original} se puede ver parte del proceso de reconocimiento y simulación para el trazo original y en la figura \ref{fig:ensayo_cuadrado_escalado} para el trazo escalado.\par
+   En este caso se aprecia que las marcas están mucho mas distantes que lo que deberían debido a la escala, pero aun así, son reconocidas y el software escala correctamente el trazo.
    
    \subfigab
-   {0.48} {cuadrado_original} {Trabajo de corte perimetral de un cuadrado sin distorcion.} {fig:ensayo_escalado_b}
+   {0.48} {cuadrado_original} {Trabajo de corte perimetral de un cuadrado sin distorsión.} {fig:ensayo_escalado_b}
    {0.48} {cuadrado_escalado} {Trabajo de corte perimetral de un cuadrado escalado.} {fig:ensayo_escalado_a}
-   {Generacion de un trabajo de corte perimetral original y otro escalado con la intencion de validr si el software puede cortarlos de igual manera }
+   {Generación de un trabajo de corte perimetral original y otro escalado con la intención de validar la función de escalado no lineal del software. }
    {fig:ensayo_escalado}
 
    \subfigthreethree
@@ -103,7 +104,7 @@ Para validar la caracteristica de escalado del software se genero un trazo recta
       {ensayo_cuadrado_original4}
       {ensayo_cuadrado_original5}
       {ensayo_cuadrado_original6}
-      {Secuancia de pasos para la simulacion de corte de un cuadrado con su respectivo archivo de corte GCode sin distorcion.}
+      {Secuencia de pasos para la simulación de corte de un cuadrado con su respectivo archivo de corte GCode sin distorsion.}
       {fig:ensayo_cuadrado_original}
 
 
@@ -114,20 +115,20 @@ Para validar la caracteristica de escalado del software se genero un trazo recta
       {ensayo_cuadrado_escalado4}
       {ensayo_cuadrado_escalado5}
       {ensayo_cuadrado_escalado6}
-      {Secuancia de pasos para la simulacion de corte de un cuadrado escalado con el archivo de corte GCode de la version sin escalar.}
+      {Secuencia de pasos para la simulación de corte de un cuadrado escalado con el archivo de corte GCode de la version sin escalar.}
       {fig:ensayo_cuadrado_escalado}
 
 
-      En la tabla \ref{tbl:ensayo_escalado} se comparan los resultados del proceso de corte para el cuadrado sin distorcion y su con traparte escalado.\par
-      Se puede ver que los resultados son practicamente equivalenes aun cuando la columna de escalas reflejan la diferencia.
+      En la tabla \ref{tbl:ensayo_escalado} se comparan los resultados del proceso de corte para el cuadrado sin distorsion y su contraparte escalado.\par
+      Se puede ver que los resultados son prácticamente equivalentes aún cuando las escalas reflejan la diferencia.
 
       \begin{longtable}[!h]{m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}m{0.12\textwidth}}
-            \caption[Ensayos de corte simulado escalado]{Informacion recolectada durante dos ensayos de corte de un cuadrado sin distorsion y otro escalado.}\\
+            \caption[Ensayos de corte simulado escalado]{Información recolectada durante dos ensayos de corte de un cuadrado sin distorsión y otro escalado.}\\
             \toprule
                \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Maximo} \\ 
             \midrule
             \endfirsthead
-            \caption[Ensayos de corte simulado escalado]{Informacion recolectada durante dos ensayos de corte de un cuadrado sin distorsion y otro escalado. Continuacion}\\
+            \caption[Ensayos de corte simulado escalado]{Información recolectada durante dos ensayos de corte de un cuadrado sin distorsión y otro escalado. Continuación}\\
             \toprule
                \textbf{Angulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error Maximo} \\ 
             \midrule
@@ -140,22 +141,20 @@ Para validar la caracteristica de escalado del software se genero un trazo recta
             \label{tbl:ensayo_escalado}
          \end{longtable}
 
-\subsection{Ensayos con diferentes resoluciones de video}
+\subsection{Ensayos con diferentes resoluciones de vídeo}
 
-Si bien cuanto mas resolucion tenga la camara mas pequeno el tamano del pixel, parece no
-trasladarse linealmente a los resultados en las dimensiones de marcas utilizadas. \par
-Por el contrario una mayor resolucion en la imagen implica mayor tiempo de procesamiento.\par
-Como la PocketBeagle no es especialmente potente para procesar imagenes de manera eficiente, es recomendable lograr un punto optimo para la resolucion de las imagenes. \par
-En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de 3 resoluciones tipicas en video y para cada caso se probaron dos niveles de compresion.\par
-
+Si bien cuanto mas resolución tenga la cámara mas pequeño será el tamaño del pixel, parece no trasladarse linealmente a los resultados para las dimensiones de marcas utilizadas.\par
+Por el contrario una mayor resolución en la imagen implica mayor tiempo de procesamiento.\par
+Como la PocketBeagle no es especialmente potente para procesar imágenes de manera eficiente, es recomendable lograr un punto óptimo para la resolución de las imágenes. \par
+En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de 3 resoluciones típicas en vídeo y para cada caso se probaron dos niveles de compresión.\par
 
       \begin{longtable}[!h]{p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.2\textwidth}}
-            \caption[Ensayos de resolucion de imagen]{Comparacion de diferentes resoluciones de imagenes y sus resultados para la identificacion de marcas.}\\
+            \caption[Ensayos de resolucion de imagen]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas.}\\
             \toprule
             \textbf{Ancho x alto} & \textbf{Calidad} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Angulo X} & \textbf{Imagen} \\ 
             \midrule
             \endfirsthead
-            \caption[Ensayos de resolucion de imagen]{Comparacion de diferentes resoluciones de imagenes y sus resultados para la identificacion de marcas. Continuacion.}\\
+            \caption[Ensayos de resolucion de imagen]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas. Continuación.}\\
             \toprule
             \textbf{Ancho x alto} & \textbf{Calidad} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Angulo X} & \textbf{Imagen} \\ 
             \midrule
@@ -174,6 +173,6 @@ En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de 3 resolu
             \label{tbl:ensayo_resoluciones}
          \end{longtable}
 
-         Se puede concluir que no es tan relevante la resolucion de la imagen como la calidad de compresion. Es preferible una calidad media con una resolucion baja a una resolucion alta con una compresion baja.\par
-         Para la mayoria de los ensayos de este trabajo se utilizo una resolucion de 640x480 con una calidad del 20\% a 30\%. Estos valores permiten una buena calidad de inspeccion sin ralentizar el procesamiento.
+         Se puede concluir que no es tan relevante la resolución de la imagen como la calidad de compresión. Es preferible una calidad media con una resolución baja a una resolución alta con una compresión baja.\par
+         Para la mayoría de los ensayos de este trabajo se utilizó una resolución de $640x480$ con una calidad del 20\% a 30\%. Estos valores permiten una buena calidad de inspección sin ralentizar el procesamiento.
 
