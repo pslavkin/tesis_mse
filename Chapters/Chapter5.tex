@@ -1,14 +1,47 @@
 \chapter{Conclusiones}
 \label{Chapter5}
+En el presente capitulo se presentan las conclusiones generales del trabajo, algunas consideraciones sobre las herramientas utilizadas y los desafios pendientes.
 
 \section{Conclusiones generales }
 
-La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado y cómo se podría continuar. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
-
-Algunas preguntas que pueden servir para completar este capítulo:
 
 \begin{itemize}
-\item ¿Cuál es el grado de cumplimiento de los requerimientos?
+   \item{Se logro el objectivo de reonocer marcas utilizando una camara y se lo supero en cuanto que ademas permite utilizar una camara de un telefono celular. Esto amplia el mercado de usuarios posibles y facilita la integracion en maquinas existentes con minimo costo y esfuerzo.}
+
+   \item{Se implemento un software de control que no solo permite alunear el trabajo a cortar sino que tambien permite simular la maquina en tiempo real. Esto es de gran valor dado que permite visualizar con antelacion problemas que podrian ocurrir no solo por problemas en el corte sino con la disposicion del material en la mesa de trabajo.}
+
+   \item{Se utilizo una de las plataformas mas pequenas y economicas del mercado, y aun asi, aun queda margen para actualizaciones y mejoras. Esto mejora el margen de costos y permite acercar el producto a un mercado de gamma media y baja.}
+
+   \item{Si bien el equipo elegido no cuenta con una interfaz para manejerlo remotamente, la tecnica utilizada, permite mantener el euqipo original, y compartir el mando a distancia junto con el acceso web. Esta caracteristica permite probar el equipo en una maquina funcionando, sin siquiera tener que apagarla.}
+
+   \item{Se logro con el objetivo de poder acceder a la maqina remotamente, tanto desde la web como desde una conexion segura SSH.}
+
+   \item{Se logro realizar el desarrollo web para incluir a los usuarios de cualquier sistema operativo, incluso desde una tableta o movil.}
+
+   \item{Se lograron precisiones de correccion en promedio por debajo de $0,5mm$. Sin ambargo no se cuenta con el herramental necesario para determinar si este error es debido a la tecnica de alineacion o es un error intrinseco de las herramientas.}
+
+   \item{Se econtro una dificulad importante en el desarrollo del driver SPI que tomo considerablemente mas tiempo que el esperado. Pero dado que todo el trabajo se basa en el correcto funcinamiento de dicho software fue necesario realizar uno a medida y afrontar el retraso.}
+
+   \item{Se aprobecho la tecnologia de configFS de Linux para cumplir con el requisito de realizar la trasnferencia de archivos remotamente. Solamente este punto resuelve un problema recurrente de intercambiar archivos desde una PC con el uso de una unidad de almacenamiento externa.}
+   \item{Gracias a la aplicacion movil IP Webcam se logro el requisito de contar con una camara de video versatil y accesibleq que pudiera tranferir video de forma inalambrica. Ademas el desarrollo contempla el uso de cualquier fuente de video inalambrica por Wi-Fi.}
+
+   \item{Se logro montar el prototipo de puebas en una maquia de CNC real y validar todas las funcionalidades del sistema}
+
+   \item{Se logro un algoritmo de reconociminento muy potente capaza de reconocer marcas con cierta distorcion pero al mismo tiempo sin consumur todos los recursos del procesador. Esto se logro limitando los cuadros por segundo a procesar, bajando las resoluciones de imagen y limitando la cantidad de contornos permitidos por cuadro pero sin disminurir la funcionalidad general.}
+
+   \item{Ademas de reconocer las marcas y alinear la pieza, se cumplioo con el objectivo de escalar el archivo de corte de manera no proporcional en X e Y que es una caracteristica superior al escalamiento proporcional que se encuentra en la mayoria de las soluciones similares.}
+
+   \item{Ademas de reconocer las marcas y alinear la pieza, se cumplioo con el objectivo de escalar el archivo de corte de manera no proporcional en X e Y que es una caracteristica superior al escalamiento proporcional que se encuentra en la mayoria de las soluciones similares.}
+
+   \item{A excepcion del driver SPI, el resto de las tareas se alcanzaron en los plazos esperados.}
+
+   \item{Si bien el sistema originalmente se planteo sobre la base de Flask, se encontrraon otras herramientas superadoras durante el proceso que mejoraron la performance notablemente.}
+
+   \item{El software permite al usuario modelar en 3D su aquina y cargar el modelo en el software de control y mover independientemente los ejes segun el movimiento real de la maquina. Esto no era un requisito, pero se lo identifico como de mucho valor, tanto para el usuario como para el desarrollador.}
+
+   \item{Una de las tecnicas mas utiles en la segunda mitad del trabajo fue haber logrado conectar una PC con la PocketBeagle y correr todo el software en la PC, excepto la capa de drivers. Esto permitrio acelerar el desarrollo notablemente. Cuando el sistema estaba listo simplemente se portaba a la plataforma y se validaban los resultados.}
+
+
 \item ¿Cuán fielmente se puedo seguir la planificación original (cronograma incluido)?
 \item ¿Se manifestó algunos de los riesgos identificados en la planificación? ¿Fue efectivo el plan de mitigación? ¿Se debió aplicar alguna otra acción no contemplada previamente?
 \item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
@@ -18,4 +51,13 @@ Algunas preguntas que pueden servir para completar este capítulo:
 
 \section{Próximos pasos}
 
-Acá se indica cómo se podría continuar el trabajo más adelante.
+\begin{itemize}
+\item{Agregar soporte para las versiones mas avanzadas del NK105 que tambien ofrece el fabricante y que al compartir el mismo controlador, son perfectamente compatbibles con este desarrollo.}
+\item{Validar el sistema mecanido de la maquina CNC y el de impresion laser con el uso de reglas patron para poder desacomplar los errores cometidos por la mecanica y por el sistema de alinecaion, la camara, etc.}
+\item{Agregar proteccion de acceso multiple para que varios usuarios puedan compartir el software y monitorear la maquina sin poner en riesgo la integridad del trabajo.}
+\item{Simplificar la interfaz web para resaltar las funciones mas relevantes.}
+\item{Convertir el protoripo de hardware en un producto para poder comercializarlo.}
+\item{Discriminar entre los diferentes tamanos de pantalla en los dispositivos de acceso para presentar una interfaz acorde a cada uno.}
+\item{Agregar la funcionalid de hospot a la PocketBeagle, para permitir interacruar con la maquina independientemente del acceso a Wi-Fi.}
+\item{Buscar el modelo de negocios mas adecuado para poder comercializar el producto.}
+\end{itemize}
