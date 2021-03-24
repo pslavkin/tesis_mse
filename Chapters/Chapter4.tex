@@ -55,9 +55,9 @@ Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y 
       \begin{table}[!ht]
          \centering
          \caption[Ensayos de corte simulado]{Información recolectada durante repetidos ensayos a un mismo diseño de corte pero posicionado en diferentes ángulos y desplazamientos.}
-         \begin{tabular}[!ht]{llllll}
+         \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
-            \textbf{Ángulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error máximo}\\
+            \textbf{Ángulo [grados]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Escala X [mm]} & \textbf{Escala Y [mm]} & \textbf{Error máximo [mm]}\\
             \midrule
 %-----------------------------
             15,46 & 0     & 0     & 1 & 1 & 0,4\\
@@ -124,9 +124,9 @@ Para validar la característica de escalado del software se generó un trabajo d
       \begin{table}[!ht]
          \centering
          \caption[Ensayos de corte simulado escalado]{Información recolectada durante dos ensayos de corte de un perímetro sin distorsión y otro escalado.}
-         \begin{tabular}[!ht]{llllll}
+         \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
-            \textbf{Ángulo} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Escala X} & \textbf{Escala Y} & \textbf{Error máximo}\\
+            \textbf{Ángulo [grados]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Escala X [mm]} & \textbf{Escala Y [mm]} & \textbf{Error máximo [mm]}\\
             \midrule
 %-----------------------------
             {-4,00}& {-0.18}& {0,2}   & {1}    & {1}    & {0,3}\\
@@ -144,26 +144,27 @@ Por el contrario, una mayor resolución en la imagen implica mayor tiempo de pro
 Como la PocketBeagle no es especialmente eficiente para procesar imágenes, se buscó lograr un punto óptimo para la resolución de las imágenes. \par
 En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de 3 resoluciones típicas de vídeo y para cada caso se probaron dos niveles de compresión.\par
 
-      \begin{longtable}[!h]{p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.2\textwidth}}
+\begin{longtable}[!h]{p{1.4cm}p{1.4cm}p{1.4cm}p{1.4cm}p{1.4cm}p{0.3\textwidth}}
+
             \caption[Ensayos de resolucion de imagen]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas.}\\
             \toprule
-            \textbf{Ancho x alto} & \textbf{Calidad} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Ángulo} & \textbf{Imagen} \\ 
+            \textbf{Ancho x alto [pixeles]} & \textbf{Calidad [\%]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Ángulo [grados]} & \textbf{Imagen} \\ 
             \midrule
             \endfirsthead
             \caption[Ensayos de resolucion de imagen]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas. Continuación.}\\
             \toprule
-            \textbf{Ancho x alto} & \textbf{Calidad} & \textbf{Delta X} & \textbf{Delta Y} & \textbf{Ángulo} & \textbf{Imagen} \\ 
+            \textbf{Ancho x alto [pixeles]} & \textbf{Calidad [\%]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Ángulo [grados]} & \textbf{Imagen} \\ 
             \midrule
             \endhead
 %-----------------------------
-            {240x320}&{ 1\%}&{5,04}&{-5,09}&{18,30}&\figtable{0,20}{ensayo_resolucion_1}\\
-            {240x320}&{50\%}&{4,98}&{-5,04}&{19,48}&\figtable{0,20}{ensayo_resolucion_2}\\
+            {240x320}&{ 1}&{5,04}&{-5,09}&{18,30}&\figtable{0.3}{ensayo_resolucion_1}\\
+            {240x320}&{50}&{4,98}&{-5,04}&{19,48}&\figtable{0.3}{ensayo_resolucion_2}\\
 
-            {640x480}&{ 1\%}&{5,04}&{-5,05}&{18,90}&\figtable{0,20}{ensayo_resolucion_3}\\
-            {640x480}&{50\%}&{5,02}&{-5,07}&{19,48}&\figtable{0,20}{ensayo_resolucion_4}\\
+            {640x480}&{ 1}&{5,04}&{-5,05}&{18,90}&\figtable{0.3}{ensayo_resolucion_3}\\
+            {640x480}&{50}&{5,02}&{-5,07}&{19,48}&\figtable{0.3}{ensayo_resolucion_4}\\
 
-            {960x720}&{ 1\%}&{5,05}&{-5,06}&{18,90}&\figtable{0,20}{ensayo_resolucion_5}\\
-            {960x720}&{50\%}&{5,01}&{-5,07}&{19,48}&\figtable{0,20}{ensayo_resolucion_6}\\
+            {960x720}&{ 1}&{5,05}&{-5,06}&{18,90}&\figtable{0.3}{ensayo_resolucion_5}\\
+            {960x720}&{50}&{5,01}&{-5,07}&{19,48}&\figtable{0.3}{ensayo_resolucion_6}\\
 %-----------------------------
                \bottomrule
             \label{tbl:ensayo_resoluciones}

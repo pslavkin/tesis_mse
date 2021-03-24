@@ -153,7 +153,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
 \subsection{Pantalla virtual}
 
       Para poder conocer el estado del controlador es necesario contar con la información que se muestra en la pantalla LCD.\par
-      Se estudió en detalle las especificaciones del controlador de esta pantalla con el objetivo de emular una pantalla virtual.\par
+      Se estudiaron en detalle las especificaciones del controlador de esta pantalla con el objetivo de emular una pantalla virtual.\par
       Debido a la alta velocidad de los datos y que las tramas no tienen un largo definido, no fue posible utilizar los drivers de SPI del \textit{kernel} y realizar esta emulación en espacio de usuario.\par
       Para poder capturar correctamente estas tramas se implementó un driver SPI en modo esclavo \textit{SPI slave} como un nuevo módulo del sistema operativo \citep{ldd3}.
       Este driver, a diferencia del original, permite recibir cualquier longitud de trama, en cualquier momento y almacenarla en un espacio de memoria contigua.
@@ -406,7 +406,7 @@ Sobre la base del desarrollo de la página web de control, se extendió la aplic
 {0.8} {web_mach1} {Pantalla principal del software nkHACK. Se visualiza el modelo de la máquina CNC, las coordenadas actuales, la imagen de la cámara y el trabajo a mecanizar.} {fig:web_mach1}
 
 \subfiga
-{0.8} {web_mach2} {Software nkHACK. Menu de configuración de la cámara. Se puede ver la imagen capturada en modo binaria en la cuál se ha detectado una marca de 3.3mm de lado.}{fig:web_mach2}
+{0.8} {web_mach2} {Software nkHACK. Menu de configuración de la cámara. Se puede ver la imagen capturada en modo binario en la cuál se ha detectado una marca de $3.3mm$ de lado.}{fig:web_mach2}
 
 Algunas de las funcionalidades de esta página se detallan en la siguiente lista:
 \begin{itemize}
@@ -450,7 +450,7 @@ donde:
 
 Para estimar la medida de un píxel se ingresan las dimensiones de ancho y alto de un fotograma con la ayuda de una regla, y el software realiza el resto de los cálculos.\par
 
-Sin embargo si la cámara no está perfectamente perpendicular a la mesa de trabajo, la dimensión de los píxeles cambia según su posición.\par
+Sin embargo, si la cámara no está perfectamente perpendicular a la mesa de trabajo, la dimensión de los píxeles cambia según su posición.\par
 Otro efecto no deseado ocurre según el tipo de lente de la cámara y la distancia al objetivo.\par
 
 En la figura \ref{fig:calibracion1a} se puede ver la imagen de una regla capturada con una cámara perpendicular y en la \ref{fig:calibracion1b} otra capturada a cierto ángulo. Se puede apreciar que en el último caso se distorsionan las medidas notablemente.\par 
@@ -477,7 +477,7 @@ Para mitigar este problema se desarrollaron dos técnicas:
    {fig:calibracion_zoom}
 
    \item{Centrado: se utiliza la dimensión del píxel como una aproximación, pero luego se itera el movimiento de la máquina hasta que la marca se posiciona justo en el centro de la imagen.\par
-         Este procedimiento aletarga el proceso de alineación, pero minimiza los efectos de error mencionados, debido a que la distancia entre el centro de la imagen y la marca tienden a cero píxeles.\par
+         Este procedimiento aletarga el proceso de alineación, pero minimiza los efectos de error mencionados, debido a que la distancia entre el centro de la imagen y la marca tiende a cero píxeles.\par
          En la figura \ref{fig:calibracion_centrado} se muestra una marca a cierta distancia del centro de la imagen. Luego de varias iteraciones, se posiciona la marca justo en el centro donde los errores son despreciables.}
    \end{itemize}
 
@@ -550,7 +550,7 @@ En la tabla \ref{tbl:alineacion_paso_a_paso} se detalla el método manual con un
 %-----------------------------
 %               {\vspace{\tablespace}}&{\vspace{\tablespace}}\\
 %-----------------------------
-               {Transformación: con las estimaciones de escalas en X e Y y el ángulo de rotación de la pieza se convierte el archivo GCode original y se eliminan las marcas.\par
+               {Transformación: con las estimaciones de escalas en X e Y y el ángulo de rotación de la pieza, se convierte el archivo GCode original y se eliminan las marcas.\par
                   Se envía el nuevo archivo al controlador.}
                &
                \figtable{0.45}{mark_transform} \\
