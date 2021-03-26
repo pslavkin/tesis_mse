@@ -448,7 +448,17 @@ donde:
    \item{$dim_x, dim_y$: medida en mm del fotograma en dirección X e Y.}
 \end{itemize}
 
-Para estimar la medida de un píxel se ingresan las dimensiones de ancho y alto de un fotograma con la ayuda de una regla, y el software realiza el resto de los cálculos.\par
+Para estimar la medida de un píxel se ingresan las dimensiones de ancho y alto de un fotograma. \par
+Estas medidas se puden tomar con la ayuda de una regla como se muestra en la figura \ref{fig:calibracion_ancho_alto}.
+Con el dato de la resolucion de video y las medidas ingresadas por el usuario, el software realiza el resto de los cálculos como se muestra en figura \ref{fig:calibracion_ancho_alto_C}
+
+\subfigabc
+   {0.48} {calibracion_ancho_alto1} {Medicion del ancho del fotograma con la ayuda de una regla. Se puede ver una medicion de aproximadamente $18,2mm$} {fig:calibracion_ancho_alto_A}
+   {0.48} {calibracion_ancho_alto2} {Medicion del alto del fotograma con la ayuda de una regla. Se puede ver una medicion de aproximadamente $25,5mm$} {fig:calibracion_ancho_alto_A}
+   {0.60} {calibracion_ancho_alto3} {Con las dimensiones de ancho, alto y la resolucion del video el software calcula las dimensiones del pixel. En este ejemplo se obtuvo $0,039mm$ de ancho y $0,04mm$ de alto.} {fig:calibracion_ancho_alto_C}
+   {Calibracion del tamano del pixel de un fotograma. Se utiliza una regla para medir el ancho y el alto y el software realiza las cuentas para obtener y almacenar el tamano del pixel en funcion de la resolucion de video que se este utilizando.}
+   {fig:calibracion_ancho_alto}
+
 
 Sin embargo, si la cámara no está perfectamente perpendicular a la mesa de trabajo, la dimensión de los píxeles cambia según su posición.\par
 Otro efecto no deseado ocurre según el tipo de lente de la cámara y la distancia al objetivo.\par
