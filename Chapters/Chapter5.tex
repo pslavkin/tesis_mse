@@ -9,13 +9,11 @@ En la siguiente lista se detallan los objetivos cumplidos más destacados y se c
 \begin{itemize}
    \item{Se logró el objetivo de reconocer marcas no solo con una cámara de video sino también con el uso de un celular. Esto amplía el mercado de usuarios posibles y facilita la integración en máquinas existentes con mínimo costo y esfuerzo.}
 
-   \item{Se implementó un software de control que no solo permite alinear el trabajo a cortar sino que también simula la máquina en tiempo real.\par 
-      Esto es de gran valor dado que permite visualizar posibles problemas en el corte y analizar la disposición del material en la mesa de trabajo con antelación.}
+   \item{Se implementó un software de control que no solo permite alinear el trabajo a cortar sino que también simula la máquina en tiempo real. Esto es de gran valor dado que permite visualizar posibles problemas en el corte y analizar la disposición del material en la mesa de trabajo con antelación.}
 
    \item{Se utilizó una de las plataformas más pequeñas y económicas del mercado, y aun así queda margen para actualizaciones y mejoras.}
 
-   \item{Si bien el equipo elegido no cuenta con una interfaz para manejarlo remoto, la técnica utilizada, permite mantener el equipo original intacto, y compartir el mando a distancia junto con el acceso web. \par
-      Esta característica permite probar el equipo en una máquina funcionando en solo unos minutos y sin intervención.}
+   \item{Si bien el equipo elegido no cuenta con una interfaz para manejarlo remoto, la técnica utilizada, permite mantener el equipo original intacto, y compartir el mando a distancia junto con el acceso web. Esta característica permite probar el equipo en una máquina funcionando en solo unos minutos y sin intervención.}
 
    \item{Se logró el objetivo de poder acceder a la máquina remotamente, tanto desde la web como desde una conexión segura SSH.}
 
@@ -23,24 +21,19 @@ En la siguiente lista se detallan los objetivos cumplidos más destacados y se c
 
    \item{Se lograron precisiones de corrección en promedio por debajo de $0,5mm$. Si bien es un punto a mejorar, se considera aceptable considerando las calidades de las herramientas utilizadas.}
 
-   \item{Se encontró una dificultad importante en el desarrollo del driver SPI que tomó considerablemente más tiempo del esperado. \par
-      Pero dado que todo el trabajo se basa en la eficiencia de dicho software fue necesario realizar uno a medida y afrontar el retraso.\par
-   A excepción de este driver, el resto de las tareas se alcanzaron en los plazos esperados.}
+   \item{Se encontró una dificultad importante en el desarrollo del driver SPI que tomó considerablemente más tiempo del esperado. Pero dado que todo el trabajo se basa en la eficiencia de dicho software fue necesario realizar uno a medida y afrontar el retraso. A excepción de este driver, el resto de las tareas se alcanzaron en los plazos esperados.}
    
-   \item{Se aprovechó la tecnología configFS de Linux para cumplir con el requisito de realizar la transferencia de archivos remoto.\par
-      Este punto por si solo resuelve un problema recurrente de intercambiar archivos desde una PC con el uso de una unidad de almacenamiento externa.}
+   \item{Se aprovechó la tecnología configFS de Linux para cumplir con el requisito de realizar la transferencia de archivos remoto. Este punto por si solo resuelve un problema recurrente de intercambiar archivos desde una PC con el uso de una unidad de almacenamiento externa.}
 
    \item{Se logró montar el prototipo de pruebas en una máquina CNC real y validar todas las funcionalidades del sistema.}
 
-   \item{Se logró un algoritmo de reconocimiento muy potente capaz de reconocer marcas con cierta distorsión pero sin consumir todos los recursos del procesador. \par
-      Para lograrlo se aplicaron técnicas como: limitar los cuadros por segundo a procesar, bajar las resoluciones de imagen y limitar la cantidad de contornos permitidos por cuadro.}
+   \item{Se logró un algoritmo de reconocimiento muy potente capaz de distinguir marcas con cierta distorsión pero sin consumir todos los recursos del procesador.  Para lograrlo se aplicaron técnicas como: limitar los cuadros por segundo a procesar, bajar las resoluciones de imagen y limitar la cantidad de contornos permitidos por cuadro.}
 
    \item{Además de reconocer las marcas y alinear la pieza, se cumplió con el objetivo de escalar el archivo de corte de manera no proporcional en X e Y. Esta es una característica muy poco frecuente en soluciones similares.}
 
-   \item{El software permite al usuario visualizar el modelo 3D de su máquina, y mover independientemente cada eje.\par
-      Esto no era un requisito, pero se lo identificó como de mucho valor y muy factible para el tiempo disponible.}
+   \item{El software permite al usuario visualizar el modelo 3D de su máquina, y mover independientemente cada eje. Esto no era un requisito, pero se lo identificó como de mucho valor y muy factible para el tiempo disponible.}
 
-   \item{Una de las técnicas más útiles en la segunda mitad del trabajo fue haber logrado trabajar en una PC e interactuar con la PocketBeagle remotamente para el acceso a los drivers.\par Esto permitió acelerar el desarrollo notablemente.}
+   \item{Una de las técnicas más útiles en la segunda mitad del trabajo fue haber logrado trabajar en una PC e interactuar con la PocketBeagle remotamente para el acceso a los drivers. Esto permitió acelerar el desarrollo notablemente.}
 
 \end{itemize}
 
@@ -49,7 +42,7 @@ En la siguiente lista se detallan los objetivos cumplidos más destacados y se c
 
 \begin{itemize}
 \item{Agregar soporte para las versiones más avanzadas del NK105 que también ofrece el fabricante y como comparten el mismo controlador, son perfectamente compatibles con este desarrollo.}
-\item{Validar el sistema mecánico de la máquina CNC y revisar la calibración de la impresora láser.\par De esta manera se podrán desacoplar los errores cometidos por la mecánica y por el sistema de alineación.}
+\item{Validar el sistema mecánico de la máquina CNC y revisar la calibración de la impresora láser. De esta manera se podrán desacoplar los errores cometidos por la mecánica y por el sistema de alineación.}
 
 \item{Agregar alguna protección de acceso múltiple para que varios usuarios puedan compartir el software y monitorear la máquina sin poner en riesgo la integridad del trabajo en curso.}
 

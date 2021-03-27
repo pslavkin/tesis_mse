@@ -32,8 +32,12 @@ En la figura \ref{fig:acceso_multiple_spi} se muestra una captura de estos acces
 
 \subsection{Ensayo con archivos de mecanizado}
 
-Se diseñó un archivo de mecanizado de una letra ``A'' con un círculo central como plantilla de pruebas.\par
+Se diseñó un archivo de mecanizado de una letra ``A'' con un círculo central como plantilla de pruebas que se muestra en la figura \ref{fig:a_con_circulo}.\par
+
 Este archivo cuenta con líneas rectas, anguladas y curvas que lo hace especialmente útil para encontrar los limites de la técnica de alineación. \par
+\subfiga
+{0.4} {A_circulo_escalado.pdf} {Plantilla de pruebas disenada para validar ciertas acciones del software durante los ensayos.}{fig:a_con_circulo}
+
 Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y se sujetó a una base de madera para asegurar la planitud. Con esto se simula una pieza previamente impresa que se desea mecanizar como se muestra en la figura \ref{fig:tabla_madera_con_hoja}.\par
 
    \subfiga{0.6} {tabla_madera_con_hoja} {Placa de madera con la impresión del trabajo de corte pegada. Esto permite ubicar la pieza en diferentes posiciones y probar los resultados del sistema de alineación.} {fig:tabla_madera_con_hoja}
@@ -82,11 +86,11 @@ Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y 
    Con dichas herramientas se espera poder desacoplar el error de la trigonometría de alineación, si lo tuviera, de los problemas mecánicos. \par
 
 
-\section{Pruebas funcionales del sowtware}
+\section{Pruebas funcionales del software}
 \label{sec:pruebasHW}
 
-\subsection{Ensayos de segmentacion de marcas}
-Para poder medir el correcto funcionamiento del algoritmo de reconocimiento de marcas se imprimieron algunas marcas de diferentes tamanos, angulos y en posiciones estrategicas.\par
+\subsection{Ensayos de segmentación de marcas}
+Para poder medir el correcto funcionamiento del algoritmo de reconocimiento de marcas se imprimieron algunas marcas de diferentes tamaños, ángulos y en posiciones estratégicas.\par
 En la figura \ref{fig:marcas_segmentacion} se pueden ver tres ensayos.
 
    \subfigabc
@@ -175,6 +179,7 @@ Para validar la correcta medicion de los angulos, se imprimio una plantilla como
       \end{table}
 
 \subsection{Ensayo de marcas jerarquicas}
+\label{subsection:marcas_jerarquias}
 
 Hay casos que una marca podria tener alguna inscripcion dentro de su perimetro. Tambien podria ocurrir que dentro de la marca se detecten perimetros cerrados espureso a cause de imperfeccinoes en el material. En estos y cualquier otro caso, ademas de segmentear segun el area del perimetro, solo se consideran validas aquellas marcas que no estan encerradas por otro perimetro. \par
 Se diseno una hoja de ensayos como se muestra en la figura \ref{fig:marcas_segmentacion_C} que obliga al software a seleccionar entre dos marcas de igual area pero una de las cuales esta dentro de otro perimetro.\par

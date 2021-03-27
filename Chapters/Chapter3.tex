@@ -66,7 +66,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
    Se estudió en detalle el cable que los interconecta y se determinó que conduce dos canales de comunicación que se detallan en la siguiente lista:
    \begin{itemize}
       \item{UART: \textit{universal asynchronous receiver-transmitter} es una comunicación serial que comunica periódicamente el estado del teclado al controlador.}
-      \item{SPI: \textit{synchronous peripheral interface} es una interfaz sobre la cual se envían los datos desde el controlador a la pantalla de cristal líquido o LCD \textit{liquid crystal display}.}
+      \item{SPI: \textit{synchronous peripheral interface} es una interfaz sobre la cual se envían los datos desde el controlador a la pantalla de cristal líquido o LCD (\textit{liquid crystal display}).}
    \end{itemize}
 
    Para poder interactuar con estas interfaces se intercaló una tarjeta electrónica que las conecta a la plataforma PocketBeagle. En la figura \ref{fig:handheld_a_pocket} se muestra esta conexión en comparación con la original.
@@ -161,8 +161,8 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
       \begin{itemize}
          \item {Interrupciones: se utilizó una interrupción conectada a la señal de selección de chip CS \textit{chip select}. Esto permite reaccionar rápidamente cuando se inicia una transacción.}
          \item {Acceso directo a memoria: se utilizó el subsistema DMA \textit{direct access memory} para que las operaciones de copia de los datos que se reciben por SPI a memoria se realicen sin la intervención del procesador. Esto permite conservar los recursos del procesador para otras tareas.}
-         \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's \textit{interprocess commnications} que ofrece Linux para lograr un sistema reactivo con mínimo retardo \citep{ldd3}.}
-         \item{Operaciones de archivo: para transferir las tramas decodificadas del espacio de \textit{kernel} al de usuario, se implementó un acceso al módulo como un archivo virtual. De esta manera se aprovechan las herramientas de lectura del sistema operativo y se facilita el desarrollo del software en espacio de usuario.}
+         \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's\citep{WEBSITE:kerneldocs} (\textit{interprocess commnications}) que ofrece Linux para lograr un sistema reactivo con mínimo retardo.}
+         \item{Operaciones de archivo: para transferir las tramas decodificadas del espacio de \textit{kernel} al de usuario, se implementó un acceso al módulo emulando un archivo. De esta manera se aprovechan las herramientas de lectura y escritura del sistema operativo y se facilita el desarrollo del software en espacio de usuario.}
          \item{Multitarea en espacio de \textit{kernel}: dentro del módulo se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepción de nuevos datos por SPI.}
          \item{Indexado de memoria contigua: debido a que la escritura por DMA no permite escribir en colas circulares, se implementó un sistema de una cola lineal indexada. Esto permite poder leer y escribir sin solapamientos. Cuando está cerca del limite de utilización se reinician los índices.}
       \end{itemize}
@@ -365,7 +365,7 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
 
          La imagen binaria es procesada en la línea 4 por la función ``findContours'' \footnote\opencvfindcontours que busca todos los posibles contornos.\par
          Sin embargo se configura para que devuelva solo aquellos que no están encerrados por un contorno mayor.\par
-         En el ejemplo de la figura \ref{fig:reconocimiento_paso_a_paso2b} se puede ver este efecto en los cuadrados sin relleno que son detectados solo por su contorno externo.\par
+         En el ejemplo de la figura \ref{fig:reconocimiento_paso_a_paso2b} se puede ver este efecto en los cuadrados sin relleno que son detectados solo por su contorno externo. En la subsection \ref{subsection:marcas_jerarquias} se aborda este tema con todo detalle.\par
    En la siguiente parte del algoritmo se recorren todos los contornos encontrados y se le aplica una función que aproxima cada contorno a uno más suave.\par
    Este algoritmo pretende filtrar irregularidades de la marca o de la captura de vídeo y se configura para que devuelva siempre un perímetro cerrado.\par
    Se utiliza la función minAreaRect en la línea 15 para encontrar un rectángulo de área mínima que encierre completamente al perímetro. Esto permite calcular una buena aproximación del área y del ángulo.\par

@@ -120,16 +120,16 @@ Permiten ajustar el área de visualización al tamaño de las marcas. \par
 Sin embargo la distancia entre el controlador de la máquina y la cámara es mayor a la que soporta el canal USB. Para poder utilizarlo de manera confiable se requiere de un amplificador que permita extender su alcance.
 Esto aumenta el costo total de la solución y agrega elementos susceptibles de fallas.\par
 
-Por lo tanto para el alcance de este trabajo se optó por usar la cámara de un teléfono celular en conjunto con la aplicación IP Webcam \citep{WEBSITE:ipwebcam} para la transmisión de vídeo como se muestra en la figura \ref{fig:ipwebcam}.\par
+Por lo tanto para el alcance de este trabajo se optó por usar la cámara de un teléfono celular en conjunto con la aplicación IP Webcam \citep{WEBSITE:ipwebcam} para la transmisión de vídeo como se muestra en la figura \ref{fig:ipwebcam_B}.\par
 
    Esta opción resuelve el problema de la longitud del cable dado que transmite por Wi-Fi, pero también permite utilizar varios modelos de teléfonos simultáneamente sin cambiar el software y poder tomar imágenes desde diferentes ángulos. \par
 
-  Esta aplicación cuenta además con una interfaz web desde donde se pueden ajustar los parámetros de la cámara más importantes: zoom, brillo, desplazamiento, resolución y calidad de imagen.
+   Esta aplicación cuenta además con una interfaz web desde donde se pueden ajustar los parámetros de la cámara más importantes: zoom, brillo, desplazamiento, resolución y calidad de imagen. Se muestra una captura parcial de esta página en la figura. \ref{fig:ipwebcam_A}
 
 
 \subfigab
-         {0.45}{ipwebcam1}{Captura parcial de la página web que permite el control de los parámetros de la cámara.}{fig:ipwebcam_A}
-         {0.5}{ipwebcam2}{Captura parcial la aplicación en el teléfono. Se puede ver la misma imagen que en la web de administración}{fig:ipwebcam_B}
+{0.48}{ipwebcam1}{Captura parcial de la página web que permite el control de los parámetros de la cámara.\\ \vphantom{1}}{fig:ipwebcam_A}
+         {0.48}{ipwebcam2}{Captura parcial la aplicación en el teléfono. Se puede ver la misma imagen que en la web de administración}{fig:ipwebcam_B}
          {Aplicación IP Webcam que permite utilizar la cámara del teléfono y enviar el vídeo por Wi-Fi.}
          {fig:ipwebcam}
 
@@ -191,8 +191,8 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
          Una vez obtenida la diferencia de ángulos se corrige rotando el plano A respecto del B como se muestra en la figura \ref{fig:alineacion_rotacion2}.
 
 \subfigab
-            {0.45}{alineacion_rotacion4}{Superposición de los ángulos de la recta formada por los puntos 1 y 2.}{fig:alineacion_rotacion2_A}
-            {0.45}{alineacion_rotacion5}{Planos A y B correctamente corregidos segun, según la diferencia de los ángulos calculada}{fig:alineacion_rotacion2_B}
+            {0.48}{alineacion_rotacion4}{Superposición de los ángulos de la recta formada por los puntos 1 y 2.\\ \vphantom{1}}{fig:alineacion_rotacion2_A}
+            {0.48}{alineacion_rotacion5}{Planos A y B correctamente corregidos segun, según la diferencia de los ángulos calculada}{fig:alineacion_rotacion2_B}
             {Corrección de la rotación del plano A respecto del plano B utilizando dos puntos de referencia.}
             {fig:alineacion_rotacion2}
 
@@ -200,8 +200,8 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
          Se muestra gráficamente esta corrección en la figura \ref{fig:alineacion_escalado1} y se expresa en las ecuaciones \ref{eq:alineacion_escalado}.
 
 \subfigab
-         {0.45}{alineacion_escalado1}{Se calcula la diferencia de dimensiones en $x$ e $y$}{fig:alineacion_escalado1_A}
-         {0.45}{alineacion_escalado2}{Se corrige escalando el plano A.}{fig:alineacion_escalado1_B}
+         {0.48}{alineacion_escalado1}{Se calcula la diferencia de dimensiones en $x$ e $y$}{fig:alineacion_escalado1_A}
+         {0.48}{alineacion_escalado2}{Se corrige escalando el plano A.\\ \vphantom{1}}{fig:alineacion_escalado1_B}
          {Corrección de la escala entre los planos A y B utilizando como factor de escala las dimensiones relativas entre los dos planos.}
          {fig:alineacion_escalado1}
 
@@ -218,7 +218,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
          \end{equation}
 
 \section{Detección y tipos de marcas fiduciales}
-   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado es usual encontrar que las marcas son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\\
+   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado es usual encontrar que las marcas son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\par
    Para un efectivo reconocimiento de una marca utilizando una cámara de vídeo algunas consideraciones deben tenerse en cuenta como ser:
    \begin{itemize}
       \item{Maximizar el contraste entre el fondo del objeto y la marca.}
@@ -231,11 +231,11 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
    Algunos ejemplos de marcas fiduciales se muestran en la figura \ref{fig:ejemplo_marcas}.
 
 \subfigtwotwo
-            {0.5}{ejemplo_marcas2}{Figuras geométricas llenas o solo su contorno.} 
-            {0.38}{ejemplo_marcas1}{Ejemplo de marcas fiduciales en una placa de circuito impreso PCB.}
-            {0.5}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado utilizando el software desarrollado.}
-            {0.38}{ejemplo_marcas3}{Marcas fiduciales codificadas. Se pueden utilizar para reconocer la posición y un código para diversos usos.}
-            {Ejemplo de diferentes tipos de marcas fiduciales.}
+            {0.48}{ejemplo_marcas2}{Figuras geométricas llenas o solo su contorno.} 
+            {0.48}{ejemplo_marcas1}{Ejemplo de marcas fiduciales en una placa de circuito impreso PCB.}
+            {0.48}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado utilizando el software desarrollado nkHACK.\\ \vphantom{1}}
+            {0.48}{ejemplo_marcas3}{Marcas fiduciales codificadas. Se pueden utilizar para reconocer la posición y un código para diversos usos.}
+            {Ejemplo de diferentes tipos de marcas fiduciales para diversas aplicaciones.}
             {fig:ejemplo_marcas}
 
          Para el alcance de este trabajo solo se utilizarán marcas geométricas llenas o sus contornos.

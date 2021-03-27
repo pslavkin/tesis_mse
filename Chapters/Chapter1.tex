@@ -9,15 +9,15 @@ En el presente capítulo se explica el principio de funcionamiento de las máqui
 %----------------------------------------------------------------------------------------
 \section{Historia y principio de funcionamiento}
 
-Hacia finales de la década del '40, el mecánico inventor Jhon Parsons\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons_A}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada como se muestra en la figura \ref{fig:parsons_B}.\\
+Hacia finales de la década del '40, el mecánico inventor John Parsons\footnote\jhonparsonwiki retratado en la figura \ref{fig:parsons_A}, logró motorizar una agujereadora de banco de precisión y la automatizó mediante el uso de una cinta perforada como se muestra en la figura \ref{fig:parsons_B}.\\
 A este invento se lo considera la primera máquina de control numérico o NC por sus siglas en inglés (\textit{numerical control}).
 \subfigab
-         {0.37}{parsons_face}{Fotografia de Jhon T. Parsons, considerado en la industria como el inventor de las máquinas NC.}{fig:parsons_A}
+         {0.37}{parsons_face}{Fotografia de John T. Parsons, considerado en la industria como el inventor de las máquinas NC.}{fig:parsons_A}
          {0.6}{parsons_machine}{Una de las primeras máquinas de la industria consideradas de control numérico.\\ \vphantom{1}}{fig:parsons_B}
-         {Jhon Parsons, el inventor de las máquinas de control numérico junto a una de sus máquinas.}
+         {John Parsons, el inventor de las máquinas de control numérico junto a una de sus máquinas.}
          {fig:parsons}
 \par
-Luego de varias décadas, con el surgimiento de las computadoras, se reemplazaron las cintas perforadas por software, dando lugar a las máquinas de control numérico computarizado o CNC por sus siglas en inglés \textit{(computer numerical control)}.
+Luego de varias décadas, con el surgimiento de las computadoras, se reemplazaron las cintas perforadas por software, dando lugar a las máquinas de control numérico computarizado o CNC\citep{WEBSITE:cncwiki} (\textit{computer numerical control}) por sus siglas en inglés.
 \\
 A pesar del paso del tiempo y los avances tecnológicos, los bloques constitutivos de una máquina CNC siguen siendo los mismos que se muestran en la figura \ref{fig:cnc_main_blocks}.
 \subfiga {1}
@@ -39,8 +39,7 @@ Se pueden ver algunas imágenes de este primigenio proceso en la figura \ref{fig
           {fig:programacion_cnc_primigenia}
 
 
-          En el presente se diseña la pieza en tres dimensiones con la ayuda de software de diseño asistido por computadora o CAD (\textit{computer aided design}) por sus siglas en inglés.\\
-          Algunos software de CAD reconocidos se listan a continuación:
+          En el presente se diseña la pieza en tres dimensiones con la ayuda de un software de diseño asistido por computadora o CAD (\textit{computer aided design}) por sus siglas en inglés. Algunos de los más reconocidos se listan a continuación:
           \begin{itemize}
              \item{FreeCAD}
              \item{Blender}
@@ -48,8 +47,7 @@ Se pueden ver algunas imágenes de este primigenio proceso en la figura \ref{fig
              \item{AutoCAD}
              \item{SolidWorks}
           \end{itemize}
-   El archivo de salida del CAD se procesa con un software de manufactura asistida por computadora o CAM (\textit{computer aided manufacturing}) por sus siglas en inglés, en donde el diseñador puede configurar los métodos y estrategias de mecanizado.\par
-          Algunos software de CAM reconocidos se listan a continuación:
+   El archivo de salida del CAD se procesa con un software de manufactura asistida por computadora o CAM (\textit{computer aided manufacturing}) por sus siglas en inglés, en donde el diseñador puede configurar los métodos y estrategias de mecanizado. Algunos de los más reconocidos se listan a continuación:
           \begin{itemize}
              \item{RhinoCAM}
              \item{Blender CAM}
@@ -152,10 +150,11 @@ Es usual utilizar tres ejes perpendiculares para mesas de corte planos, seis eje
 Para el desarrollo de este trabajo se estudian solamente máquinas de dos y tres ejes perpendiculares, dado que la empresa interesada comercializa principalmente este tipo de estructuras. \par
 Se esquematiza y se muestran algunos modelos de este tipo de estructuras en la figura \ref{fig:wolfcut1}.
 
+
 \subfigtwotwo
-{0.48}{cnc_3d1}{Esquema general de una máquina CNC de tres ejes perpendiculares.\\ \vphantom{1}}
+            {0.48}{cnc_3d1}{Esquema general de una máquina CNC de tres ejes perpendiculares.\\ \vphantom{1}}
             {0.48}{wolfcut3}{Máquina de tres ejes para corte y grabado láser de materiales plásticos, madera, cartón, papel, etc.}
-            {0.48}{wolfcut2}{Máquina de dos ejes de corte por cuchilla para cartón, papel, tela, etc.\\ \vphantom{1}}
+            {0.48}{wolfcut2}{Máquina de dos ejes de corte por cuchilla para cartón, papel, tela, etc.}
             {0.48}{wolfcut1}{Fresadora de tres ejes para corte y mecanizado de madera, plástico, cartón, aluminio, etc.}
             {Esquema general y modelos de máquinas CNC dependiendo del tipo de material a procesar y la tecnología de corte.}
             {fig:wolfcut1}
@@ -163,10 +162,10 @@ Se esquematiza y se muestran algunos modelos de este tipo de estructuras en la f
 
 \section{Mecanizados de piezas por control numérico}
 
-En la actualidad muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas} se realizan utilizando máquinas de control numérico computarizado o CNC \citep{WEBSITE:cncwiki} (\textit{computer numerical control)}.
+En la actualidad muchos de los procesos industriales que involucran el mecanizado de piezas como las que se muestran en la figura \ref{fig:piezas_mecanizadas} se realizan utilizando máquinas de control numérico computarizado o CNC.
 
 \subfigtwotwo 
-         {0.48}{Piezas_mecanizadas4}{Máquina CNC ejecutando el corte de piezas en madera para mobiliarios.} 
+         {0.48}{piezas_mecanizadas4}{Máquina CNC que ejecuta el corte de piezas en madera para mobiliarios.} 
          {0.48}{piezas_mecanizadas2}{Placa de circuito impreso realizado mediante el fresado del contorno de sus pistas.}
          {0.48}{piezas_mecanizadas1}{Corte y fresado en placa de aluminio para obtener un repuesto de una máquina herramienta.}
          {0.48}{piezas_mecanizadas5}{Corte de logos y letras en madera. \\ \vphantom{10}\\ \vphantom{10}}
@@ -184,19 +183,20 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
 \end{enumerate}
 
 \subfigab
-         {0.46}{pos_sin_marcas1}{Placa a cortar fijada a la mesa de corte y fresa de corte en posición.}{fig:pos_sin_marcas_A}
-         {0.48}{pos_sin_marcas2}{Pieza cortada.\\ \hphantom{1}}{fig:pos_sin_marcas_B}
-         {Esquema de corte de una letra A en una placa de material virgen.}
+         {0.48}{pos_sin_marcas1}{Placa a cortar fijada a la mesa de corte y fresa de corte en posición.}{fig:pos_sin_marcas_A}
+         {0.48}{pos_sin_marcas2}{Pieza cortada sin problemas de alineación.\\ \vphantom{1}}{fig:pos_sin_marcas_B}
+         {Esquema de corte de una letra ``A'' en una placa de material virgen.}
          {fig:pos_sin_marcas}
 
          Hay casos en los cuales la placa a cortar está previamente impresa y el proceso de corte debe respetar su silueta con exactitud como se esquematiza en la figura \ref{fig:pos_torcido_A}.
          Al no haberse aplicado ninguna corrección ni alineamiento entre el sistema de movimientos de la máquina y la pieza, el software de corte no tiene la información de la posición, rotación y escala exacta de la pieza dispuesta en la mesa. \par
-         En el ejemplo mostrado en la figura \ref{fig:pos_torcido_B}, se puede ver que la máquina no puede seguir con exactitud el contorno de la letra A.\\
+         En el ejemplo mostrado en la figura \ref{fig:pos_torcido_B}, se puede ver que la máquina no puede seguir con exactitud el contorno de la letra ``A''.\\
+
 
 \subfigab
-         {0.48}{pos_torcido1}{Placa a cortar fijada a la mesa de corte y fresa de corte en posición.\\ \vphantom{1}}{fig:pos_torcido_A}
+         {0.48}{pos_torcido1}{Placa a cortar fijada a la mesa de corte y fresa de corte en posición.}{fig:pos_torcido_A}
          {0.48}{pos_torcido2}{Pieza cortada con una notable desalineación entre la silueta previamente impresa y el corte.}{fig:pos_torcido_B}
-         {Corte de la silueta de la letra A previamente impresa en el material.}
+         {Corte de la silueta de la letra ``A'' previamente impresa en el material.}
          {fig:pos_torcido}
 
          En la industria se presenta este problema en muchos casos, algunos de los cuales se enumeran a continuación:
@@ -210,14 +210,14 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
 \end{itemize}
 
          En el presente trabajo se aplican técnicas de visión artificial para reconocer los puntos de referencia que permiten corregir esta desalineación.
-         Estos puntos se incluyen en el proceso de diseño y se imprimen junto con el trabajo a mecanizar.
+         Estos puntos se incluyen en el proceso de diseño y se imprimen junto con el trabajo a mecanizar.\par
          Mediante el uso de una cámara de vídeo montada en el CNC se puede corregir el desplazamiento, el ángulo y la escala del objeto impreso en relación al sistema de coordenadas de la máquina.
          El resultado esperado se muestra en la figura \ref{fig:pos_con_marcas}.
 
 \subfigab
-         {0.48}{pos_con_marcas1}{Placa a cortar impresa con la letra A y tres marcas. Se encuentra fijada a la mesa con la fresa de corte en posición.\\ \vphantom{10}}{fig:pos_con_marcas_A}
+         {0.48}{pos_con_marcas1}{Placa a cortar impresa con la letra ``A'' y tres marcas. Se encuentra fijada a la mesa con la fresa de corte en posición.\\ \vphantom{10}}{fig:pos_con_marcas_A}
          {0.48}{pos_con_marcas2}{Alineación del trabajo de corte según las marcas azules de referencia. La pieza se muestra mecanizada siguiendo el contorno sin errores.}{fig:pos_con_marcas_B}
-         {Corte de la silueta de la letra A previamente impresa en el material con lectura de marcas. }
+         {Corte de la silueta de la letra ``A'' previamente impresa en el material con lectura de marcas. }
          {fig:pos_con_marcas}
 
 
@@ -279,9 +279,9 @@ Es por ello que se trabajó en conjunto para lograr una solución embebida.\par
 
    Este controlador solo cuenta con un comando remoto para todas las operaciones de manejo y configuración.\par
    No provee una API (\textit{application programming interface}) definida por el fabricante ni una canal físico para conectarse y extender sus funciones. \par
-   Por otro lado, gracias a su diseño basado en FPGA (\textit{field programmable gate array}) y no depender de una PC para funcionar es reconocido por: excelentes resultados de corte, gran estabilidad en trabajos extensos, muy buena fiabilidad y un costo muy accesible. \par
+   Por otro lado, gracias a su diseño basado en FPGA \footnote{\url{https://en.wikipedia.org/wiki/Field-programmable_gate_array}} (\textit{field programmable gate array}) y no depender de una PC para funcionar es reconocido por: excelentes resultados de corte, gran estabilidad en trabajos extensos, muy buena fiabilidad y un costo muy accesible. \par
    Las capacidades de operación del NK105 son relativamente simples, pero de nivel profesional con un mercado ya consolidado y muy extenso en todo el mundo.\par
-   Además este modelo pertenece a una familia de soluciones de complejidad creciente, pero que comparten el controlador. Las extensiones que se incorporen en este se pueden aplicar a toda la familia.\par
+   Este modelo, a su vez, pertenece a una familia de soluciones de complejidad creciente que comparten el mismo controlador. Por lo tanto se espera que las extensiones que se desarrollaron se puedan aplicar a toda la familia.\par
    El alcance de este trabajo se limita a intervenir y dotar de lectura de marcas al controlador NK105 y obtener resultados comparables con otras soluciones de mercado.
 
 %----------------------------------------------------------------------------------------
