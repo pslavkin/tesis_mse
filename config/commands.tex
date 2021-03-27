@@ -39,6 +39,19 @@
    \end{figure}
 }
 
+\newcommand{\subfigthreetwo}[7]{
+   \begin{figure}[!h]
+      \begin{center}
+               \includegraphics[width=0.3\textwidth,frame]{#1}
+               \includegraphics[width=0.3\textwidth,frame]{#2}
+               \includegraphics[width=0.3\textwidth,frame]{#3}\\
+               \includegraphics[width=0.3\textwidth,frame]{#4}
+               \includegraphics[width=0.3\textwidth,frame]{#5}
+         \caption{#6}
+         \label{#7}
+      \end{center}
+   \end{figure}
+}
 \newcommand{\subfigthreethree}[8]{
    \begin{figure}[!h]
       \begin{center}
@@ -50,6 +63,34 @@
                \includegraphics[width=0.3\textwidth,frame]{#6}
          \caption{#7}
          \label{#8}
+      \end{center}
+   \end{figure}
+}
+\newcommand{\subfigfourfour}[9]{
+    \def\tempa{#1}%
+    \def\tempb{#2}%
+    \def\tempc{#3}%
+    \def\tempd{#4}%
+    \def\tempe{#5}%
+    \def\tempf{#6}%
+    \def\tempg{#7}%
+    \def\temph{#8}%
+    \def\tempi{#9}%
+    \subfigfourfourmoreparams
+}
+\newcommand{\subfigfourfourmoreparams}[1]{
+   \begin{figure}[!h]
+      \begin{center}
+               \includegraphics[width=0.24\textwidth,frame]{\tempa}
+               \includegraphics[width=0.24\textwidth,frame]{\tempb}
+               \includegraphics[width=0.24\textwidth,frame]{\tempc}
+               \includegraphics[width=0.24\textwidth,frame]{\tempd}\\
+               \includegraphics[width=0.24\textwidth,frame]{\tempe}
+               \includegraphics[width=0.24\textwidth,frame]{\tempf}
+               \includegraphics[width=0.24\textwidth,frame]{\tempg}
+               \includegraphics[width=0.24\textwidth,frame]{\temph}
+         \caption{\tempi}
+         \label{#1}
       \end{center}
    \end{figure}
 }

@@ -90,11 +90,102 @@ Para poder medir el correcto funcionamiento del algoritmo de reconocimiento de m
 En la figura \ref{fig:marcas_segmentacion} se pueden ver tres ensayos.
 
    \subfigabc
-   {0.3} {marcas_segmentacion1} {} {fig:marcas_segmantacion_A}
-   {0.3} {marcas_segmentacion2} {} {fig:marcas_segmantacion_B}
-   {0.3} {marcas_segmentacion3} {} {fig:marcas_segmantacion_C}
+   {0.3} {marcas_segmentacion1} {} {fig:marcas_segmentacion_A}
+   {0.3} {marcas_segmentacion2} {} {fig:marcas_segmentacion_B}
+   {0.3} {marcas_segmentacion3} {} {fig:marcas_segmentacion_C}
    {Ensayo de diferentes marcas en condiciones estrategicas para poder medir ciertos parametros del funcionamiento del algoritmo de reconocimiento.}
    {fig:marcas_segmentacion}
+
+\subsection{Ensayo de discriminacion por area}
+
+Se utilizo la plantilla de la figura \ref{fig:marcas_segmentacion_A} y se secuencio el parametro de tamano de lado de la marca para verificar la correcta seleccion.
+Se muestran los resultados en la figura \ref{fig:marcas_dimensiones}.
+
+\subfigfourfour
+   {marcas_dimensiones1}
+   {marcas_dimensiones2}
+   {marcas_dimensiones3}
+   {marcas_dimensiones4}
+   {marcas_dimensiones5}
+   {marcas_dimensiones6}
+   {marcas_dimensiones7}
+   {marcas_dimensiones8}
+   {Reconocimiento de una marca dentro de un conjunto. Modificando en el software la medida del lado de la marca, se capturo el resultado para las ocho marcas.}
+   {fig:marcas_dimensiones}
+
+   Para comparar el rendimiento del algoritmo se fijo una precision en el error posible de deteccion de $\pm0,05$\% y solamente ajustando en el software el parametro de la dimension del lado de la marca a detectar se registraron los valores obtenidos en la tabla \ref{tbl:marcas_dimensiones}.\par
+
+Se encontro que en las marcas mas pequenas, el error aumenta. Una explicacion a este efecto es que el ancho del trazo del contorno de la impresion, que ronda $0,15mm$, introduce un pequeno incremento en el area total de la marca. \par 
+Es un dato importante para considerar ajustar al momento de imprimir las marcas.
+
+      \begin{table}[!ht]
+         \centering
+         \caption[Ensayos de discriminacion de dimensiones de marcas]{Ensayo de discriminacion de dimensiones de marcas. Se mide el error en la deteccion de marcas de entre $1mm$ a $8mm$ de lado, para una precieion constante de $\pm0,05$\%.}
+         \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
+            \toprule
+            \textbf{lado [mm]} & \textbf{seleccion [mm]} & \textbf{error [mm]}& \textbf{precision [\%]}\\
+            \midrule
+%-----------------------------
+            {1}& {1,2}& {0,2}& {$\pm$0,05}\\
+            {2}& {2,1}& {0,2}& {$\pm$0,05}\\
+            {3}& {3,1}& {0,2}& {$\pm$0,05}\\
+            {4}& {4,0}& {0,0}& {$\pm$0,05}\\
+            {5}& {5,0}& {0,0}& {$\pm$0,05}\\
+            {6}& {6,0}& {0,0}& {$\pm$0,05}\\
+            {7}& {7,0}& {0,0}& {$\pm$0,05}\\
+            {8}& {8,0}& {0,0}& {$\pm$0,05}\\
+%-----------------------------
+            \bottomrule
+         \end{tabular}
+         \label{tbl:marcas_dimensiones}
+      \end{table}
+
+\subsection{Ensayo de marcas en angulo}
+
+Para validar la correcta medicion de los angulos, se imprimio una plantilla como la mostrada en la figura \ref{fig:marcas_segmentacion_B} y se tomo una captura del software durante reconocimiento y medicion del angulo para cada una. Se pueden ver los resultados en la figura \ref{fig:marcas_angulos}.\par
+
+\subfigthreetwo
+   {marcas_angulos1}
+   {marcas_angulos2}
+   {marcas_angulos3}
+   {marcas_angulos4}
+   {marcas_angulos5}
+   {Validacion de la medicino del angulo de la marca. El software reconoce y mide el angulo de una misma marca en diferentes angulos.}
+   {fig:marcas_angulos}
+
+   Se confecciono la tabla \ref{tbl:marcas_angulos} en donde se registro el angulo real de la marca y el error cometido por software.\par
+
+      \begin{table}[!ht]
+         \centering
+         \caption[Ensayo de medicion de angulos de marcas]{Validacion de la medicion del angulo medido por el software en una misma marca ubicada en diferentes angulos.}
+         \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}}
+            \toprule
+            \textbf{Ángulo real [grados]} & \textbf{Angulo medido [grados]} & \textbf{Error [\%]}\\
+            \midrule
+%-----------------------------
+            {0}   & {0}     & {0}\\
+            {20}  & {19,6}  & {0,02}\\
+            {40}  & {39,8}  & {0,005}\\
+            {-15} & {-15,3} & {0,02}\\
+            {-35} & {-35,1} & {0,002}\\
+%-----------------------------
+            \bottomrule
+         \end{tabular}
+         \label{tbl:marcas_angulos}
+      \end{table}
+
+\subsection{Ensayo de marcas jerarquicas}
+
+Hay casos que una marca podria tener alguna inscripcion dentro de su perimetro. Tambien podria ocurrir que dentro de la marca se detecten perimetros cerrados espureso a cause de imperfeccinoes en el material. En estos y cualquier otro caso, ademas de segmentear segun el area del perimetro, solo se consideran validas aquellas marcas que no estan encerradas por otro perimetro. \par
+Se diseno una hoja de ensayos como se muestra en la figura \ref{fig:marcas_segmentacion_C} que obliga al software a seleccionar entre dos marcas de igual area pero una de las cuales esta dentro de otro perimetro.\par
+   Se capturaron los resultados en la figura \ref{fig:marcas_jerarquia}.
+
+   \subfigabc
+   {0.3} {marcas_jerarquia1} {Si detectan dos marcas de lado $2mm$, pero solo se selecciona la marca que esta fuera de cualquier otro perimetro cerrado.} {fig:marcas_jerarquia_A}
+   {0.3} {marcas_jerarquia2} {Si detectan dos marcas de lado $3mm$, pero solo se selecciona la marca que esta fuera de cualquier otro perimetro cerrado.} {fig:marcas_jerarquia_B}
+   {0.3} {marcas_jerarquia3} {Se detecta solo una marca de lado $8mm$, se reconoce correctamente.\\ \vphantom{1}\\ \vphantom{1}} {fig:marcas_jerarquia_C}
+   {Ensayo de seleccion de marcas dispuestas en jerarquia. Por decicion en el desarrollo del software no se selccionan las marcas que estan dentro de otro perimetro cerrado.}
+   {fig:marcas_jerarquia}
 
 
 \subsection{Ensayos con impresiones escaladas}
