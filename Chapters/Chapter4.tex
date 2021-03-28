@@ -58,7 +58,7 @@ Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y 
 
       \begin{table}[!ht]
          \centering
-         \caption[Ensayos de corte simulado]{Información recolectada durante repetidos ensayos a un mismo diseño de corte pero posicionado en diferentes ángulos y desplazamientos.}
+         \caption[Ensayos de corte simulado.]{Información recolectada durante repetidos ensayos a un mismo diseño de corte pero posicionado en diferentes ángulos y desplazamientos.}
          \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
             \textbf{Ángulo [grados]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Escala X [mm]} & \textbf{Escala Y [mm]} & \textbf{Error máximo [mm]}\\
@@ -94,9 +94,9 @@ Para poder medir el correcto funcionamiento del algoritmo de reconocimiento de m
 En la figura \ref{fig:marcas_segmentacion} se pueden ver tres ensayos.
 
    \subfigabc
-   {0.3} {marcas_segmentacion1} {} {fig:marcas_segmentacion_A}
-   {0.3} {marcas_segmentacion2} {} {fig:marcas_segmentacion_B}
-   {0.3} {marcas_segmentacion3} {} {fig:marcas_segmentacion_C}
+   {0.3} {marcas_segmentacion1} {Plantilla para medir la discriminación de las marcas según su área.} {fig:marcas_segmentacion_A}
+   {0.3} {marcas_segmentacion3} {Plantilla para validar la medición de rotación.\\ \vphantom{1}} {fig:marcas_segmentacion_B}
+   {0.3} {marcas_segmentacion2} {Plantilla para discriminar marcas dentro y fuera de otras marcas.} {fig:marcas_segmentacion_C}
    {Ensayo de diferentes marcas en condiciones estratégicas para poder medir ciertos parámetros del funcionamiento del algoritmo de reconocimiento.}
    {fig:marcas_segmentacion}
 
@@ -118,12 +118,11 @@ Se utilizó la plantilla de la figura \ref{fig:marcas_segmentacion_A} y se incre
 
    Para comparar el rendimiento del algoritmo se fijó una precisión del error de detección en $\pm0,05$\% y solamente ajustando en el software la dimensión de la marca se registraron los valores obtenidos en la tabla \ref{tbl:marcas_dimensiones}.\par
 
-Se encontró que en las marcas mas pequeñas, el error aumenta. Una explicación a este efecto es que el ancho del trazo de la impresión, que ronda $0,18mm$, introduce un pequeño incremento en el área total de la marca. \par
-Es un dato importante para considerar ajustar al momento de imprimir las marcas.
+Se encontró que en las marcas más pequeñas, el error aumenta. Una explicación a este efecto es que el ancho del trazo de la impresión, que ronda $0,18mm$, introduce un pequeño incremento en el área total de la marca. Es un dato importante para considerar al momento de imprimir las marcas.
 
       \begin{table}[!ht]
          \centering
-         \caption[Ensayos de discriminación de dimensiones de marcas]{Ensayo de discriminación de dimensiones de marcas. Se mide el error en la detección de marcas de entre $1mm$ y $8mm$ de lado, para una precisión constante de $\pm0,05$\%.}
+         \caption[Ensayos de discriminación de dimensiones de marcas.]{Ensayo de discriminación de dimensiones de marcas. Se mide el error en la detección de marcas de entre $1mm$ y $8mm$ de lado, para una precisión constante de $\pm0,05$\%.}
          \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
             \textbf{Lado [mm]} & \textbf{Selección [mm]} & \textbf{Error [mm]}& \textbf{Precisión [\%]}\\
@@ -160,7 +159,7 @@ Para validar la correcta medición de los ángulos, se imprimió una plantilla c
 
       \begin{table}[!ht]
          \centering
-         \caption[Ensayo de medición de ángulos de marcas]{Validación de la medición del ángulo medido por el software en una misma marca con diferentes rotaciones.}
+         \caption[Ensayo de medición de ángulos de marcas.]{Validación de la medición del ángulo medido por el software en una misma marca con diferentes rotaciones.}
          \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
             \textbf{Ángulo real [grados]} & \textbf{Ángulo medido [grados]} & \textbf{Error [\%]}\\
@@ -195,10 +194,10 @@ Se diseño una hoja de ensayos como se muestra en la figura \ref{fig:marcas_segm
 \subsection{Ensayos con impresiones escaladas}
 
 Para validar la característica de escalado del software se generó un trabajo de corte que consiste en una figura de $150mm$ x $150mm$ como se muestra en la figura \ref{fig:ensayo_escalado_a} y una versión a escala cuyas medidas son $140mm$ x $130mm$, como se muestra en la figura \ref{fig:ensayo_escalado_b}.\par
-   En el primer ensayo se procede a cortar el archivo original con su archivo de corte GCode correcto. \par
-   En el segundo ensayo se mantiene el archivo GCode, pero se intenta cortar el perímetro impreso en escala reducida.\par
+   En el primer ensayo se procede a cortar el archivo original con el archivo GCode correcto. \par
+   En el segundo ensayo se mantiene el archivo GCode, pero se intenta cortar el perímetro impreso en escala reducida. Notar que en este caso habrá una discrepancia de escalas entre el trazo impreso que se desea cortar y los datos del archivo GCode.\par
    En la figura \ref{fig:ensayo_cuadrado_original} se puede ver parte del proceso de reconocimiento y simulación para el trazo original y en la figura \ref{fig:ensayo_cuadrado_escalado} para el trazo escalado.\par
-   En este caso se aprecia que las marcas están mucho mas distantes que lo que deberían debido a la escala, pero aun así, son reconocidas y el software lo corrige.
+   En este caso se aprecia que las marcas están mucho más distantes que lo que deberían debido a la escala, pero aun así, son reconocidas y el software lo corrige.
 
    \subfigab
    {0.48} {cuadrado_original} {Trabajo de corte perimetral sin distorsión.} {fig:ensayo_escalado_a}
@@ -233,7 +232,7 @@ Para validar la característica de escalado del software se generó un trabajo d
 
       \begin{table}[!ht]
          \centering
-         \caption[Ensayos de corte simulado escalado]{Información recolectada durante dos ensayos de corte de un perímetro sin distorsión y otro escalado.}
+         \caption[Ensayos de corte simulado escalado.]{Información recolectada durante dos ensayos de corte de un perímetro sin distorsión y otro escalado.}
          \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
             \textbf{Ángulo [grados]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Escala X [mm]} & \textbf{Escala Y [mm]} & \textbf{Error máximo [mm]}\\
@@ -248,11 +247,9 @@ Para validar la característica de escalado del software se generó un trabajo d
       \end{table}
 
 \subsection{Ensayos con diferentes resoluciones de vídeo}
-
-Si bien cuanto más resolución tenga la cámara más pequeño será el tamaño del pixel, esta mejora parece no trasladarse linealmente a los resultados para las dimensiones de marcas utilizadas.\par
-Por el contrario, una mayor resolución en la imagen implica mayor tiempo de procesamiento.\par
-Como la PocketBeagle no es especialmente eficiente para procesar imágenes, se buscó lograr un punto óptimo para la resolución de las imágenes. \par
-En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de 3 resoluciones típicas de vídeo y para cada caso se probaron dos niveles de compresión.\par
+Si bien cuanto más resolución tenga la cámara más pequeño será el tamaño del píxel, esta mejora parece no trasladarse linealmente a los resultados para las dimensiones de marcas utilizadas.\par
+Por el contrario, una mayor resolución en la imagen implica mayor tiempo de procesamiento. Como la PocketBeagle no es especialmente eficiente para procesar imágenes, se buscó lograr un punto óptimo para la resolución de las imágenes.\par
+En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de tres resoluciones típicas de vídeo y para cada caso se probaron dos niveles de compresión.\par
 
 \begin{longtable}[!h]{p{1.4cm}p{1.4cm}p{1.4cm}p{1.4cm}p{1.4cm}p{0.3\textwidth}}
 
@@ -267,19 +264,19 @@ En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de 3 resolu
             \midrule
             \endhead
 %-----------------------------
-            {240x320}&{ 1}&{5,04}&{-5,09}&{18,30}&\figtable{0.3}{ensayo_resolucion_1}\\
-            {240x320}&{50}&{4,98}&{-5,04}&{19,48}&\figtable{0.3}{ensayo_resolucion_2}\\
+            {240x320}&{ 1}&{5,04}&{-5,04}&{18,43}&\figtable{0.3}{ensayo_resolucion_1}\\
+            {240x320}&{50}&{4,98}&{-5,05}&{19,02}&\figtable{0.3}{ensayo_resolucion_2}\\
 
-            {640x480}&{ 1}&{5,04}&{-5,05}&{18,90}&\figtable{0.3}{ensayo_resolucion_3}\\
-            {640x480}&{50}&{5,02}&{-5,07}&{19,48}&\figtable{0.3}{ensayo_resolucion_4}\\
+            {640x480}&{ 1}&{5,04}&{-5,04}&{18,43}&\figtable{0.3}{ensayo_resolucion_3}\\
+            {640x480}&{50}&{5,00}&{-5,06}&{19,37}&\figtable{0.3}{ensayo_resolucion_4}\\
 
-            {960x720}&{ 1}&{5,05}&{-5,06}&{18,90}&\figtable{0.3}{ensayo_resolucion_5}\\
-            {960x720}&{50}&{5,01}&{-5,07}&{19,48}&\figtable{0.3}{ensayo_resolucion_6}\\
+            {960x720}&{ 1}&{5,04}&{-5,05}&{19,24}&\figtable{0.3}{ensayo_resolucion_5}\\
+            {960x720}&{50}&{5,01}&{-5,07}&{19,34}&\figtable{0.3}{ensayo_resolucion_6}\\
 %-----------------------------
                \bottomrule
             \label{tbl:ensayo_resoluciones}
          \end{longtable}
 
          Se puede concluir que no es tan relevante la resolución de la imagen como la calidad de compresión. Es preferible una calidad media con una resolución baja a una resolución alta con una compresión baja.\par
-         Para la mayoría de los ensayos de este trabajo se utilizó una resolución de $640x480$ con una calidad del 20\% al 30\%. Estos valores permiten una buena calidad de inspección sin ralentizar el procesamiento.
+         Para la mayoría de los ensayos de este trabajo se utilizó una resolución de $640$x$480$ con una calidad del 20\% al 30\%. Estos valores permiten una buena calidad de inspección sin ralentizar el procesamiento.
 

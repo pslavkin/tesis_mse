@@ -6,7 +6,7 @@ En este capítulo se desglosan los bloques principales del sistema, se explica s
 
 \section{Diseño general del sistema}
 
-En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparación entre la topología original, que se muestra en la figura \ref{fig:system_blocks0} y el modificado para el reconocimiento de marcas, representado en la figura \ref{fig:system_blocks1}.
+En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparación entre la topología original de conexión del controlador NK105, que se muestra en la figura \ref{fig:system_blocks0} y la modificada para el reconocimiento de marcas, representado en la figura \ref{fig:system_blocks1}.
 
 \subfigab 
 {0.45} {system_blocks0.pdf} {Conexión entre la máquina CNC y el controlador original.} {fig:system_blocks0}
@@ -155,16 +155,16 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
       Para poder conocer el estado del controlador es necesario contar con la información que se muestra en la pantalla LCD.\par
       Se estudiaron en detalle las especificaciones del controlador de esta pantalla con el objetivo de emular una pantalla virtual.\par
       Debido a la alta velocidad de los datos y que las tramas no tienen un largo definido, no fue posible utilizar los drivers de SPI del \textit{kernel} y realizar esta emulación en espacio de usuario.\par
-      Para poder capturar correctamente estas tramas se implementó un driver SPI en modo esclavo \textit{SPI slave} como un nuevo módulo del sistema operativo \citep{ldd3}.
+      Para poder capturar correctamente estas tramas se implementó un driver SPI en modo esclavo o \textit{SPI slave}, como un nuevo módulo del sistema operativo \citep{ldd3}.
       Este driver, a diferencia del original, permite recibir cualquier longitud de trama, en cualquier momento y almacenarla en un espacio de memoria contigua.
       Esto se logró utilizando las siguientes técnicas:
       \begin{itemize}
          \item {Interrupciones: se utilizó una interrupción conectada a la señal de selección de chip CS \textit{chip select}. Esto permite reaccionar rápidamente cuando se inicia una transacción.}
          \item {Acceso directo a memoria: se utilizó el subsistema DMA \textit{direct access memory} para que las operaciones de copia de los datos que se reciben por SPI a memoria se realicen sin la intervención del procesador. Esto permite conservar los recursos del procesador para otras tareas.}
          \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's\citep{WEBSITE:kerneldocs} (\textit{interprocess commnications}) que ofrece Linux para lograr un sistema reactivo con mínimo retardo.}
-         \item{Operaciones de archivo: para transferir las tramas decodificadas del espacio de \textit{kernel} al de usuario, se implementó un acceso al módulo emulando un archivo. De esta manera se aprovechan las herramientas de lectura y escritura del sistema operativo y se facilita el desarrollo del software en espacio de usuario.}
+         \item{Operaciones de archivo: para transferir las tramas decodificadas del espacio de \textit{kernel} al de usuario, se implementó un acceso al módulo emulando un archivo. De esta manera se aprovechan las herramientas de lectura y escritura del sistema operativo y se facilita el desarrollo del software.}
          \item{Multitarea en espacio de \textit{kernel}: dentro del módulo se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepción de nuevos datos por SPI.}
-         \item{Indexado de memoria contigua: debido a que la escritura por DMA no permite escribir en colas circulares, se implementó un sistema de una cola lineal indexada. Esto permite poder leer y escribir sin solapamientos. Cuando está cerca del limite de utilización se reinician los índices.}
+         \item{Indexado de memoria contigua: debido a que la escritura por DMA no permite escribir en colas circulares, se implementó un sistema de una cola lineal indexada. Esto permite leer y escribir sin solapamientos. Cuando está cerca del limite de utilización se reinician los índices.}
       \end{itemize}
       En los fragmentos de código \ref{cod:lcd_driver1}, \ref{cod:lcd_driver2} y \ref{cod:lcd_driver3} se destacan algunas de esta técnicas.\par
       En el diagrama de bloques de la figura \ref{fig:lcd_driver_blocks} se muestra la secuencia de pasos implementada en el módulo.
@@ -288,7 +288,7 @@ La única opción para transferir archivos al controlador es a través un dispos
 \end{figure}
 
 
-\section{Conexión de cámara a PocketBeagle}
+\section{Conexión de la cámara con la PocketBeagle}
 Como se comentó en la sección \ref{section:camara_de_video}, en el alcance de este trabajo se optó por usar la cámara de un teléfono celular montado en la máquina CNC y transmitir vídeo por Wi-Fi con una aplicación.\par
    En la figura \ref{fig:soporte_celu} se muestra un soporte desarrollado para sujetar el teléfono al eje Z de la máquina. \par
    Además se agregó un soporte para un puntero láser que sirve para ajustar las posiciones relativas del teléfono y el motor de corte.\par
@@ -368,7 +368,7 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
          En el ejemplo de la figura \ref{fig:reconocimiento_paso_a_paso2b} se puede ver este efecto en los cuadrados sin relleno que son detectados solo por su contorno externo. En la subsection \ref{subsection:marcas_jerarquias} se aborda este tema con todo detalle.\par
    En la siguiente parte del algoritmo se recorren todos los contornos encontrados y se le aplica una función que aproxima cada contorno a uno más suave.\par
    Este algoritmo pretende filtrar irregularidades de la marca o de la captura de vídeo y se configura para que devuelva siempre un perímetro cerrado.\par
-   Se utiliza la función minAreaRect en la línea 15 para encontrar un rectángulo de área mínima que encierre completamente al perímetro. Esto permite calcular una buena aproximación del área y del ángulo.\par
+   Se utiliza la función minAreaRect, en la línea 15, para encontrar un rectángulo de área mínima que encierre completamente al perímetro. Esto permite estimar el área y el ángulo de la marca.\par
    Finalmente se selecciona solamente la marca que tenga una área cercana a la especificada por el parámetro ``targetArea'' y le permite al usuario discriminar una marca por sobre otras.\par
    A la marca resultante se le calcula el desplazamiento en X e Y y su rotación respecto a la cámara.\par
    Estos son los datos que se ingresan en las ecuaciones trigonométricas vistas en la sección \ref{section:trigonometria} y es lo que permite realizar la alineación de la pieza.\par
@@ -396,17 +396,18 @@ En la línea 2 del algoritmo se convierte el formato de ``img'' a escala de gris
 
    A diferencia del mando a distancia cableado, el control a través de esta página web se puede hacer desde cualquier dispositivo con acceso a la red Wi-Fi compartida con la PocketBeagle.\par
    Por otra parte se agregó una funcionalidad adicional al controlador original, con la cual es posible ubicar la máquina en coordenadas precisas. Esta función es un ejemplo de las posibilidades de automatización que permite este accesorio.\par
-
+\pagebreak
 \section{Software de lectura de marcas nkHACK}
+\label{section:software_lectura_marcas}
 
 Sobre la base del desarrollo de la página web de control, se extendió la aplicación y se implementó el sistema de alineación por lectura de marcas.
-   En la figuras \ref{fig:web_mach1} y \ref{fig:web_mach2} se pueden ver aspectos destacados de esta página. En el apéndice \ref{AppendixB} se pueden ver mas imágenes en distintos escenarios de uso.
+   En la figuras \ref{fig:web_mach1} y \ref{fig:web_mach2} se pueden ver aspectos destacados de esta página. En el apéndice \ref{AppendixB} se pueden ver más imágenes en distintos escenarios de uso.
 
 \subfiga
 {0.8} {web_mach1} {Pantalla principal del software nkHACK. Se visualiza el modelo de la máquina CNC, las coordenadas actuales, la imagen de la cámara y el trabajo a mecanizar.} {fig:web_mach1}
 
 \subfiga
-{0.8} {web_mach2} {Software nkHACK. Menu de configuración de la cámara. Se puede ver la imagen capturada en modo binario en la cuál se ha detectado una marca de $3.3mm$ de lado.}{fig:web_mach2}
+{0.8} {web_mach2} {Software nkHACK. Menú de configuración de la cámara. Se puede ver la imagen capturada en modo binario en la cuál se ha detectado una marca de $3.3mm$ de lado.}{fig:web_mach2}
 
 Algunas de las funcionalidades de esta página se detallan en la siguiente lista:
 \begin{itemize}
@@ -450,15 +451,16 @@ donde:
 
 Para estimar la medida de un píxel se ingresan las dimensiones de ancho y alto de un fotograma. \par
 Estas medidas se puden tomar con la ayuda de una regla como se muestra en la figura \ref{fig:calibracion_ancho_alto}.
-Con el dato de la resolucion de video y las medidas ingresadas por el usuario, el software realiza el resto de los cálculos como se muestra en figura \ref{fig:calibracion_ancho_alto_C}
+Con el dato de la resolución de vídeo y las medidas ingresadas por el usuario, el software realiza el resto de los cálculos como se muestra en figura \ref{fig:calibracion_ancho_alto_C}
 
 \subfigabc
-   {0.48} {calibracion_ancho_alto1} {Medicion del ancho del fotograma con la ayuda de una regla. Se puede ver una medicion de aproximadamente $18,2mm$} {fig:calibracion_ancho_alto_A}
-   {0.48} {calibracion_ancho_alto2} {Medicion del alto del fotograma con la ayuda de una regla. Se puede ver una medicion de aproximadamente $25,5mm$} {fig:calibracion_ancho_alto_A}
-   {0.60} {calibracion_ancho_alto3} {Con las dimensiones de ancho, alto y la resolucion del video el software calcula las dimensiones del pixel. En este ejemplo se obtuvo $0,039mm$ de ancho y $0,04mm$ de alto.} {fig:calibracion_ancho_alto_C}
-   {Calibracion del tamano del pixel de un fotograma. Se utiliza una regla para medir el ancho y el alto y el software realiza las cuentas para obtener y almacenar el tamano del pixel en funcion de la resolucion de video que se este utilizando.}
+   {0.48} {calibracion_ancho_alto1} {Medición del ancho del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $18,2mm$} {fig:calibracion_ancho_alto_A}
+   {0.48} {calibracion_ancho_alto2} {Medición del alto del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $25,5mm$} {fig:calibracion_ancho_alto_A}
+   {0.60} {calibracion_ancho_alto3} {Con las dimensiones de ancho, alto y la resolución del vídeo el software calcula las dimensiones del píxel. En este ejemplo se obtuvo $0,039mm$ de ancho y $0,04mm$ de alto.} {fig:calibracion_ancho_alto_C}
+   {Calibración del tamaño del píxel de un fotograma. Se utiliza una regla para medir el ancho y el alto y el software realiza las cuentas para obtener y almacenar el tamaño del píxel en función de la resolución de vídeo que se este utilizando.}
    {fig:calibracion_ancho_alto}
 
+   Epígrafe
 
 Sin embargo, si la cámara no está perfectamente perpendicular a la mesa de trabajo, la dimensión de los píxeles cambia según su posición.\par
 Otro efecto no deseado ocurre según el tipo de lente de la cámara y la distancia al objetivo.\par
@@ -481,7 +483,7 @@ Para mitigar este problema se desarrollaron dos técnicas:
 
 \subfigabc
 {0.3} {calibracion_zoom1} {Recorte de imagen perpendicular. La imagen original y la recortada presentan una linealidad similar.\\ \vphantom{1}\\ \vphantom{1}} {fig:calibracion_zoom_a}
-   {0.3} {calibracion_zoom2} {Recorte de una imagen tomada en ángulo. Aún con la distorsión generada, el recorte permite tomar una zona local sensiblemente mas lineal que la imagen completa.} {fig:calibracion_zoom_b}
+   {0.3} {calibracion_zoom2} {Recorte de una imagen tomada en ángulo. Aún con la distorsión generada, el recorte permite tomar una zona local sensiblemente más lineal que la imagen completa.} {fig:calibracion_zoom_b}
    {0.3} {calibracion_zoom3} {Recorte de una imagen tomada con una lente gran angular. Aún se puede apreciar algo de distorsión pero menor que la imagen original.\\ \vphantom{1}} {fig:calibracion_zoom_b}
    {Análisis de la distorsión en las imágenes tomadas en diferentes escenarios. Se aplican técnicas de recorte para mitigar el defecto.}
    {fig:calibracion_zoom}

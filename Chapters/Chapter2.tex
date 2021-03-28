@@ -92,10 +92,10 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
       }
 \end{itemize}
 
-\section{Cámara de vídeo}
+\section{Selección de la cámara de vídeo}
 \label{section:camara_de_video}
    Los criterios para la selección de la cámara de vídeo se basaron principalmente en la interfaz de comunicación, los costos, la calidad de imagen y la facilidad de adquisición en mercado local. 
-   Con dichos criterios se confeccionó la tabla \ref{tab:camara_selection} con las opciones más destacadas calificando de 0 a 5.
+   Con dichos criterios se confeccionó la tabla \ref{tab:camara_selection} con las opciones más destacadas y se las calificó de 0 a 5.
 
    \begin{table}[h]
    \centering
@@ -122,7 +122,7 @@ Esto aumenta el costo total de la solución y agrega elementos susceptibles de f
 
 Por lo tanto para el alcance de este trabajo se optó por usar la cámara de un teléfono celular en conjunto con la aplicación IP Webcam \citep{WEBSITE:ipwebcam} para la transmisión de vídeo como se muestra en la figura \ref{fig:ipwebcam_B}.\par
 
-   Esta opción resuelve el problema de la longitud del cable dado que transmite por Wi-Fi, pero también permite utilizar varios modelos de teléfonos simultáneamente sin cambiar el software y poder tomar imágenes desde diferentes ángulos. \par
+   Esta opción resuelve el problema de la longitud del cable dado que transmite de manera inalámbrica, pero también permite utilizar varios modelos de teléfonos simultáneamente sin cambiar el software y poder tomar imágenes desde diferentes ángulos. \par
 
    Esta aplicación cuenta además con una interfaz web desde donde se pueden ajustar los parámetros de la cámara más importantes: zoom, brillo, desplazamiento, resolución y calidad de imagen. Se muestra una captura parcial de esta página en la figura. \ref{fig:ipwebcam_A}
 
@@ -143,7 +143,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
 
    Como se trata de una alineación en dos dimensiones, en geometría implica posicionar, escalar y rotar un plano respecto de otro.\par
 
-   Dado dos planos A y B superpuestos como se muestra en la figura \ref{fig:alineacion_offset_A} para el siguiente análisis se define al plano A, en rojo, como el sistema de coordenadas de la máquina y sus dimensiones las establecidas en el archivo de corte.
+   Dado dos planos A y B superpuestos como se muestra en la figura \ref{fig:alineacion_offset_A}, se define al plano A, en rojo, como el sistema de coordenadas de la máquina y sus dimensiones las establecidas en el archivo de corte.
    Mientras que B, en azul, como el objeto real a mecanizar que se encuentra desplazado, rotado y escalado respecto al primero.\par
    Conociendo las coordenadas de un solo punto en los dos sistemas de referencia, se puede establecer el desplazamiento y corregirlo como se realiza en la figura \ref{fig:alineacion_offset_B}.\par
    El punto $1$ en el sistema A es el $(2,1)$ mientras que en el sistema B es el $(0,0)$.\par
@@ -218,12 +218,12 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
          \end{equation}
 
 \section{Detección y tipos de marcas fiduciales}
-   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado es usual encontrar que las marcas son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\par
+   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado lo más usual son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\par
    Para un efectivo reconocimiento de una marca utilizando una cámara de vídeo algunas consideraciones deben tenerse en cuenta como ser:
    \begin{itemize}
       \item{Maximizar el contraste entre el fondo del objeto y la marca.}
       \item{Evitar irregularidades en el trazado del contorno.}
-      \item{De ser posible que la marca esté pintada internamente y que no sea solo un contorno.}
+      \item{De ser posible, que la marca esté llena con un color que contraste con el material impreso.}
       \item{Que esté alejada de bordes y otras figuras de la pieza.}
       \item{En el caso de marcas cuadradas es posible calcular el centro y también una aproximación del ángulo.}
       \item{En el caso de marcas circulares se logra mejor precisión en la detección del centro pero dado su simetría radial no se cuenta con la información de rotación.}
@@ -233,10 +233,11 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
 \subfigtwotwo
             {0.48}{ejemplo_marcas2}{Figuras geométricas llenas o solo su contorno.} 
             {0.48}{ejemplo_marcas1}{Ejemplo de marcas fiduciales en una placa de circuito impreso PCB.}
-            {0.48}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado utilizando el software desarrollado nkHACK.\\ \vphantom{1}}
+            {0.48}{ejemplo_marcas4}{Reconocimiento de un contorno cuadrado utilizando el software desarrollado nkHACK. Ver más detalles en la sección \ref{section:software_lectura_marcas}.}
             {0.48}{ejemplo_marcas3}{Marcas fiduciales codificadas. Se pueden utilizar para reconocer la posición y un código para diversos usos.}
             {Ejemplo de diferentes tipos de marcas fiduciales para diversas aplicaciones.}
             {fig:ejemplo_marcas}
 
-         Para el alcance de este trabajo solo se utilizarán marcas geométricas llenas o sus contornos.
+         Para el alcance de este trabajo solo se utilizarán marcas geométricas llenas o contornos.
+
 
