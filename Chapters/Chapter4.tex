@@ -1,12 +1,12 @@
 \chapter{Ensayos y resultados} % Main chapter title
 \label{Chapter4}
 
-En el presente capítulo se describen los ensayos más relevantes, los procedimientos de cada uno, las herramientas y los materiales utilizados.
+En el presente capítulo se describen los ensayos más relevantes, los procedimientos llevados a cabo en cada caso, las herramientas y los materiales utilizados.
 
 \section{Listado de herramientas}
 
-Durante los ensayos, además de las herramientas convencionales para el desarrollo de sistemas embebidos, se utilizaron las siguientes herramientas específicas:
-\begin{enumerate}
+Durante los ensayos, además de las herramientas convencionales para el desarrollo de sistemas embebidos, se utilizaron otras específicas que se listan a continuación:
+\begin{itemize}
    \item{Máquina de control numérico modelo Start126 de la firma BGMA industrial. \footnote{\url{https://www.bgma-industrial.com.ar/}}}
    \item{Teléfono móvil Samsung J7.}
    \item{Impresora HP LaserJet 1025nw.}
@@ -14,15 +14,15 @@ Durante los ensayos, además de las herramientas convencionales para el desarrol
    \item{Plataforma de desarrollo PocketBeagle.}
    \item{Controlador NK105 de la firma Weihong.}
    \item{Drivers de motores paso a paso M542 de la firma Leadshine \footnote{\url{http://www.leadshine.com/}}.}
-\end{enumerate}
+\end{itemize}
 
 \section{Pruebas funcionales del hardware}
 \label{sec:pruebasHW}
 
 \subsection{Acceso concurrente al driver SPI}
 El acceso al módulo del \textit{kernel} que maneja el SPI, se realiza mediante operaciones de entrada y salida del sistema operativo.\par
-Cuando se recibe una petición de abrir archivo, se registra en una lista un descriptor de esta operación y se lo mantiene hasta la operación de cerrar. \par
-Esta lista permite mantener accesos múltiples al \textit{driver}. Esa característica es muy útil para monitorear la máquina remotamente sin la capa de software.\par
+Cuando se recibe una petición de abrir archivo, se registra en una lista un descriptor de esta operación y se lo mantiene hasta que se recibe la operación de cierre de archivo. \par
+Esta lista permite mantener accesos múltiples al \textit{driver} y es muy útil para monitorear la máquina remotamente sin la capa de software.\par
 Se realizaron pruebas con cuatro accesos concurrentes al mismo driver y se verificó la integridad y la sincronía de la información de cada cliente.\par
 En la figura \ref{fig:acceso_multiple_spi} se muestra una captura de estos accesos desde una conexión remota por \textit{SSH} (\textit{secure shell}) \footnote{\url{https://www.ucl.ac.uk/isd/what-ssh-and-how-do-i-use-it}} desde un ordenador a la PocketBeagle.
 
@@ -30,9 +30,9 @@ En la figura \ref{fig:acceso_multiple_spi} se muestra una captura de estos acces
 {0.7} {acceso_multiple_spi} {Acceso concurrente al módulo de manejo de SPI desde una conexión SSH. Se puede ver la sincronía entre los cuatro accesos y el registro de cada acceso en los mensajes del \textit{kernel}.}{fig:acceso_multiple_spi}
 
 
-\subsection{Ensayo con archivos de mecanizado}
+\subsection{Ensayos con archivos de mecanizado}
 
-Se diseñó un archivo de mecanizado de una letra ``A'' con un círculo central como plantilla de pruebas que se muestra en la figura \ref{fig:a_con_circulo}.\par
+Se diseñó un archivo de mecanizado de una letra ``A'' con un círculo central como plantilla de pruebas. Se muestra una impresión en la figura \ref{fig:a_con_circulo}.\par
 
 Este archivo cuenta con líneas rectas, anguladas y curvas que lo hace especialmente útil para encontrar los limites de la técnica de alineación. \par
 \subfiga
@@ -44,7 +44,7 @@ Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y 
 
    Se realizaron cinco operaciones con diferentes rotaciones y desplazamientos y se recolectaron los datos que se detallan en la tabla \ref{tbl:ensayo_A}.\par
    Durante una de las simulaciones de corte se tomó una secuencia de imágenes que se muestran en la figura \ref{fig:ensayo_A}.\par
-   Se puede ver el recuadro rojo en el centro de la imagen que se usó para registrar el error.\par
+   Se puede ver el recuadro rojo de $1mm$ de lado en el centro de la imagen que se usó para registrar el error.\par
 
    \subfigthreethree
       {ensayo_A_1}
@@ -53,7 +53,7 @@ Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y 
       {ensayo_A_4}
       {ensayo_A_5}
       {ensayo_A_6}
-      {Secuencia de pasos para los ensayos de corte simulado. Se utiliza el recuadro rojo en el centro de la imagen como testigo del error máximo.}
+      {Secuencia de pasos para los ensayos de corte simulado. Se utiliza el recuadro rojo de $1mm$ de lado en el centro de la imagen como testigo del error máximo.}
       {fig:ensayo_A}
 
       \begin{table}[!ht]
@@ -97,13 +97,12 @@ En la figura \ref{fig:marcas_segmentacion} se pueden ver tres ensayos.
    {0.3} {marcas_segmentacion1} {} {fig:marcas_segmentacion_A}
    {0.3} {marcas_segmentacion2} {} {fig:marcas_segmentacion_B}
    {0.3} {marcas_segmentacion3} {} {fig:marcas_segmentacion_C}
-   {Ensayo de diferentes marcas en condiciones estrategicas para poder medir ciertos parametros del funcionamiento del algoritmo de reconocimiento.}
+   {Ensayo de diferentes marcas en condiciones estratégicas para poder medir ciertos parámetros del funcionamiento del algoritmo de reconocimiento.}
    {fig:marcas_segmentacion}
 
-\subsection{Ensayo de discriminacion por area}
+\subsection{Ensayo de discriminación por área}
 
-Se utilizo la plantilla de la figura \ref{fig:marcas_segmentacion_A} y se secuencio el parametro de tamano de lado de la marca para verificar la correcta seleccion.
-Se muestran los resultados en la figura \ref{fig:marcas_dimensiones}.
+Se utilizó la plantilla de la figura \ref{fig:marcas_segmentacion_A} y se incrementó el tamaño del lado de la marca desde $1mm$ a $8mm$ para verificar la correcta selección. Se muestran los resultados en la figura \ref{fig:marcas_dimensiones}.
 
 \subfigfourfour
    {marcas_dimensiones1}
@@ -114,20 +113,20 @@ Se muestran los resultados en la figura \ref{fig:marcas_dimensiones}.
    {marcas_dimensiones6}
    {marcas_dimensiones7}
    {marcas_dimensiones8}
-   {Reconocimiento de una marca dentro de un conjunto. Modificando en el software la medida del lado de la marca, se capturo el resultado para las ocho marcas.}
+   {Reconocimiento de una marca dentro de un conjunto. Al modificar en el software la medida de la marca deseada, se reconoce solo la correcta.}
    {fig:marcas_dimensiones}
 
-   Para comparar el rendimiento del algoritmo se fijo una precision en el error posible de deteccion de $\pm0,05$\% y solamente ajustando en el software el parametro de la dimension del lado de la marca a detectar se registraron los valores obtenidos en la tabla \ref{tbl:marcas_dimensiones}.\par
+   Para comparar el rendimiento del algoritmo se fijó una precisión del error de detección en $\pm0,05$\% y solamente ajustando en el software la dimensión de la marca se registraron los valores obtenidos en la tabla \ref{tbl:marcas_dimensiones}.\par
 
-Se encontro que en las marcas mas pequenas, el error aumenta. Una explicacion a este efecto es que el ancho del trazo del contorno de la impresion, que ronda $0,15mm$, introduce un pequeno incremento en el area total de la marca. \par 
+Se encontró que en las marcas mas pequeñas, el error aumenta. Una explicación a este efecto es que el ancho del trazo de la impresión, que ronda $0,18mm$, introduce un pequeño incremento en el área total de la marca. \par
 Es un dato importante para considerar ajustar al momento de imprimir las marcas.
 
       \begin{table}[!ht]
          \centering
-         \caption[Ensayos de discriminacion de dimensiones de marcas]{Ensayo de discriminacion de dimensiones de marcas. Se mide el error en la deteccion de marcas de entre $1mm$ a $8mm$ de lado, para una precieion constante de $\pm0,05$\%.}
+         \caption[Ensayos de discriminación de dimensiones de marcas]{Ensayo de discriminación de dimensiones de marcas. Se mide el error en la detección de marcas de entre $1mm$ y $8mm$ de lado, para una precisión constante de $\pm0,05$\%.}
          \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
-            \textbf{lado [mm]} & \textbf{seleccion [mm]} & \textbf{error [mm]}& \textbf{precision [\%]}\\
+            \textbf{Lado [mm]} & \textbf{Selección [mm]} & \textbf{Error [mm]}& \textbf{Precisión [\%]}\\
             \midrule
 %-----------------------------
             {1}& {1,2}& {0,2}& {$\pm$0,05}\\
@@ -144,9 +143,9 @@ Es un dato importante para considerar ajustar al momento de imprimir las marcas.
          \label{tbl:marcas_dimensiones}
       \end{table}
 
-\subsection{Ensayo de marcas en angulo}
+\subsection{Ensayo de marcas rotadas}
 
-Para validar la correcta medicion de los angulos, se imprimio una plantilla como la mostrada en la figura \ref{fig:marcas_segmentacion_B} y se tomo una captura del software durante reconocimiento y medicion del angulo para cada una. Se pueden ver los resultados en la figura \ref{fig:marcas_angulos}.\par
+Para validar la correcta medición de los ángulos, se imprimió una plantilla como la mostrada en la figura \ref{fig:marcas_segmentacion_B} y se tomó una captura del software durante el reconocimiento y medición del ángulo para cada una. Se pueden ver los resultados en la figura \ref{fig:marcas_angulos}.
 
 \subfigthreetwo
    {marcas_angulos1}
@@ -154,17 +153,17 @@ Para validar la correcta medicion de los angulos, se imprimio una plantilla como
    {marcas_angulos3}
    {marcas_angulos4}
    {marcas_angulos5}
-   {Validacion de la medicino del angulo de la marca. El software reconoce y mide el angulo de una misma marca en diferentes angulos.}
+   {Validación de la medición del ángulo de la marca. El software reconoce y mide el ángulo de una misma marca en diferentes rotaciones.}
    {fig:marcas_angulos}
 
-   Se confecciono la tabla \ref{tbl:marcas_angulos} en donde se registro el angulo real de la marca y el error cometido por software.\par
+   Se confeccionó la tabla \ref{tbl:marcas_angulos} en donde se registró el ángulo real de la marca, el ángulo medido y el error cometido por software.\par
 
       \begin{table}[!ht]
          \centering
-         \caption[Ensayo de medicion de angulos de marcas]{Validacion de la medicion del angulo medido por el software en una misma marca ubicada en diferentes angulos.}
+         \caption[Ensayo de medición de ángulos de marcas]{Validación de la medición del ángulo medido por el software en una misma marca con diferentes rotaciones.}
          \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
-            \textbf{Ángulo real [grados]} & \textbf{Angulo medido [grados]} & \textbf{Error [\%]}\\
+            \textbf{Ángulo real [grados]} & \textbf{Ángulo medido [grados]} & \textbf{Error [\%]}\\
             \midrule
 %-----------------------------
             {0}   & {0}     & {0}\\
@@ -178,20 +177,20 @@ Para validar la correcta medicion de los angulos, se imprimio una plantilla como
          \label{tbl:marcas_angulos}
       \end{table}
 
-\subsection{Ensayo de marcas jerarquicas}
+\subsection{Ensayo de marcas encerradas}
 \label{subsection:marcas_jerarquias}
 
-Hay casos que una marca podria tener alguna inscripcion dentro de su perimetro. Tambien podria ocurrir que dentro de la marca se detecten perimetros cerrados espureso a cause de imperfeccinoes en el material. En estos y cualquier otro caso, ademas de segmentear segun el area del perimetro, solo se consideran validas aquellas marcas que no estan encerradas por otro perimetro. \par
-Se diseno una hoja de ensayos como se muestra en la figura \ref{fig:marcas_segmentacion_C} que obliga al software a seleccionar entre dos marcas de igual area pero una de las cuales esta dentro de otro perimetro.\par
+Hay casos que una marca podría tener alguna inscripción de texto dentro de su perímetro. También podría ocurrir que dentro de la marca se detecten perímetros cerrados espúreos a causa de imperfecciones en el material.\par
+En estos y otro casos similares, además de segmentar según el área del perímetro, solo se consideran válidas aquellas marcas que no están encerradas por otro perímetro. \par
+Se diseño una hoja de ensayos como se muestra en la figura \ref{fig:marcas_segmentacion_C} que obliga al software a seleccionar entre dos marcas de igual área pero una de las cuales está dentro de otro perímetro.\par
    Se capturaron los resultados en la figura \ref{fig:marcas_jerarquia}.
 
    \subfigabc
-   {0.3} {marcas_jerarquia1} {Si detectan dos marcas de lado $2mm$, pero solo se selecciona la marca que esta fuera de cualquier otro perimetro cerrado.} {fig:marcas_jerarquia_A}
-   {0.3} {marcas_jerarquia2} {Si detectan dos marcas de lado $3mm$, pero solo se selecciona la marca que esta fuera de cualquier otro perimetro cerrado.} {fig:marcas_jerarquia_B}
-   {0.3} {marcas_jerarquia3} {Se detecta solo una marca de lado $8mm$, se reconoce correctamente.\\ \vphantom{1}\\ \vphantom{1}} {fig:marcas_jerarquia_C}
-   {Ensayo de seleccion de marcas dispuestas en jerarquia. Por decicion en el desarrollo del software no se selccionan las marcas que estan dentro de otro perimetro cerrado.}
+   {0.3} {marcas_jerarquia1} {Se detectan dos marcas de $2mm$ de lado, pero solo se selecciona la marca que está fuera de cualquier otro perímetro cerrado.} {fig:marcas_jerarquia_A}
+   {0.3} {marcas_jerarquia2} {Se detectan dos marcas de $3mm$ de lado, pero solo se selecciona la marca que está fuera de cualquier otro perímetro cerrado.} {fig:marcas_jerarquia_B}
+   {0.3} {marcas_jerarquia3} {Se detecta solo una marca de $8mm$ de lado, se reconoce correctamente.\\ \vphantom{1}\\ \vphantom{1}} {fig:marcas_jerarquia_C}
+   {Ensayo de selección de marcas dispuestas en jerarquía. Por decision en el desarrollo del software no se consideran las marcas que están dentro de otro perímetro cerrado.}
    {fig:marcas_jerarquia}
-
 
 \subsection{Ensayos con impresiones escaladas}
 
@@ -200,7 +199,7 @@ Para validar la característica de escalado del software se generó un trabajo d
    En el segundo ensayo se mantiene el archivo GCode, pero se intenta cortar el perímetro impreso en escala reducida.\par
    En la figura \ref{fig:ensayo_cuadrado_original} se puede ver parte del proceso de reconocimiento y simulación para el trazo original y en la figura \ref{fig:ensayo_cuadrado_escalado} para el trazo escalado.\par
    En este caso se aprecia que las marcas están mucho mas distantes que lo que deberían debido a la escala, pero aun así, son reconocidas y el software lo corrige.
-   
+
    \subfigab
    {0.48} {cuadrado_original} {Trabajo de corte perimetral sin distorsión.} {fig:ensayo_escalado_a}
    {0.48} {cuadrado_escalado} {Trabajo de corte perimetral escalado.} {fig:ensayo_escalado_b}
@@ -257,12 +256,12 @@ En la tabla \ref{tbl:ensayo_resoluciones} se muestra una comparativa de 3 resolu
 
 \begin{longtable}[!h]{p{1.4cm}p{1.4cm}p{1.4cm}p{1.4cm}p{1.4cm}p{0.3\textwidth}}
 
-            \caption[Ensayos de resolucion de imagen]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas.}\\
+            \caption[Ensayos de resolución de imagen.]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas.}\\
             \toprule
             \textbf{Ancho x alto [pixeles]} & \textbf{Calidad [\%]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Ángulo [grados]} & \textbf{Imagen} \\ 
             \midrule
             \endfirsthead
-            \caption[Ensayos de resolucion de imagen]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas. Continuación.}\\
+            \caption[Ensayos de resolución de imagen. Continuación.]{Comparación de diferentes resoluciones de imágenes y sus resultados para la identificación de marcas. Continuación.}\\
             \toprule
             \textbf{Ancho x alto [pixeles]} & \textbf{Calidad [\%]} & \textbf{Delta X [mm]} & \textbf{Delta Y [mm]} & \textbf{Ángulo [grados]} & \textbf{Imagen} \\ 
             \midrule

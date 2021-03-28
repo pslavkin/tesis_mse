@@ -1,7 +1,7 @@
 % Chapter 1 
 \chapter{Introducción general} % Main chapter title
 
-En el presente capítulo se explica el principio de funcionamiento de las máquinas de control numérico y las dificultades que presentan para alinearse con las piezas a mecanizar. Se exponen soluciones de alineación existentes y finalmente se comenta acerca de la motivación, el alcance y los objetivos de la propia.
+En el presente capítulo se explica el principio de funcionamiento de las máquinas de control numérico y las dificultades que presentan para alinear piezas en la mesa de trabajo. Se exponen algunas soluciones existentes en mercado y finalmente se comenta acerca de la motivación, el alcance y los objetivos de la propia.
 
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 \label{IntroGeneral}
@@ -27,7 +27,7 @@ A pesar del paso del tiempo y los avances tecnológicos, los bloques constitutiv
 
 \subsection{Programa de movimientos}
    El programa de movimientos consiste en una serie de instrucciones necesarias para obtener una determinada pieza y se escribe en un un lenguaje conocido como GCode\citep{WEBSITE:gcode_wiki}.\par
-   Este lenguaje fue creado por el Instituto tecnológico de Masachussets en la década del '50 y especificado en el documento NIST-RS274-D \citep{rs274}.\par
+   Este lenguaje fue creado por el \textit{MIT}, Instituto Tecnológico de Masachussets, en la década del '50 y especificado en el documento NIST-RS274-D \citep{rs274}.\par
 Originalmente los ingenieros de mecanizado lo escribían manualmente en una planilla y luego, mediante una máquina de mecanografía, se transcribía a una cinta perforada que era interpretada por el controlador de movimientos.\par
 Se pueden ver algunas imágenes de este primigenio proceso en la figura \ref{fig:programacion_cnc_primigenia}.
 \subfigtwotwo
@@ -76,16 +76,44 @@ De esta manera el controlador se compone de dos etapas, controlador lógico y dr
          {La etapa de control se suele separar en dos: controlador lógico y driver de potencia.}
          {fig:control_and_driver}
 
-En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.\\
-En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales detallando las características principales.\\
+En función de la complejidad requerida para la máquina y de los requisitos de potencia para los movimientos se dimensionan el controlador y los drivers.\par
+En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelos de controladores y drivers comerciales detallando las características principales.
 
-      \begin{longtable}[!h]{m{0.53\textwidth}p{0.4\textwidth}}
-         \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado.}\\
+      \begin{longtable}[!h]{m{0.63\textwidth}p{0.3\textwidth}} %la suma tiene que ser 0.93 sino se sale de margen..
+         \caption[Modelos de drivers]{Modelos de drivers de motores.}\\
          \toprule
          \textbf{Características} & \textbf{Imagen}\\
          \midrule
          \endfirsthead
-         \caption[Modelos de controladores]{Modelos de controladores CNC disponibles en el mercado. Continuación}\\
+         \caption[Modelos de drivers. Continuación.]{Modelos de drivers de motores. Continuación}\\
+         \toprule
+         \textbf{Características} & \textbf{Imagen}\\
+         \midrule
+         \endhead
+%-----------------------------
+         Driver para motores paso a paso pequeños, económicos, ideales para máquinas simples, impresoras 3D, y hobby.
+         &
+         \figtable{0.3}{driver_steper_arduino} \\
+%-----------------------------
+         Driver para motores paso a paso medianos, ideales para máquinas de media precisión y mecánica ligera.
+         &
+         \figtable{0.3}{driver_steper} \\
+%-----------------------------
+         Driver para motores BLDC (\textit{brush less direct current motors}), de potencia media, adecuados para máquinas de extrema precisión y escalables en potencia.
+         &
+         \figtable{0.3}{driver_servo} \\
+%-----------------------------
+         \bottomrule
+         \label{tbl:drivers}
+      \end{longtable}
+
+      \begin{longtable}[!h]{m{0.53\textwidth}p{0.4\textwidth}}
+         \caption[Modelos de controladores.]{Modelos de controladores CNC disponibles en el mercado.}\\
+         \toprule
+         \textbf{Características} & \textbf{Imagen}\\
+         \midrule
+         \endfirsthead
+         \caption[Modelos de controladores. Continuación.]{Modelos de controladores CNC disponibles en el mercado. Continuación.}\\
          \toprule
          \textbf{Características} & \textbf{Imagen}\\
          \midrule
@@ -93,53 +121,23 @@ En las tablas \ref{tbl:controllers} y \ref{tbl:drivers} se listan algunos modelo
 %-----------------------------
             Controlador dependiente de una PC y conexión por puerto paralelo. Solución económica para máquinas  de baja performance.
             &
-            \figtable{0.4}{controlador_paralelo} \\
+            \figtable{0.4}{controlador_paralelo}\\
 %-----------------------------
             Controlador integrado de media performance, ideal para máquinas profesionales pero de baja complejidad. Este es el controlador que se usará para realizar los ensayos.
             &
-            \figtable{0.4}{nk105} \\
+            \figtable{0.4}{nk105}\\
 %-----------------------------
-            Controlador basado en PC sobre Windows de media performance. Este es el controlador que usa actualmente la empresa Wolfcut en sus máquinas.
+            Controlador basado en PC sobre Windows de media performance. Este es el controlador que usa actualmente la empresa Wolfcut en sus máquinas. Ver sección \ref{section:empresa_interesada}.
             &
-            \figtable{0.4}{edding_board} \\
+            \figtable{0.4}{edding_board}\\
 %-----------------------------
             Controlador autónomo profesional de gran performance y opciones de operación. Este tipo de controladores se utilizan en centros de mecanizado de altísima complejidad y prestaciones sumamente exigentes. Es inusual ver este tipo de controladores en las máquinas de gama media debido a su alto costo. 
             &
-            \figtable{0.4}{controlador_nk200} \\
+            \figtable{0.4}{controlador_nk200}\\
 %-----------------------------
             \bottomrule
             \label{tbl:controllers}
          \end{longtable}
-
-
-      \begin{longtable}[!h]{m{0.63\textwidth}p{0.3\textwidth}} %la suma tiene que ser 0.93 sino se sale de margen..
-   \caption[Modelos de drivers]{Modelos de drivers de motores.}\\
-         \toprule
-         \textbf{Características} & \textbf{Imagen}\\
-         \midrule
-         \endfirsthead
-         \caption[Modelos de drivers]{Modelos de drivers de motores. Continuación}\\
-         \toprule
-         \textbf{Características} & \textbf{Imagen}\\
-         \midrule
-         \endhead
-%-----------------------------
-      Driver para motores paso a paso pequeños, económicos, ideales para máquinas simples, impresoras 3D, y hobby.
-      &
-      \figtable{0.3}{driver_steper_arduino} \\
-%-----------------------------
-      Driver para motores paso a paso medianos, ideales para máquinas de media precisión y mecánica ligera.
-      &
-      \figtable{0.3}{driver_steper} \\
-%-----------------------------
-      Driver para motores BLDC (\textit{brush less direct current motors}), de potencia media, adecuados para máquinas de extrema precisión y escalables en potencia.
-      &
-      \figtable{0.3}{driver_servo} \\
-%-----------------------------
-      \bottomrule
-      \label{tbl:drivers}
-   \end{longtable}
-
 
 \subsection{Máquina de control numérico}
 En términos generales una máquina CNC es un conjunto de piezas electromecánicas que permiten mover el elemento de mecanizado en varias dimensiones.
@@ -225,7 +223,7 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
    En la tabla \ref{tbl:competitors} se destacan algunos desarrollos de software que permiten extenderse o adaptarse para soportar el reconocimiento de marcas.\par
    Se puede ver que la mayoría de las soluciones del mercado están basadas en PC. Esto aumenta el costo general del sistema, disminuye la fiabilidad y limita el acceso desde múltiples dispositivos y plataformas.\par
 
-   Además del hardware, las licencias y extensiones de software, las cámaras de video compatibles son muy específicas y de muy alto valor, agravando aún más la viabilidad de estas soluciones.\par
+   Además del hardware, las licencias y extensiones de software, las cámaras de vídeo compatibles son muy específicas y de muy alto valor, agravando aún más la viabilidad de estas soluciones.\par
 
    La empresa interesada, Wolfcut \footnote{\wolfcutlink}, utiliza actualmente uno de estos sistemas con algunos resultados adversos.\par
 
@@ -235,7 +233,7 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
 
 \begin{table}[h!]
    \centering
-   \caption[Sistemas de reconocimiento de marcas]{Se destacan algunos modelos y marcas de sistemas de reconocimiento de marcas y sus características principales.}
+   \caption[Sistemas de reconocimiento de marcas.]{Se destacan algunos modelos y marcas de sistemas de reconocimiento de marcas y sus características principales.}
    \begin{tabular}{m{0.5\textwidth}m{0.5\textwidth}}
       \toprule
       \textbf{Características} & \textbf{Imagen} \\ 
@@ -262,7 +260,9 @@ En la actualidad muchos de los procesos industriales que involucran el mecanizad
    \label{tbl:competitors}
 \end{table}
 
-\section{Empresa interesada}
+\section{Empresa interesada Wolfcut}
+\label{section:empresa_interesada}
+
 Este trabajo se realiza en el marco de una colaboración con la empresa española Wolfcut, la cual fabrica y comercializa máquinas de control numérico en toda Europa.\par
 Se pueden ver algunos de sus productos en su página web \wolfcutlink.\par
 Cuenta con más de 20 años de experiencia en el rubro y algunas innovaciones en el área de reconocimiento de marcas.\par
