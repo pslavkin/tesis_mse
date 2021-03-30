@@ -36,7 +36,7 @@ Se diseñó un archivo de mecanizado de una letra ``A'' con un círculo central 
 
 Este archivo cuenta con líneas rectas, anguladas y curvas que lo hace especialmente útil para encontrar los limites de la técnica de alineación. \par
 \subfiga
-{0.4} {A_circulo_escalado.pdf} {Plantilla de pruebas disenada para validar ciertas acciones del software durante los ensayos.}{fig:a_con_circulo}
+{0.4} {A_con_circulo.pdf} {Plantilla de pruebas disenada para validar ciertas acciones del software durante los ensayos.}{fig:a_con_circulo}
 
 Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y se sujetó a una base de madera para asegurar la planitud. Con esto se simula una pieza previamente impresa que se desea mecanizar como se muestra en la figura \ref{fig:tabla_madera_con_hoja}.\par
 
@@ -44,7 +44,7 @@ Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y 
 
    Se realizaron cinco operaciones con diferentes rotaciones y desplazamientos y se recolectaron los datos que se detallan en la tabla \ref{tbl:ensayo_A}.\par
    Durante una de las simulaciones de corte se tomó una secuencia de imágenes que se muestran en la figura \ref{fig:ensayo_A}.\par
-   Se puede ver el recuadro rojo de $1mm$ de lado en el centro de la imagen que se usó para registrar el error.\par
+   Se puede ver el recuadro rojo de $1 mm$ de lado en el centro de la imagen que se usó para registrar el error.\par
 
    \subfigthreethree
       {ensayo_A_1}
@@ -53,7 +53,7 @@ Para las pruebas se imprimió el trazado con una impresora láser en hoja A4, y 
       {ensayo_A_4}
       {ensayo_A_5}
       {ensayo_A_6}
-      {Secuencia de pasos para los ensayos de corte simulado. Se utiliza el recuadro rojo de $1mm$ de lado en el centro de la imagen como testigo del error máximo.}
+      {Secuencia de pasos para los ensayos de corte simulado. Se utiliza el recuadro rojo de $1 mm$ de lado en el centro de la imagen como testigo del error máximo.}
       {fig:ensayo_A}
 
       \begin{table}[!ht]
@@ -102,7 +102,7 @@ En la figura \ref{fig:marcas_segmentacion} se pueden ver tres ensayos.
 
 \subsection{Ensayo de discriminación por área}
 
-Se utilizó la plantilla de la figura \ref{fig:marcas_segmentacion_A} y se incrementó el tamaño del lado de la marca desde $1mm$ a $8mm$ para verificar la correcta selección. Se muestran los resultados en la figura \ref{fig:marcas_dimensiones}.
+Se utilizó la plantilla de la figura \ref{fig:marcas_segmentacion_A} y se incrementó el tamaño del lado de la marca desde $1 mm$ a $8 mm$ para verificar la correcta selección. Se muestran los resultados en la figura \ref{fig:marcas_dimensiones}.
 
 \subfigfourfour
    {marcas_dimensiones1}
@@ -118,11 +118,11 @@ Se utilizó la plantilla de la figura \ref{fig:marcas_segmentacion_A} y se incre
 
    Para comparar el rendimiento del algoritmo se fijó una precisión del error de detección en $\pm0,05$\% y solamente ajustando en el software la dimensión de la marca se registraron los valores obtenidos en la tabla \ref{tbl:marcas_dimensiones}.\par
 
-Se encontró que en las marcas más pequeñas, el error aumenta. Una explicación a este efecto es que el ancho del trazo de la impresión, que ronda $0,18mm$, introduce un pequeño incremento en el área total de la marca. Es un dato importante para considerar al momento de imprimir las marcas.
+Se encontró que en las marcas más pequeñas, el error aumenta. Una explicación a este efecto es que el ancho del trazo de la impresión, que ronda $0,18 mm$, introduce un pequeño incremento en el área total de la marca. Es un dato importante para considerar al momento de imprimir las marcas.
 
       \begin{table}[!ht]
          \centering
-         \caption[Ensayos de discriminación de dimensiones de marcas.]{Ensayo de discriminación de dimensiones de marcas. Se mide el error en la detección de marcas de entre $1mm$ y $8mm$ de lado, para una precisión constante de $\pm0,05$\%.}
+         \caption[Ensayos de discriminación de dimensiones de marcas.]{Ensayo de discriminación de dimensiones de marcas. Se mide el error en la detección de marcas de entre $1 mm$ y $8 mm$ de lado, para una precisión constante de $\pm0,05$\%.}
          \begin{tabular}[!ht]{m{1.6cm}m{1.6cm}m{1.6cm}m{1.6cm}}
             \toprule
             \textbf{Lado [mm]} & \textbf{Selección [mm]} & \textbf{Error [mm]}& \textbf{Precisión [\%]}\\
@@ -185,15 +185,15 @@ Se diseño una hoja de ensayos como se muestra en la figura \ref{fig:marcas_segm
    Se capturaron los resultados en la figura \ref{fig:marcas_jerarquia}.
 
    \subfigabc
-   {0.3} {marcas_jerarquia1} {Se detectan dos marcas de $2mm$ de lado, pero solo se selecciona la marca que está fuera de cualquier otro perímetro cerrado.} {fig:marcas_jerarquia_A}
-   {0.3} {marcas_jerarquia2} {Se detectan dos marcas de $3mm$ de lado, pero solo se selecciona la marca que está fuera de cualquier otro perímetro cerrado.} {fig:marcas_jerarquia_B}
-   {0.3} {marcas_jerarquia3} {Se detecta solo una marca de $8mm$ de lado, se reconoce correctamente.\\ \vphantom{1}\\ \vphantom{1}} {fig:marcas_jerarquia_C}
+   {0.3} {marcas_jerarquia1} {Se detectan dos marcas de $2 mm$ de lado, pero solo se selecciona la marca que está fuera de cualquier otro perímetro cerrado.} {fig:marcas_jerarquia_A}
+   {0.3} {marcas_jerarquia2} {Se detectan dos marcas de $3 mm$ de lado, pero solo se selecciona la marca que está fuera de cualquier otro perímetro cerrado.} {fig:marcas_jerarquia_B}
+   {0.3} {marcas_jerarquia3} {Se detecta solo una marca de $8 mm$ de lado, se reconoce correctamente.\\ \vphantom{1}\\ \vphantom{1}} {fig:marcas_jerarquia_C}
    {Ensayo de selección de marcas dispuestas en jerarquía. Por decision en el desarrollo del software no se consideran las marcas que están dentro de otro perímetro cerrado.}
    {fig:marcas_jerarquia}
 
 \subsection{Ensayos con impresiones escaladas}
 
-Para validar la característica de escalado del software se generó un trabajo de corte que consiste en una figura de $150mm$ x $150mm$ como se muestra en la figura \ref{fig:ensayo_escalado_a} y una versión a escala cuyas medidas son $140mm$ x $130mm$, como se muestra en la figura \ref{fig:ensayo_escalado_b}.\par
+Para validar la característica de escalado del software se generó un trabajo de corte que consiste en una figura de $150 mm$ x $150 mm$ como se muestra en la figura \ref{fig:ensayo_escalado_a} y una versión a escala cuyas medidas son $140 mm$ x $130 mm$, como se muestra en la figura \ref{fig:ensayo_escalado_b}.\par
    En el primer ensayo se procede a cortar el archivo original con el archivo GCode correcto. \par
    En el segundo ensayo se mantiene el archivo GCode, pero se intenta cortar el perímetro impreso en escala reducida. Notar que en este caso habrá una discrepancia de escalas entre el trazo impreso que se desea cortar y los datos del archivo GCode.\par
    En la figura \ref{fig:ensayo_cuadrado_original} se puede ver parte del proceso de reconocimiento y simulación para el trazo original y en la figura \ref{fig:ensayo_cuadrado_escalado} para el trazo escalado.\par

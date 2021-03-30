@@ -9,8 +9,8 @@ En este capítulo se desglosan los bloques principales del sistema, se explica s
 En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la comparación entre la topología original de conexión del controlador NK105, que se muestra en la figura \ref{fig:system_blocks0} y la modificada para el reconocimiento de marcas, representado en la figura \ref{fig:system_blocks1}.
 
 \subfigab 
-{0.45} {system_blocks0.pdf} {Conexión entre la máquina CNC y el controlador original.} {fig:system_blocks0}
-        {0.45}{system_blocks1.pdf} {Conexión de la máquina CNC con el agregado del reconocimiento de marcas.} {fig:system_blocks1}
+        {0.48} {system_blocks0.pdf} {Conexión entre la máquina CNC y el controlador original.} {fig:system_blocks0}
+        {0.48} {system_blocks1.pdf} {Conexión de la máquina CNC con el agregado del reconocimiento de marcas.} {fig:system_blocks1}
         {Comparación entre la conexión original de la máquina CNC y la modificada para el reconocimiento de marcas.}
         {fig:system_blocks}
 
@@ -161,7 +161,7 @@ En los diagramas de bloques de la figura \ref{fig:system_blocks} se realiza la c
       \begin{itemize}
          \item {Interrupciones: se utilizó una interrupción conectada a la señal de selección de chip CS \textit{chip select}. Esto permite reaccionar rápidamente cuando se inicia una transacción.}
          \item {Acceso directo a memoria: se utilizó el subsistema DMA \textit{direct access memory} para que las operaciones de copia de los datos que se reciben por SPI a memoria se realicen sin la intervención del procesador. Esto permite conservar los recursos del procesador para otras tareas.}
-         \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's\citep{WEBSITE:kerneldocs} (\textit{interprocess commnications}) que ofrece Linux para lograr un sistema reactivo con mínimo retardo.}
+         \item{Comunicación interprocesos: se utilizaron diversos métodos de IPC's \citep{WEBSITE:kerneldocs} (\textit{interprocess commnications}) que ofrece Linux para lograr un sistema reactivo con mínimo retardo.}
          \item{Operaciones de archivo: para transferir las tramas decodificadas del espacio de \textit{kernel} al de usuario, se implementó un acceso al módulo emulando un archivo. De esta manera se aprovechan las herramientas de lectura y escritura del sistema operativo y se facilita el desarrollo del software.}
          \item{Multitarea en espacio de \textit{kernel}: dentro del módulo se utilizaron varias tareas \textit{kthreads} para evitar bloqueos entre operaciones de escritura de datos al espacio de usuario con la recepción de nuevos datos por SPI.}
          \item{Indexado de memoria contigua: debido a que la escritura por DMA no permite escribir en colas circulares, se implementó un sistema de una cola lineal indexada. Esto permite leer y escribir sin solapamientos. Cuando está cerca del limite de utilización se reinician los índices.}
@@ -248,7 +248,7 @@ La única opción para transferir archivos al controlador es a través un dispos
 \subfiga 
    {0.55} {hard_setup6} {La PocketBeagle se comporta como un dispositivo de almacenamiento. El controlador accede al sistema de archivos en busca de trabajos a procesar.}{fig:conexion_usb}
 
-   La tecnología involucrada en Linux para permitir este funcionamiento es \mbox{\textit{configFS}\citep{WEBSITE:configfs}}.\par
+   La tecnología involucrada en Linux para permitir este funcionamiento es \mbox{\textit{configFS} \citep{WEBSITE:configfs}}.\par
    Se implementó un sistema de intercambio de doble sistema de archivos como el que se muestra en la figura \ref{fig:configfs}.
    Con este método mientras el controlador accede a un sistema de archivos con trabajos a procesar, la PocketBeagle puede escribir en otro.\par
    Cuando se desea transferir un nuevo archivo al controlador, simplemente se invierten estos dos sistemas: el de lectura pasa a ser escritura y viceversa.
@@ -407,7 +407,7 @@ Sobre la base del desarrollo de la página web de control, se extendió la aplic
 {0.8} {web_mach1} {Pantalla principal del software nkHACK. Se visualiza el modelo de la máquina CNC, las coordenadas actuales, la imagen de la cámara y el trabajo a mecanizar.} {fig:web_mach1}
 
 \subfiga
-{0.8} {web_mach2} {Software nkHACK. Menú de configuración de la cámara. Se puede ver la imagen capturada en modo binario en la cuál se ha detectado una marca de $3.3mm$ de lado.}{fig:web_mach2}
+{0.8} {web_mach2} {Software nkHACK. Menú de configuración de la cámara. Se puede ver la imagen capturada en modo binario en la cuál se ha detectado una marca de $3,3 mm$ de lado.}{fig:web_mach2}
 
 Algunas de las funcionalidades de esta página se detallan en la siguiente lista:
 \begin{itemize}
@@ -454,9 +454,9 @@ Estas medidas se puden tomar con la ayuda de una regla como se muestra en la fig
 Con el dato de la resolución de vídeo y las medidas ingresadas por el usuario, el software realiza el resto de los cálculos como se muestra en figura \ref{fig:calibracion_ancho_alto_C}
 
 \subfigabc
-   {0.48} {calibracion_ancho_alto1} {Medición del ancho del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $18,2mm$} {fig:calibracion_ancho_alto_A}
-   {0.48} {calibracion_ancho_alto2} {Medición del alto del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $25,5mm$} {fig:calibracion_ancho_alto_A}
-   {0.60} {calibracion_ancho_alto3} {Con las dimensiones de ancho, alto y la resolución del vídeo el software calcula las dimensiones del píxel. En este ejemplo se obtuvo $0,039mm$ de ancho y $0,04mm$ de alto.} {fig:calibracion_ancho_alto_C}
+   {0.48} {calibracion_ancho_alto1} {Medición del ancho del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $18,2 mm$} {fig:calibracion_ancho_alto_A}
+   {0.48} {calibracion_ancho_alto2} {Medición del alto del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $25,5 mm$} {fig:calibracion_ancho_alto_A}
+   {0.60} {calibracion_ancho_alto3} {Con las dimensiones de ancho, alto y la resolución del vídeo el software calcula las dimensiones del píxel. En este ejemplo se obtuvo $0,039 mm$ de ancho y $0,04 mm$ de alto.} {fig:calibracion_ancho_alto_C}
    {Calibración del tamaño del píxel de un fotograma. Se utiliza una regla para medir el ancho y el alto y el software realiza las cuentas para obtener y almacenar el tamaño del píxel en función de la resolución de vídeo que se este utilizando.}
    {fig:calibracion_ancho_alto}
 
@@ -494,7 +494,7 @@ Para mitigar este problema se desarrollaron dos técnicas:
    \end{itemize}
 
 \subfigab
-{0.48} {calibracion_centrado1} {Marca desplazada $-5.22mm$ en X y $2.77mm$ en Y respecto del centro de la imagen. El desplazamiento real depende de la medida de cada píxel y de la linealidad de la imagen.\\ \vphantom{1}}{fig:calibracion_centrado_a}
+{0.48} {calibracion_centrado1} {Marca desplazada $-5,22 mm$ en X y $2,77 mm$ en Y respecto del centro de la imagen. El desplazamiento real depende de la medida de cada píxel y de la linealidad de la imagen.\\ \vphantom{1}}{fig:calibracion_centrado_a}
 {0.48} {calibracion_centrado2} {Interacción de movimientos que ubica la marca en el centro de la imagen. El desplazamiento es prácticamente nulo, y por lo tanto no depende de la dimensión de los píxeles ni de la linealidad de la imagen.}{fig:calibracion_centrado_a}
    {Método de iteración de movimientos para el centrado de la marca y la mitigación de los efectos alineales en el fotograma.}
    {fig:calibracion_centrado}

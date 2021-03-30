@@ -15,7 +15,7 @@ En el presente capítulo se introducen las tecnologías más relevantes involucr
          {fig:system_blocks_main}
 
 \section{Plataforma PocketBeagle}
-   PocketBeagle es un miembro del ecosistema de plataformas de desarrollo BeagleBoard. \citep{WEBSITE:beagleboard}.
+PocketBeagle es un miembro del ecosistema de plataformas de desarrollo \mbox{BeagleBoard \citep{WEBSITE:beagleboard}}.
    Las características de esta plataforma, que se muestra en la figura \ref{fig:pocketbeagle}.A, y que son relevantes para este trabajo son las siguientes:
    \begin{itemize}
       \item{Controlador integrado SiP (system-in-package) Octavo Systems OSD3358-SM.}
@@ -50,47 +50,47 @@ Muchos usuarios utilizan herramientas de diseño sobre el sistema operativo \mbo
 
    Para entender la función principal de cada capa se describen algunos detalles en la siguiente lista:
    \begin{itemize}
-      \item{Python \citep{WEBSITE:python}: Es un poderoso y popular lenguaje de programación en el cual se corre principalmente el servidor web, y las funciones de procesamiento de imágenes.\par
+      \item{Python \citep{WEBSITE:python}: es un poderoso y popular lenguaje de programación en el cual se corre principalmente el servidor web, y las funciones de procesamiento de imágenes.\par
          La imagen del sistema operativo de la PocketBeagle ya cuenta con Python versión 3 instalado por defecto, lo que asegura compatibilidad.
       }
-      \item{asyncio \citep{WEBSITE:asyncio}: Es una biblioteca para Python que permite correr una única tarea que administra muchas de manera concurrente y cooperativa.\par
+      \item{asyncio \citep{WEBSITE:asyncio}: es una biblioteca para Python que permite correr una única tarea que administra muchas de manera concurrente y cooperativa.\par
       Esto permite que, por ejemplo, una función de Python esté esperando datos de un archivo mientras otra procesa una imagen sin bloquear las funciones del servidor.
       }
-      \item{aiohttp \citep{WEBSITE:aiohttp}: Es una biblioteca de Python que permite correr un servidor web utilizando la infraestructura de asyncio para realizar tareas de manera cooperativa y concurrete.
+      \item{aiohttp \citep{WEBSITE:aiohttp}: es una biblioteca de Python que permite correr un servidor web utilizando la infraestructura de asyncio para realizar tareas de manera cooperativa y concurrete.
       Es el motor del servidor web.
       }
-      \item{HTML 5.0 \citep{WEBSITE:html5}: Es el lenguaje de marcas utilizado para visualizar contenidos en la web.\par
+      \item{HTML 5.0 \citep{WEBSITE:html5}: es el lenguaje de marcas utilizado para visualizar contenidos en la web.\par
          Se utiliza para mostrar contenido estático y también para aprovechar un mecanismo nativo de la version 5.0 que permite la reproducción de vídeo en la página web sin necesidad de otras tecnologías.
       }
-      \item{CSS \citep{WEBSITE:css}: Es un lenguaje que permite definir estilos, colores, formato y modo de presentación en pantalla de una página escrita en HTML.\par
+      \item{CSS \citep{WEBSITE:css}: es un lenguaje que permite definir estilos, colores, formato y modo de presentación en pantalla de una página escrita en HTML.\par
       Es indispensable para crear aplicaciones web atractivas y apropiadas para cada uso.
       }
-      \item{JavaScript \citep{WEBSITE:javascript}: Es un lenguaje de programación intrínsecamente relacionado con HTML que permite la creación de páginas web dinámicas.\par
+      \item{JavaScript \citep{WEBSITE:javascript}: es un lenguaje de programación intrínsecamente relacionado con HTML que permite la creación de páginas web dinámicas.\par
          La mayoría de los navegadores modernos soportan este lenguaje y esto permite que la aplicación que se desarrolla pueda correr en cualquier plataforma que cuente con un navegador web.\par
          Más del 90\% de la aplicación web desarrollada está codificada en lenguaje JavaScript: los cálculos de alineación, la interacción con el usuario, etc.\par
          También se utilizan bibliotecas de terceros para diferentes usos, escritas en este lenguaje, lo que permite reutilizar código.
       }
-      \item{WebGL \citep{WEBSITE:webgl}: Es una biblioteca gráfica (\textit{Web graphics library}) escrita en JavaScript, que permite definir y visualizar objetos en tres dimensiones en una página web.\par
+      \item{WebGL \citep{WEBSITE:webgl}: es una biblioteca gráfica (\textit{Web graphics library}) escrita en JavaScript, que permite definir y visualizar objetos en tres dimensiones en una página web.\par
          Esta íntimamente ligada con el desarrollo web y es por ello que puede aprovechar las tarjetas gráficas del ordenador del cliente para acelerar las tareas de visualización y procesamiento.\par
          De esta manera logra eficiencias similares a las aplicaciones nativas del sistema operativo.
       }
-      \item{Three.js \citep{WEBSITE:threejs}: Es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGL y facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación y mejora el mantenimiento del código.\par
+      \item{Three.js \citep{WEBSITE:threejs}: es una biblioteca escrita en JavaScript, que utiliza la tecnología WebGL y facilita la creación de objetos, cuenta con muchos ejemplos y casos de uso, abstrae al programador de los detalles de implementación y mejora el mantenimiento del código.\par
          Se utiliza en la aplicación para visualizar el movimiento de la máquina en 3D, los trazos de corte, las correcciones de rotación, etc.
       }
-      \item{Websockets \citep{WEBSITE:websockets}: Es un protocolo de comunicaciones que opera sobre el protocolo TCP/IP, similar a HTTP, pero diseñado con la premisa de lograr una comunicación bidireccional de baja latencia.\par
+      \item{Websockets \citep{WEBSITE:websockets}: es un protocolo de comunicaciones que opera sobre el protocolo TCP/IP, similar a HTTP, pero diseñado con la premisa de lograr una comunicación bidireccional de baja latencia.\par
          Es de gran importancia en la aplicación para lograr una rápida respuesta de operación.
       }
       \item{socket.IO \citep{WEBSITE:socketio}: Es una biblioteca de JavaScript que utiliza Websockets para permitir la comunicación bidireccional entre el servidor web y el o los clientes.\par
          Toda la comunicación entre los scripts de JavaScript que corren en el cliente y el servidor en Python que corre en la PocketBeagle se comunican utilizando esta biblioteca.
       }
-   \item{OpenCV \citep{WEBSITE:opencv}: Es una biblioteca muy popular escrita en C++ para procesamiento de imágenes asistido por computadora.
-         Además de contar con potentes algoritmos de procesamiento muy útiles para este trabajo, es soportada por muchas plataformas asegurando la compatibilidad entre dispositivos.
-         En particular la PocketBeagle utiliza la biblioteca libopencv-dev extraída de los repositorios oficiales de Debian.
+      \item{OpenCV \citep{WEBSITE:opencv}: es una biblioteca muy popular escrita en C++ para procesamiento de imágenes asistido por computadora.
+      Además de contar con potentes algoritmos de procesamiento muy útiles para este trabajo, es soportada por muchas plataformas asegurando la compatibilidad entre dispositivos.
+      En particular la PocketBeagle utiliza la biblioteca libopencv-dev extraída de los repositorios oficiales de Debian.
       }
-   \item{PyOpenCV \citep{WEBSITE:pyopencv}: Es una biblioteca de Python que permite utilizar las funciones de OpenCV.
-         Dado que este trabajo está escrito en Python, se utiliza esta biblioteca para el procesamiento de marcas que internamente utiliza libopencv-dev del sistema operativo.
+      \item{PyOpenCV \citep{WEBSITE:pyopencv}: es una biblioteca de Python que permite utilizar las funciones de OpenCV.
+      Dado que este trabajo está escrito en Python, se utiliza esta biblioteca para el procesamiento de marcas que internamente utiliza libopencv-dev del sistema operativo.
       }
-\end{itemize}
+   \end{itemize}
 
 \section{Selección de la cámara de vídeo}
 \label{section:camara_de_video}
@@ -218,7 +218,7 @@ Como la pieza que se desea mecanizar y también la propia mecánica de la máqui
          \end{equation}
 
 \section{Detección y tipos de marcas fiduciales}
-   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado lo más usual son círculos o cuadrados de entre $1mm$ y $10mm$ de diámetro o de lado.\par
+   Es posible utilizar diversas figuras geométricas e incluso colores para identificar la posición de una marca, sin embargo en el mercado gráfico y de mecanizado lo más usual son círculos o cuadrados de entre $1 mm$ y $10 mm$ de diámetro o de lado.\par
    Para un efectivo reconocimiento de una marca utilizando una cámara de vídeo algunas consideraciones deben tenerse en cuenta como ser:
    \begin{itemize}
       \item{Maximizar el contraste entre el fondo del objeto y la marca.}
