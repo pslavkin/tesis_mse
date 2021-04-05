@@ -407,7 +407,7 @@ Sobre la base del desarrollo de la página web de control, se extendió la aplic
 {0.8} {web_mach1} {Pantalla principal del software nkHACK. Se visualiza el modelo de la máquina CNC, las coordenadas actuales, la imagen de la cámara y el trabajo a mecanizar.} {fig:web_mach1}
 
 \subfiga
-{0.8} {web_mach2} {Software nkHACK. Menú de configuración de la cámara. Se puede ver la imagen capturada en modo binario en la cuál se ha detectado una marca de $3,3 mm$ de lado.}{fig:web_mach2}
+{0.8} {web_mach2} {Software nkHACK. Menú de configuración de la cámara. Se puede ver la imagen capturada en modo binario en la cuál se ha detectado una marca de $3,3\:mm$ de lado.}{fig:web_mach2}
 
 Algunas de las funcionalidades de esta página se detallan en la siguiente lista:
 \begin{itemize}
@@ -454,13 +454,11 @@ Estas medidas se puden tomar con la ayuda de una regla como se muestra en la fig
 Con el dato de la resolución de vídeo y las medidas ingresadas por el usuario, el software realiza el resto de los cálculos como se muestra en figura \ref{fig:calibracion_ancho_alto_C}
 
 \subfigabc
-   {0.48} {calibracion_ancho_alto1} {Medición del ancho del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $18,2 mm$} {fig:calibracion_ancho_alto_A}
-   {0.48} {calibracion_ancho_alto2} {Medición del alto del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $25,5 mm$} {fig:calibracion_ancho_alto_A}
-   {0.60} {calibracion_ancho_alto3} {Con las dimensiones de ancho, alto y la resolución del vídeo el software calcula las dimensiones del píxel. En este ejemplo se obtuvo $0,039 mm$ de ancho y $0,04 mm$ de alto.} {fig:calibracion_ancho_alto_C}
+   {0.48} {calibracion_ancho_alto1} {Medición del ancho del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $18,2\:mm$} {fig:calibracion_ancho_alto_A}
+   {0.48} {calibracion_ancho_alto2} {Medición del alto del fotograma con la ayuda de una regla. Se puede ver una medición de aproximadamente $25,5\:mm$} {fig:calibracion_ancho_alto_A}
+   {0.60} {calibracion_ancho_alto3} {Con las dimensiones de ancho, alto y la resolución del vídeo el software calcula las dimensiones del píxel. En este ejemplo se obtuvo $0,039\:mm$ de ancho y $0,04\:mm$ de alto.} {fig:calibracion_ancho_alto_C}
    {Calibración del tamaño del píxel de un fotograma. Se utiliza una regla para medir el ancho y el alto y el software realiza las cuentas para obtener y almacenar el tamaño del píxel en función de la resolución de vídeo que se este utilizando.}
    {fig:calibracion_ancho_alto}
-
-   Epígrafe
 
 Sin embargo, si la cámara no está perfectamente perpendicular a la mesa de trabajo, la dimensión de los píxeles cambia según su posición.\par
 Otro efecto no deseado ocurre según el tipo de lente de la cámara y la distancia al objetivo.\par
@@ -494,7 +492,7 @@ Para mitigar este problema se desarrollaron dos técnicas:
    \end{itemize}
 
 \subfigab
-{0.48} {calibracion_centrado1} {Marca desplazada $-5,22 mm$ en X y $2,77 mm$ en Y respecto del centro de la imagen. El desplazamiento real depende de la medida de cada píxel y de la linealidad de la imagen.\\ \vphantom{1}}{fig:calibracion_centrado_a}
+{0.48} {calibracion_centrado1} {Marca desplazada $-5,22\:mm$ en X y $2,77\:mm$ en Y respecto del centro de la imagen. El desplazamiento real depende de la medida de cada píxel y de la linealidad de la imagen.\\ \vphantom{1}}{fig:calibracion_centrado_a}
 {0.48} {calibracion_centrado2} {Interacción de movimientos que ubica la marca en el centro de la imagen. El desplazamiento es prácticamente nulo, y por lo tanto no depende de la dimensión de los píxeles ni de la linealidad de la imagen.}{fig:calibracion_centrado_a}
    {Método de iteración de movimientos para el centrado de la marca y la mitigación de los efectos alineales en el fotograma.}
    {fig:calibracion_centrado}
